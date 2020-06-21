@@ -20,7 +20,8 @@ import com.paLlevar.app.model.services.ProductService;
 @RequestMapping("/product")
 public class ProductController {
 	
-	String path = " localhost:8080/product/glp";
+	String path = "http://localhost:8080/product";
+	
 	@Autowired
 	private ProductService productService;
 	
