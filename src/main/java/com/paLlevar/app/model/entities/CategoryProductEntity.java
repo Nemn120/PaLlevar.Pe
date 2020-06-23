@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="category_product")
-public class CategoryProduct implements Serializable{
+public class CategoryProductEntity implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	@Id

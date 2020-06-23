@@ -41,7 +41,7 @@ public class OrderDetailEntity  implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "product_id", referencedColumnName = "id")
-	private Product product;
+	private ProductEntity product;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "order_id", referencedColumnName = "id")
@@ -88,11 +88,11 @@ public class OrderDetailEntity  implements Serializable{
 		this.userDelivery = userDelivery;
 	}
 
-	public Product getProduct() {
+	public ProductEntity getProduct() {
 		return product;
 	}
 
-	public void setProduct(Product product) {
+	public void setProduct(ProductEntity product) {
 		this.product = product;
 	}
 

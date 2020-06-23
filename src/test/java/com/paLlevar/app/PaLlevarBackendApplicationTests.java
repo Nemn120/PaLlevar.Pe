@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.paLlevar.app.model.entities.CategoryProduct;
-import com.paLlevar.app.model.entities.Product;
+import com.paLlevar.app.model.entities.CategoryProductEntity;
+import com.paLlevar.app.model.entities.ProductEntity;
 import com.paLlevar.app.model.repository.CategoryProductRepository;
 import com.paLlevar.app.model.repository.ProductRepository;
 import com.paLlevar.app.model.services.ProductService;
@@ -39,10 +39,10 @@ class PaLlevarBackendApplicationTests {
 		Product pr = productRepository.save(product1);
 		assertThat(product1.getDescription().equals(pr.getDescription()));
 		*/
-		Product product1= new Product();
+		ProductEntity product1= new ProductEntity();
 		product1.setDescription("Ensalada de papa");
 		product1.setName("Ensalada de papa");
-		Product pr = productService.save(product1);
+		ProductEntity pr = productService.save(product1);
 		assertThat(product1.getDescription().equals(pr.getDescription()));
 	}
 

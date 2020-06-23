@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="menu_day")
-public class MenuDay implements Serializable{
+public class MenuDayEntity implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -30,14 +30,14 @@ public class MenuDay implements Serializable{
 	@Column(name="day", length=50)
 	public String day;
 	
-	@OneToMany(mappedBy = "menuDay" , targetEntity = MenuDayProduct.class)
-	private List<MenuDayProduct> menuDayProduct;
+	@OneToMany(mappedBy = "menuDay" , targetEntity = MenuDayProductEntity.class)
+	private List<MenuDayProductEntity> menuDayProduct;
 	
 	
-	public List<MenuDayProduct> getMenuDayProduct() {
+	public List<MenuDayProductEntity> getMenuDayProduct() {
 		return menuDayProduct;
 	}
-	public void setMenuDayProduct(List<MenuDayProduct> menuDayProduct) {
+	public void setMenuDayProduct(List<MenuDayProductEntity> menuDayProduct) {
 		this.menuDayProduct = menuDayProduct;
 	}
 	

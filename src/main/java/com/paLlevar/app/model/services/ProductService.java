@@ -2,10 +2,10 @@ package com.paLlevar.app.model.services;
 
 import java.util.List;
 
-import com.paLlevar.app.model.entities.Product;
+import com.paLlevar.app.model.entities.ProductEntity;
 
-public interface ProductService extends GenericCRUD<Product,Integer>{
+public interface ProductService extends GenericCRUD<ProductEntity,Integer>{
 	
-	List<Product> getAllProductByCompanyIdAndSucursalId(Integer companyId,Integer sucursalId);
+	List<ProductEntity> getAllProductByCompanyIdAndSucursalId(Integer companyId,Integer sucursalId);
 
 }

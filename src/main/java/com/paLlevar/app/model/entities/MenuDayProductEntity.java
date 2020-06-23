@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="menu_product_day")
-public class MenuDayProduct  implements Serializable{
+public class MenuDayProductEntity  implements Serializable{
 	
 	/**
 	 * 
@@ -27,11 +27,11 @@ public class MenuDayProduct  implements Serializable{
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id", referencedColumnName = "id")
-	private Product product;
+	private ProductEntity product;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "menu_day_id", referencedColumnName = "id")
-	private MenuDay menuDay;
+	private MenuDayEntity menuDay;
 	
 	@Column(name = "price", columnDefinition = "decimal(5,2)")
 	private Double price;
@@ -50,16 +50,16 @@ public class MenuDayProduct  implements Serializable{
 		this.id = id;
 	}
 
-	public Product getProduct() {
+	public ProductEntity getProduct() {
 		return product;
 	}
-	public void setProduct(Product product) {
+	public void setProduct(ProductEntity product) {
 		this.product = product;
 	}
-	public MenuDay getMenuDay() {
+	public MenuDayEntity getMenuDay() {
 		return menuDay;
 	}
-	public void setMenuDay(MenuDay menuDay) {
+	public void setMenuDay(MenuDayEntity menuDay) {
 		this.menuDay = menuDay;
 	}
 	public Double getPrice() {

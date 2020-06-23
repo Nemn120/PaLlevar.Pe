@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.paLlevar.app.model.entities.Product;
+import com.paLlevar.app.model.entities.ProductEntity;
 import com.paLlevar.app.model.services.ProductService;
 
 @RestController
@@ -27,13 +27,13 @@ public class ProductController {
 	
 	
 	@GetMapping(path="/glp")
-	public ResponseEntity<List<Product>>  getListProduct(){
-		List<Product>  lista=productService.getAll();
-		return new ResponseEntity<List<Product>>(lista,HttpStatus.OK);
+	public ResponseEntity<List<ProductEntity>>  getListProduct(){
+		List<ProductEntity>  lista=productService.getAll();
+		return new ResponseEntity<List<ProductEntity>>(lista,HttpStatus.OK);
 	}
 	@PostMapping(path="/sp")
-	public Product saveProduct(@RequestBody Product pr){
-		Product productSave = productService.save(pr);
+	public ProductEntity saveProduct(@RequestBody ProductEntity pr){
+		ProductEntity productSave = productService.save(pr);
 		return productSave;
 	}
 	@DeleteMapping(value="/dp/{id}")

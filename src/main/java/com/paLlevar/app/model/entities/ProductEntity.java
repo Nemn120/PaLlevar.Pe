@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Entity
 //@Where(clause="deleted=false" )
 @Table(name="product")
-public class Product implements Serializable{
+public class ProductEntity implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -31,7 +31,7 @@ public class Product implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "category_product_id", referencedColumnName = "id")
-	private CategoryProduct categoryProduct;
+	private CategoryProductEntity categoryProduct;
 	
 	
 	public Integer getId() {
@@ -66,11 +66,11 @@ public class Product implements Serializable{
 		this.pathPhoto = pathPhoto;
 	}
 
-	public CategoryProduct getCategoryProduct() {
+	public CategoryProductEntity getCategoryProduct() {
 		return categoryProduct;
 	}
 
-	public void setCategoryProduct(CategoryProduct categoryProduct) {
+	public void setCategoryProduct(CategoryProductEntity categoryProduct) {
 		this.categoryProduct = categoryProduct;
 	}
 	
