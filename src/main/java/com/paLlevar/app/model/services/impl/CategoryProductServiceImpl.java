@@ -2,12 +2,17 @@ package com.paLlevar.app.model.services.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.paLlevar.app.model.entities.CategoryProductEntity;
 import com.paLlevar.app.model.repository.CategoryProductRepository;
 import com.paLlevar.app.model.services.CategoryProductService;
 
+@Service
 public class CategoryProductServiceImpl implements CategoryProductService {
 
+	@Autowired
 	private CategoryProductRepository repo;
 	
 	@Override

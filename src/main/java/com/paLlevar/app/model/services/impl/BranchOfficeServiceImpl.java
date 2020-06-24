@@ -2,12 +2,17 @@ package com.paLlevar.app.model.services.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.paLlevar.app.model.entities.BranchOfficeEntity;
 import com.paLlevar.app.model.repository.BranchOfficeRepository;
 import com.paLlevar.app.model.services.BranchOfficeService;
 
+@Service
 public class BranchOfficeServiceImpl implements BranchOfficeService {
 	
+	@Autowired
 	private BranchOfficeRepository repo;
 
 	@Override

@@ -2,12 +2,17 @@ package com.paLlevar.app.model.services.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.paLlevar.app.model.entities.CompanyEntity;
 import com.paLlevar.app.model.repository.CompanyRepository;
 import com.paLlevar.app.model.services.CompanyService;
 
+@Service
 public class CompanyServiceImpl implements CompanyService {
 	
+	@Autowired
 	private CompanyRepository repo;
 
 	@Override

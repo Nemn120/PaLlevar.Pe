@@ -2,12 +2,17 @@ package com.paLlevar.app.model.services.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.paLlevar.app.model.entities.ClientEntity;
 import com.paLlevar.app.model.repository.ClientRepository;
 import com.paLlevar.app.model.services.ClientService;
 
+@Service
 public class ClientServiceImpl implements ClientService {
 	
+	@Autowired
 	private ClientRepository repo;
 
 	@Override

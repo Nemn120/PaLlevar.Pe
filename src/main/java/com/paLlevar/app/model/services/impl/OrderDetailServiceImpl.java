@@ -2,12 +2,17 @@ package com.paLlevar.app.model.services.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.paLlevar.app.model.entities.OrderDetailEntity;
 import com.paLlevar.app.model.repository.OrderDetailRepository;
 import com.paLlevar.app.model.services.OrderDetailService;
 
+@Service
 public class OrderDetailServiceImpl implements OrderDetailService {
 	
+	@Autowired
 	private OrderDetailRepository repo;
 
 	@Override

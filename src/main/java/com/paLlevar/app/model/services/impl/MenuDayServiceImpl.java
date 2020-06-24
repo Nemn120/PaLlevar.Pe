@@ -2,12 +2,17 @@ package com.paLlevar.app.model.services.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.paLlevar.app.model.entities.MenuDayEntity;
 import com.paLlevar.app.model.repository.MenuDayRepository;
 import com.paLlevar.app.model.services.MenuDayService;
 
+@Service
 public class MenuDayServiceImpl implements MenuDayService {
 	
+	@Autowired
 	private MenuDayRepository repo;
 
 	@Override
