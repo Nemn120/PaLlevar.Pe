@@ -30,7 +30,9 @@ public class BranchOfficeEntity implements Serializable{
 	@JoinColumn(name = "user_admin_id", referencedColumnName = "id")
 	private UserEntity userAdmin;
 
-	
+	@ManyToOne
+	@JoinColumn(name = "company_id", referencedColumnName = "id")
+	private CompanyEntity company;
 	public Integer getId() {
 		return id;
 	}
@@ -71,4 +73,12 @@ public class BranchOfficeEntity implements Serializable{
 		this.userAdmin = userAdmin;
 	}
 
+	public CompanyEntity getCompany() {
+		return company;
+	}
+
+	public void setCompany(CompanyEntity company) {
+		this.company = company;
+	}
+	
 }

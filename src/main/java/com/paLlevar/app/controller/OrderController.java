@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.paLlevar.app.model.entities.OrderEntity;
 import com.paLlevar.app.model.services.OrderService;
+import com.paLlevar.app.util.Constants;
 
 @RestController
 @RequestMapping("/order")
@@ -43,4 +44,27 @@ public class OrderController {
 	public void deletedOrder(@PathVariable("id")Integer id) {
 		orderService.deleteById(id);
 	}
+	
+	@PostMapping(path="/sobos")
+	public OrderEntity saveNewOrderByOrganizationIdAndSucursalId(@RequestBody OrderEntity or) {
+		orderService.saveOrderByOrganizationIdAndSucursalId(or);
+		return null;
+	}
+	
+	@GetMapping(path="/glop")
+	public ResponseEntity<List<OrderEntity>>  getListOrderPendding(){
+		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS__PENDING, org, Integer);
+		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
+		
+	}
+	
+	@GetMapping(path="/glod")
+	public ResponseEntity<List<OrderEntity>>  getListOrderDelivery(){
+		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_DETAIL_STATUS_DELIVERED, org, Integer);
+		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
+		
+	}
+
+	
+	
 }

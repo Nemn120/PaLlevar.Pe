@@ -42,4 +42,12 @@ public class MenuDayController {
 	public void deletedMenuDay(@PathVariable("id")Integer id) {
 		menudayService.deleteById(id);
 	}
+	
+	@GetMapping(path="/gmdbdo")
+	public ResponseEntity<MenuDayEntity>  getMenuDayByDayAndOrganizationIdAndSucursalId(@RequestBody Integer org, @RequestBody Integer sucursalId){
+		MenuDayEntity menuDay= menudayService.getMenuDayByDayAndOrganizationIdAndSucursalId(sucursalId, org);
+		return new ResponseEntity<>(menuDay,HttpStatus.OK);
+		
+	}
+	
 }

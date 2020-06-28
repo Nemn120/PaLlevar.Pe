@@ -1,7 +1,6 @@
 package com.paLlevar.app.model.entities;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -13,39 +12,35 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="menu_day")
-public class MenuDayEntity implements Serializable {
+@Table(name="catalog")
+public class CatalogEntity implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Integer id;
+	private Integer id;
+	@Column(name="code", length=3)
+	private String code;
 	@Column(name="name", length=60)
-	public String name;
-	@Column(name="description", length=200)
-	public String description;
+	private String name;
+	@Column(name="description", length=100)
+	private String description;
 	
-	public Date date;
-	@Column(name="day", length=50)
-	public String day;
-	
-	@OneToMany(mappedBy = "menuDay" , targetEntity = MenuDayProductEntity.class)
-	private List<MenuDayProductEntity> menuDayProduct;
-	
-	
-	public List<MenuDayProductEntity> getMenuDayProduct() {
-		return menuDayProduct;
-	}
-	public void setMenuDayProduct(List<MenuDayProductEntity> menuDayProduct) {
-		this.menuDayProduct = menuDayProduct;
-	}
+	@OneToMany(mappedBy = "catalog", targetEntity = CatalogDetailEntity.class)
+	private List<CatalogDetailEntity> listOfCatalogDetail;
 	
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
 	}
 	public String getName() {
 		return name;
@@ -59,19 +54,11 @@ public class MenuDayEntity implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Date getDate() {
-		return date;
+	public List<CatalogDetailEntity> getListOfCatalogDetail() {
+		return listOfCatalogDetail;
 	}
-	public void setDate(Date date) {
-		this.date = date;
+	public void setListOfCatalogDetail(List<CatalogDetailEntity> listOfCatalogDetail) {
+		this.listOfCatalogDetail = listOfCatalogDetail;
 	}
-	public String getDay() {
-		return day;
-	}
-	public void setDay(String day) {
-		this.day = day;
-	}
-	
-	
 	
 }

@@ -15,9 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.paLlevar.app.model.entities.OrderDetailEntity;
 import com.paLlevar.app.model.services.OrderDetailService;
+import com.paLlevar.app.util.Constants;
 
 @RestController
-@RequestMapping("/orderdetail")
+@RequestMapping("/orderDetail")
 public class OrderDetailController {
 
 	String path = "http://localhost:8080/orderdetail";
@@ -33,8 +34,8 @@ public class OrderDetailController {
 	}
 	
 	@PostMapping(path="/sod")
-	public OrderDetailEntity saveOrderDetail(@RequestBody OrderDetailEntity orde) {
-		OrderDetailEntity orderdetailSave = orderdetailService.save(orde);
+	public OrderDetailEntity saveOrderDetail(@RequestBody OrderDetailEntity order) {
+		OrderDetailEntity orderdetailSave = orderdetailService.save(order);
 		return orderdetailSave;
 	}
 	
@@ -42,4 +43,22 @@ public class OrderDetailController {
 	public void deletedOrderDetail(@PathVariable("id")Integer id) {
 		orderdetailService.deleteById(id);
 	}
+	
+	
+	@PostMapping(path="/saod")
+	public OrderDetailEntity saveAttendOrderDetail(@RequestBody OrderDetailEntity order) {
+		order.setStatus(Constants.ORDER_DETAIL_STATUS_ATTENT);
+		orderdetailService.saveAttendOrderDetail(order);
+		return null;
+	}
+	
+	@PostMapping(path="/sdod")
+	public OrderDetailEntity saveDeliveryOrderDetail(@RequestBody OrderDetailEntity order) {
+		order.setStatus(Constants.ORDER_DETAIL_STATUS_DELIVERY);
+		orderdetailService.saveAttendOrderDetail(order);
+		return null;
+	}
+	
+	
+	
 }
