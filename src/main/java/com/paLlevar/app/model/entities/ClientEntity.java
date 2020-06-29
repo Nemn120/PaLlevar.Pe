@@ -13,15 +13,14 @@ import javax.persistence.Table;
 @Table(name="client")
 public class ClientEntity implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@Column(name="nombre", length=50)
 	private String nombre;
+	
+	
 	public Integer getId() {
 		return id;
 	}

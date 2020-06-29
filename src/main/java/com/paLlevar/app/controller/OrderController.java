@@ -53,14 +53,14 @@ public class OrderController {
 	
 	@GetMapping(path="/glop")
 	public ResponseEntity<List<OrderEntity>>  getListOrderPendding(){
-		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS__PENDING, org, Integer);
+		List<OrderEntity> lista = null; //= orderService.getListOrderByStatus(Constants.ORDER_STATUS__PENDING, org, Integer);
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
 		
 	}
 	
 	@GetMapping(path="/glod")
 	public ResponseEntity<List<OrderEntity>>  getListOrderDelivery(){
-		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_DETAIL_STATUS_DELIVERED, org, Integer);
+		List<OrderEntity> lista = null; //orderService.getListOrderByStatus(Constants.ORDER_DETAIL_STATUS_DELIVERED, org, Integer);
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
 		
 	}

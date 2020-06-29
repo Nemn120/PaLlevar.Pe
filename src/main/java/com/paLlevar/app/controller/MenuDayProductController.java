@@ -17,7 +17,7 @@ import com.paLlevar.app.model.entities.MenuDayProductEntity;
 import com.paLlevar.app.model.services.MenuDayProductService;
 
 @RestController
-@RequestMapping("/menudayproduct")
+@RequestMapping("/menuDayProduct")
 public class MenuDayProductController {
 
 	String path = "http://localhost:8080/menudayproduct";

@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.paLlevar.app.model.entities.UserEntity;
 
 public interface UserRepository extends JpaRepository<UserEntity, Integer>{
-
+	UserEntity findOneByUsername(String username);
+	
 }

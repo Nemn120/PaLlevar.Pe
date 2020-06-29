@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="order_detail")
-public class OrderDetailEntity  implements Serializable{
+public class OrderDetailEntity extends MainEntity  implements Serializable{
 	
 	/**
 	 * 

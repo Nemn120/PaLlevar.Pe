@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="branch_office")
-public class BranchOfficeEntity implements Serializable{
+public class BranchOfficeEntity  extends MainEntity  implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	@Id

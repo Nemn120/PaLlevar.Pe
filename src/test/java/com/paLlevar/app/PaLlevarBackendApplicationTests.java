@@ -14,9 +14,12 @@ import com.paLlevar.app.model.entities.CategoryProductEntity;
 import com.paLlevar.app.model.entities.OrderDetailEntity;
 import com.paLlevar.app.model.entities.OrderEntity;
 import com.paLlevar.app.model.entities.ProductEntity;
+import com.paLlevar.app.model.entities.UserEntity;
 import com.paLlevar.app.model.repository.CategoryProductRepository;
 import com.paLlevar.app.model.repository.ProductRepository;
+import com.paLlevar.app.model.repository.UserRepository;
 import com.paLlevar.app.model.services.ProductService;
+import com.paLlevar.app.model.services.UserService;
 
 @SpringBootTest
 class PaLlevarBackendApplicationTests {
@@ -27,9 +30,22 @@ class PaLlevarBackendApplicationTests {
 	private CategoryProductRepository categoryProductRepository;
 	
 	@Autowired
+	private UserService userService;
+	
+	@Autowired
 	private ProductService productService;
+	
+	
 	@Test
 	void contextLoads() {
+		
+		UserEntity us1 = new UserEntity();
+		
+		us1.setUsername("email3");
+		us1.setPassword("123");
+		UserEntity user2 =userService.registerUserByProfile(us1);
+		assertThat(user2.equals(us1));
+		
 		/*CategoryProduct ct = new CategoryP/roduct();
 		ct.setDescription("Ensaladas");
 		ct.setName("Ensaladas");
@@ -45,7 +61,7 @@ class PaLlevarBackendApplicationTests {
 		Product pr = productRepository.save(product1);
 		assertThat(product1.getDescription().equals(pr.getDescription()));
 		*/
-		ProductEntity product1= new ProductEntity();
+		/*ProductEntity product1= new ProductEntity();
 		product1.setDescription("Ensalada de papa");
 		product1.setName("Ensalada de papa");
 		ProductEntity pr = productService.save(product1);
@@ -70,11 +86,11 @@ class PaLlevarBackendApplicationTests {
 		
 		OrderDetailEntity od1 = new OrderDetailEntity();
 	
-		
+		*/
 		
 	}
 	
-	@Test
+	/*@Test
 	void contextLoads2() {
 		
 		
@@ -109,6 +125,7 @@ class PaLlevarBackendApplicationTests {
 		
 		
 	}
+	*/
 	
 
 }

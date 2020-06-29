@@ -12,6 +12,6 @@ import com.paLlevar.app.model.entities.OrderEntity;
 
 public interface OrderRepository extends JpaRepository<OrderEntity, Integer>{
 
-	@Query("SELECT FROM OrderEntity or WHERE or.status:=status AND md.organizationId=:organizationId ")
-	public List<OrderEntity> getListOrderByStatus(@Param("status") String status, @Param("sucursalId") Integer idSucursal, @Param("organizationId") Integer orgId );
+	//@Query("SELECT FROM OrderEntity or WHERE or.status:=status AND md.organizationId=:organizationId ")
+//	public List<OrderEntity> getListOrderByStatus(@Param("status") String status, @Param("sucursalId") Integer idSucursal, @Param("organizationId") Integer orgId );
 }

@@ -17,5 +17,13 @@ public class Constants {
 	public static final String ORDER_STATUS_ERROR="Error";
 	
 	public static final String MENUDAY_STATUS_NOT_AVAILABLE="No disponible";
+	
+	
+	public static final Integer ADMIN_USER_ROL=1;
+	public static final Integer CLIENT_USER_ROL=2;
+	public static final Integer MAIN_CHEF_USER_ROL=3;
+	public static final Integer MASTER_DELIVERY_USER_ROL=4;
+	public static final Integer DELIVERY_USER_ROL=5;
+	
 
 }

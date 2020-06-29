@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="menu_day")
-public class MenuDayEntity implements Serializable {
+public class MenuDayEntity  extends MainEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	

@@ -79,7 +79,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public List<OrderEntity> getListOrderByStatus(String status, Integer org, Integer sucursal) {
-		List<OrderEntity> odList= repo.getListOrderByStatus(status, org, sucursal);
+		List<OrderEntity> odList = null;//= repo.getListOrderByStatus(status, org, sucursal);
 		
 		return odList;
 		

@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Entity
 //@Where(clause="deleted=false" )
 @Table(name="product")
-public class ProductEntity implements Serializable{
+public class ProductEntity  extends MainEntity  implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
