@@ -39,10 +39,10 @@ public class CustomUserDetailsService implements UserDetailsService{
 		List<GrantedAuthority> roles = new ArrayList<>();
 		
 		
-			roles.add(new SimpleGrantedAuthority(user.getProfile().getShortDescription()));
+			roles.add(new SimpleGrantedAuthority(user.getProfile().getName()));
 		
 		
-		UserDetails userDetails = new User(user.getNombre(), user.getPassword(), roles);
+		UserDetails userDetails = new User(user.getUsername(), user.getPassword(), roles);
 		
 		return userDetails;
 	}

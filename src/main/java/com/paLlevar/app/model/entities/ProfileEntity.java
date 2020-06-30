@@ -3,6 +3,7 @@ package com.paLlevar.app.model.entities;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,56 +12,52 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name="profile")
 public class ProfileEntity   extends MainEntity implements Serializable {
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	@Column(name="short_description",length=30)
-	private String shortDescription;
-	@Column(name="long_description",length=60)
-	private String longDescription;
-	//private String type;
-	
-	@OneToMany(mappedBy = "profile",targetEntity = ProfileMenuOptionEntity.class)
-	private List<ProfileMenuOptionEntity> listProfileMenuOption;
+	private Integer idProfile;
 
-	public Integer getId() {
-		return id;
+	@Column(name = "name", length = 30)
+	private String name;
+
+	@Column(name = "description", length = 50)
+	private String description;
+
+	public Integer getIdProfile() {
+		return idProfile;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setIdProfile(Integer idProfile) {
+		this.idProfile = idProfile;
 	}
 
-	public String getShortDescription() {
-		return shortDescription;
+	public String getName() {
+		return name;
 	}
 
-	public void setShortDescription(String shortDescription) {
-		this.shortDescription = shortDescription;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getLongDescription() {
-		return longDescription;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setLongDescription(String longDescription) {
-		this.longDescription = longDescription;
-	}
-
-	public List<ProfileMenuOptionEntity> getListProfileMenuOption() {
-		return listProfileMenuOption;
-	}
-
-	public void setListProfileMenuOption(List<ProfileMenuOptionEntity> listProfileMenuOption) {
-		this.listProfileMenuOption = listProfileMenuOption;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
-	
-	
+
+
 
 }

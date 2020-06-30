@@ -39,7 +39,7 @@ public class UserPrincipal implements UserDetails, Serializable{
 		List<ProfileEntity> profiles = new ArrayList<ProfileEntity>();
 		profiles.add(user.getProfile());
 		List<GrantedAuthority> authorities = profiles.stream().map(profile ->
-			new SimpleGrantedAuthority(profile.getShortDescription())).collect(Collectors.toList());
+			new SimpleGrantedAuthority(profile.getName())).collect(Collectors.toList());
 		
 		return new UserPrincipal(user.getId(), user.getUsername(), user.getPassword(), authorities);	
 		

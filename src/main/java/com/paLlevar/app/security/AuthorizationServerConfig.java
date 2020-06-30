@@ -57,7 +57,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	public void configure(ClientDetailsServiceConfigurer configurer) throws Exception {
 		configurer.inMemory().withClient(clientId).secret(bcrypt.encode(clientSecret)).authorizedGrantTypes(grantType , "refresh_token")
 		// ambitos de lectura y escritura									tiempo del token
-		.scopes(scopeRead, scopeWrite).resourceIds(resourceIds).accessTokenValiditySeconds(20000)
+		.scopes(scopeRead, scopeWrite).resourceIds(resourceIds).accessTokenValiditySeconds(100000)
 		// si usas token de refresco.,
 		.refreshTokenValiditySeconds(0);		
 	}

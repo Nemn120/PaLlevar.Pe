@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,10 +26,23 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@GetMapping(path="/usr")
-	public ResponseEntity<List<UserEntity>>  getListProduct(){
+	@GetMapping(path="/glur")
+	public ResponseEntity<List<UserEntity>>  getListUser(){
 		List<UserEntity> lista = userService.getAll();
 		return new ResponseEntity<List<UserEntity>>(lista,HttpStatus.OK);
+		
+	}
+	
+	@PostMapping(path="/gubu",produces = "application/json")
+	public ResponseEntity<UserEntity>  getUserByUsername(@RequestBody String username){
+		UserEntity user; 
+		try {
+			user= userService.getUserByUsername(username);
+		}catch(Exception e) {
+			user=null;
+
+		}
+		return new ResponseEntity<UserEntity>(user,HttpStatus.OK);
 		
 	}
 	
@@ -46,7 +60,7 @@ public class UserController {
 	@PostMapping(path="rcli",produces = "application/json", consumes = "application/json")
 	private ResponseEntity<Object> registerClient(@RequestBody UserEntity usuario){
 		usuario.setProfile(new ProfileEntity());
-		usuario.getProfile().setId(Constants.CLIENT_USER_ROL);
+		usuario.getProfile().setIdProfile(Constants.CLIENT_USER_ROL);
 		userService.registerUserByProfile(usuario);
 		return new ResponseEntity<Object>(HttpStatus.CREATED);
 	}
@@ -54,16 +68,18 @@ public class UserController {
 	@PostMapping(path="radmin",produces = "application/json", consumes = "application/json")
 	private ResponseEntity<Object> registerAdmin(@RequestBody UserEntity usuario){
 		usuario.setProfile(new ProfileEntity());
-		usuario.getProfile().setId(Constants.ADMIN_USER_ROL);
+		usuario.getProfile().setIdProfile(Constants.ADMIN_USER_ROL);
 		userService.registerUserByProfile(usuario);
 		return new ResponseEntity<Object>(HttpStatus.CREATED);
 	}
 	@PostMapping(path="rchef",produces = "application/json", consumes = "application/json")
 	private ResponseEntity<Object> registerCheft(@RequestBody UserEntity usuario){
 		usuario.setProfile(new ProfileEntity());
-		usuario.getProfile().setId(Constants.MAIN_CHEF_USER_ROL);
+		usuario.getProfile().setIdProfile(Constants.MAIN_CHEF_USER_ROL);
 		userService.registerUserByProfile(usuario);
 		return new ResponseEntity<Object>(HttpStatus.CREATED);
 	}
+	
+	
 	
 }
