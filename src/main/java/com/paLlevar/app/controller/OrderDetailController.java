@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.paLlevar.app.model.entities.OrderDetailEntity;
+import com.paLlevar.app.model.entities.OrderEntity;
 import com.paLlevar.app.model.services.OrderDetailService;
 import com.paLlevar.app.util.Constants;
 
@@ -59,6 +60,25 @@ public class OrderDetailController {
 		return null;
 	}
 	
+	@GetMapping(path="/godbsi/{id}/{status}/{org}/{suc}")
+	public ResponseEntity<OrderDetailEntity> getOrderDetailByStatusAndId(@PathVariable("id")Integer id, @PathVariable("status")String status,@PathVariable("org")Integer org,@PathVariable("suc")Integer suc){
+		OrderDetailEntity orderdetail = new OrderDetailEntity();
+		orderdetail = orderdetailService.getOrderDetailByStatusAndId(status,id,org,suc);
+		return new ResponseEntity<OrderDetailEntity>(orderdetail,HttpStatus.OK);
+	}
 	
+	@GetMapping(path="/glodbs/{status}/{org}/{suc}")
+	public ResponseEntity<List<OrderDetailEntity>>  getListOrderDetailByStatus(@PathVariable("status")String status,@PathVariable("org")Integer org,@PathVariable("suc")Integer suc){
+		List<OrderDetailEntity> lista = orderdetailService.getListOrderDetailByStatus(status, org, suc);
+		return new ResponseEntity<List<OrderDetailEntity>>(lista,HttpStatus.OK);
+		
+	}
+	
+	@GetMapping(path="/glodbsa/{org}/{suc}")
+	public ResponseEntity<List<OrderDetailEntity>>  getListOrderDetailAttent(@PathVariable("org")Integer org,@PathVariable("suc")Integer suc){
+		List<OrderDetailEntity> lista = orderdetailService.getListOrderDetailByStatus(Constants.ORDER_DETAIL_STATUS_ATTENT, org, suc);
+		return new ResponseEntity<List<OrderDetailEntity>>(lista,HttpStatus.OK);
+		
+	}
 	
 }

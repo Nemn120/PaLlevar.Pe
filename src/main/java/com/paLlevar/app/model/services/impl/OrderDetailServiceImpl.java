@@ -63,4 +63,16 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 		od.setStatus(Constants.ORDER_STATUS_PROCESS);
 	}
 	}
+
+	@Override
+	public OrderDetailEntity getOrderDetailByStatusAndId(String status, Integer id, Integer organization, Integer sucursal) {
+		OrderDetailEntity orderdetail = repo.getOrderDetailByStatusAndId(status, id, organization, sucursal);
+		return orderdetail;
+	}
+
+	@Override
+	public List<OrderDetailEntity> getListOrderDetailByStatus(String status, Integer org, Integer suc) {
+		List<OrderDetailEntity> odList = repo.getListOrderDetailByStatus(status, org, suc);
+		return odList;
+	}
 }

@@ -64,6 +64,15 @@ public class OrderController {
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
 		
 	}
+	
+	@GetMapping(path="/cho")
+	public ResponseEntity<Object>CheckOrder(@RequestBody OrderEntity or){
+		Boolean verificar= orderService.CheckOrder(or.getId(), or.getOrganizationId(), or.getSucursalId());
+		if(verificar)
+			return new ResponseEntity<Object>(HttpStatus.OK);
+		else 
+			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
+	}
 
 	
 	

@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.paLlevar.app.model.entities.MenuDayEntity;
+import com.paLlevar.app.model.entities.OrderDetailEntity;
 import com.paLlevar.app.model.entities.OrderEntity;
+import com.paLlevar.app.model.repository.OrderDetailRepository;
 import com.paLlevar.app.model.repository.OrderRepository;
 import com.paLlevar.app.model.services.MenuDayService;
 import com.paLlevar.app.model.services.OrderService;
@@ -20,6 +22,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private OrderRepository repo;
+	
+	@Autowired
+	private OrderDetailRepository repo2;
 	
 	@Autowired
 	private MenuDayService menuDayService;
@@ -83,6 +88,20 @@ public class OrderServiceImpl implements OrderService {
 		
 		return odList;
 		
+	}
+
+	@Override
+	public Boolean CheckOrder(Integer oid, Integer orgId, Integer idSucursal) {
+		List<OrderDetailEntity> odList = repo2.getListOrderDetailByOrderId(oid, orgId, idSucursal);
+		Integer checkOrderDetail=0;
+		for(OrderDetailEntity odDetail : odList){
+			if(odDetail.getStatus().equals(Constants.ORDER_DETAIL_STATUS_PENDING))
+				checkOrderDetail++;
+			
+		}
+		if(checkOrderDetail>0)
+			return true;
+		else return false;
 	}
 
 }
