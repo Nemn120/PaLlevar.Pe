@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
@@ -36,7 +37,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	private String scopeRead;
 
 	@Value("${security.jwt.scope-write}")
-	private String scopeWrite = "write";
+	private String scopeWrite;
 
 	@Value("${security.jwt.resource-ids}")
 	private String resourceIds;
@@ -52,12 +53,20 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	
 	@Autowired
 	private BCryptPasswordEncoder bcrypt;	
-
+	//v .resourceIds(resourceIds)
+	@Override
+	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+		
+		security.tokenKeyAccess("permitAll()")
+		.checkTokenAccess("isAuthenticated()")
+		.allowFormAuthenticationForClients();
+	}
+	
 	@Override // crea el token, codifica el secret 
 	public void configure(ClientDetailsServiceConfigurer configurer) throws Exception {
 		configurer.inMemory().withClient(clientId).secret(bcrypt.encode(clientSecret)).authorizedGrantTypes(grantType , "refresh_token")
 		// ambitos de lectura y escritura									tiempo del token
-		.scopes(scopeRead, scopeWrite).resourceIds(resourceIds).accessTokenValiditySeconds(100000)
+		.scopes(scopeRead, scopeWrite).accessTokenValiditySeconds(100000)
 		// si usas token de refresco.,
 		.refreshTokenValiditySeconds(0);		
 	}
