@@ -11,10 +11,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 @Entity
 @Table(name="user_organization")
-public class UserEntity implements Serializable{
+public class UserEntity extends MainEntity implements Serializable {
 	
 	/**
 	 * 
@@ -30,16 +33,13 @@ public class UserEntity implements Serializable{
 	private String password;
 	private Boolean status;
 	private String address;
-	private Integer organizationId;
-	private Integer sucursalId;
 	private String cellPhone;
 	private String username;
 	private String employeeCode;
 	private String documentTypeId;
 	private String documentNumber;
-	
 	@ManyToOne
-	@JoinColumn(name = "profile_id", referencedColumnName = "id")
+	@JoinColumn(name = "profile_id", referencedColumnName = "idProfile")
 	private ProfileEntity profile;
 	
 	public Integer getId() {
@@ -65,18 +65,6 @@ public class UserEntity implements Serializable{
 	}
 	public void setStatus(Boolean status) {
 		this.status = status;
-	}
-	public Integer getOrganizationId() {
-		return organizationId;
-	}
-	public void setOrganizationId(Integer organizationId) {
-		this.organizationId = organizationId;
-	}
-	public Integer getSucursalId() {
-		return sucursalId;
-	}
-	public void setSucursalId(Integer sucursalId) {
-		this.sucursalId = sucursalId;
 	}
 	public ProfileEntity getProfile() {
 		return profile;

@@ -39,12 +39,8 @@ class PaLlevarBackendApplicationTests {
 	@Test
 	void contextLoads() {
 		
-		UserEntity us1 = new UserEntity();
-		
-		us1.setUsername("email3");
-		us1.setPassword("123");
-		UserEntity user2 =userService.registerUserByProfile(us1);
-		assertThat(user2.equals(us1));
+		UserEntity us1 = userService.getUserByUsername("mitocode");
+		us1.setAddress("asdasd");
 		
 		/*CategoryProduct ct = new CategoryP/roduct();
 		ct.setDescription("Ensaladas");
