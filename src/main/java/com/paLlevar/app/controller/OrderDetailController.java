@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.paLlevar.app.model.entities.OrderDetailEntity;
 import com.paLlevar.app.model.entities.OrderEntity;
+import com.paLlevar.app.model.entities.UserEntity;
 import com.paLlevar.app.model.services.OrderDetailService;
 import com.paLlevar.app.util.Constants;
 
@@ -80,5 +81,13 @@ public class OrderDetailController {
 		return new ResponseEntity<List<OrderDetailEntity>>(lista,HttpStatus.OK);
 		
 	}
+	
+	@PostMapping(path="/adm/{org}/{suc}")
+	public ResponseEntity<Object> assignDeliveryMan(@RequestBody OrderDetailEntity order, @RequestBody UserEntity us,@PathVariable("org") Integer org,
+			@PathVariable("suc") Integer suc) {
+		orderdetailService.assignDeliveryMan(order.getId(),us.getId(), suc, org);
+		return new ResponseEntity<Object>(HttpStatus.OK);
+	}
+
 	
 }

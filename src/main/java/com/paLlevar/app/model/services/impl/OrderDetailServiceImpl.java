@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.paLlevar.app.model.entities.OrderDetailEntity;
 import com.paLlevar.app.model.entities.OrderEntity;
+import com.paLlevar.app.model.entities.UserEntity;
 import com.paLlevar.app.model.repository.OrderDetailRepository;
 import com.paLlevar.app.model.services.OrderDetailService;
 import com.paLlevar.app.model.services.OrderService;
@@ -75,4 +76,17 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 		List<OrderDetailEntity> odList = repo.getListOrderDetailByStatus(status, org, suc);
 		return odList;
 	}
+	
+	
+	@Override
+	public void assignDeliveryMan(Integer idOrder, Integer idDeliveryMan, Integer idSuc, Integer idOrg) {
+		
+		OrderDetailEntity or = repo.getOrderDetailById(idOrder,idSuc,idOrg);
+		UserEntity u = repo.getUserbyOrganitationDyIDBySucursal(idDeliveryMan, idSuc, idOrg);
+		or.setUserDelivery(u);
+		repo.save(or);
+		
+	}
 }
+
+

@@ -73,6 +73,47 @@ public class OrderController {
 		else 
 			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
 	}
+	
+	@GetMapping(path="/glody/{org}/{suc}")
+	public ResponseEntity<List<OrderEntity>>  getListOrderDelivery(@PathVariable("org") Integer org,@PathVariable("suc") Integer suc){
+		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS_DELIVERY,org,suc);
+		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);	
+	}
+	
+	@GetMapping(path="/gloc/{org}/{suc}")
+	public ResponseEntity<List<OrderEntity>> getListOrderCancel(@PathVariable("org") Integer org,@PathVariable("suc") Integer suc){
+		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS_CANCEL,org,suc);
+		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
+	}
+
+	@GetMapping(path="/glopr/{org}/{suc}")
+	public ResponseEntity<List<OrderEntity>> getListOrderProcess(@PathVariable("org") Integer org,@PathVariable("suc") Integer suc){
+		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS_PROCESS,org,suc);
+		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
+	}
+	@GetMapping(path="/glof/{org}/{suc}")
+	public ResponseEntity<List<OrderEntity>> getListOrderFinaly(@PathVariable("org") Integer org,@PathVariable("suc") Integer suc){
+		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS_FINALY, org, suc);
+		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
+	}
+	@GetMapping(path="/gloa/{org}/{suc}")
+	public ResponseEntity<List<OrderEntity>> getListOrderAttent(@PathVariable("org") Integer org,@PathVariable("suc") Integer suc){
+		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS_ATTENT, org, suc);
+		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
+	}
+	@GetMapping(path="/gloe/{org}/{suc}")
+	public ResponseEntity<List<OrderEntity>> getListOrderError(@PathVariable("org") Integer org,@PathVariable("suc") Integer suc){
+		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS_ERROR, org, suc);
+		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
+	}
+	
+	@GetMapping(path="/glod/{org}/{suc}")
+	public ResponseEntity<List<OrderEntity>>  getListOrderDelivered(@PathVariable("org") Integer org,@PathVariable("suc") Integer suc){
+		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_DETAIL_STATUS_DELIVERED,org,suc);
+		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
+		
+	}
+
 
 	
 	
