@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 @Entity
 @Table(name="menu_option")
-public class MenuOptionEntity  extends MainEntity  implements Serializable{
+public class MenuOptionEntity2  extends MainEntity  implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
