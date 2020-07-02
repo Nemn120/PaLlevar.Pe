@@ -1,6 +1,7 @@
 package com.paLlevar.app.model.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -46,6 +47,12 @@ public class OrderDetailEntity extends MainEntity  implements Serializable{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "order_id", referencedColumnName = "id")
 	private OrderEntity order;
+	
+	@Column(name="delivery_date")
+	private Date deliveryDate;
+	
+	@Column(name="attend_date")
+	private Date AttendDate;
 	
 	public Integer getId() {
 		return id;
@@ -103,6 +110,23 @@ public class OrderDetailEntity extends MainEntity  implements Serializable{
 	public void setOrder(OrderEntity order) {
 		this.order = order;
 	}
+
+	public Date getDeliveryDate() {
+		return deliveryDate;
+	}
+
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+
+	public Date getAttendDate() {
+		return AttendDate;
+	}
+
+	public void setAttendDate(Date attendDate) {
+		AttendDate = attendDate;
+	}
+	
 	
 	
 

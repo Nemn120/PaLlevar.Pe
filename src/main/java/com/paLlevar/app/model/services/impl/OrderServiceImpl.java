@@ -55,7 +55,7 @@ public class OrderServiceImpl implements OrderService {
 		
 	}
 
-	@Override
+	@Override // actualiza el estado del menu del dia
 	public void saveOrderByOrganizationIdAndSucursalId(OrderEntity order) {
 		
 		MenuDayEntity mday = new MenuDayEntity();// =menuDayService.getMenuDayByDayAndOrganizationIdAndSucursalId(order.sucursalId,order.organizationId);

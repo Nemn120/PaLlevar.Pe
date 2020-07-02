@@ -41,6 +41,9 @@ public class MenuDayProductEntity   extends MainEntity implements Serializable{
 	@Column(name="status", length=20)
 	private String status;
 	
+	@Column(name="type", length=20)
+	private String type;
+	
 	
 	
 	public Integer getId() {
@@ -85,6 +88,12 @@ public class MenuDayProductEntity   extends MainEntity implements Serializable{
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	

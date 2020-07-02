@@ -25,5 +25,16 @@ public class Constants {
 	public static final Integer MASTER_DELIVERY_USER_ROL=4;
 	public static final Integer DELIVERY_USER_ROL=5;
 	
+	public static final String OFFERT_ON_STATUS="1";
+	public static final String OFFERT_OFF_STATUS="2";
+	
+	public static final String TYPE_MENU="1";
+	public static final String TYPE_COMBO="2";
+	public static final String TYPE_OFERT="3";
+	
+	
+	
+	
 
 }
+

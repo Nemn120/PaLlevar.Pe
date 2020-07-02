@@ -1,6 +1,7 @@
 package com.paLlevar.app.model.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -40,6 +41,12 @@ public class OrderEntity    extends MainEntity implements Serializable{
 	@OneToMany(mappedBy = "order" , targetEntity = OrderDetailEntity.class)
 	private List<OrderDetailEntity> orderDetail;
 	
+	@Column(name="delivery_date")
+	private Date deliveryDate;
+	
+	@Column(name="attend_date")
+	private Date attendDate;
+	
 	
 	public List<OrderDetailEntity> getOrderDetail() {
 		return orderDetail;
@@ -78,6 +85,19 @@ public class OrderEntity    extends MainEntity implements Serializable{
 	public void setClientOrder(ClientEntity clientOrder) {
 		this.clientOrder = clientOrder;
 	}
+	public Date getDeliveryDate() {
+		return deliveryDate;
+	}
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+	public Date getAttendDate() {
+		return attendDate;
+	}
+	public void setAttendDate(Date attendDate) {
+		this.attendDate = attendDate;
+	}
+	
 	
 
 }

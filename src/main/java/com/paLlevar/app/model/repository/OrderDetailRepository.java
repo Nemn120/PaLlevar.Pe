@@ -18,11 +18,11 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetailEntity, 
 	public List<OrderDetailEntity> getListOrderDetailByStatus(@Param("status") String status, @Param("organizationId") Integer orgId,@Param("sucursalId") Integer idSucursal );
 	
 	@Query("SELECT o FROM OrderDetailEntity o WHERE o.order.id=:id AND o.organizationId=:organizationId AND o.sucursalId=:sucursalId")
-	public List<OrderDetailEntity> getListOrderDetailByOrderId(@Param("id") Integer oid, @Param("organizationId") Integer orgId,@Param("sucursalId") Integer idSucursal );
+	public List<OrderDetailEntity> getListOrderDetailByOrderId(@Param("id") Integer oid, @Param("organizationId") Integer orgId,@Param("sucursalId") Integer sucursalId );
 
-	@Query("SELECT o FROM OrderDetailEntity o WHERE o.id=:id AND o.organizationId=:organizationId AND o.sucursalId=:sucursalI")
+	@Query("SELECT o FROM OrderDetailEntity o WHERE o.id=:id AND o.organizationId=:organizationId AND o.sucursalId=:sucursalId")
 	public OrderDetailEntity getOrderDetailById(@Param("id") Integer id,@Param("sucursalId") Integer idSucursal, @Param("organizationId") Integer orgId);
 	
-	@Query("SELECT u FROM UserEntity u WHERE u.id=:id AND u.organizationId=:organizationId AND u.sucursalId=:sucursalI")
+	@Query("SELECT u FROM UserEntity u WHERE u.id=:id AND u.organizationId=:organizationId AND u.sucursalId=:sucursalId")
 	public UserEntity getUserbyOrganitationDyIDBySucursal(@Param("id") Integer id,@Param("sucursalId") Integer idSucursal, @Param("organizationId") Integer orgId);
 }

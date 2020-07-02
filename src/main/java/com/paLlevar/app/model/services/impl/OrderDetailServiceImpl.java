@@ -1,5 +1,6 @@
 package com.paLlevar.app.model.services.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,12 +55,24 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 			
 		for(OrderDetailEntity odDetail : od.getOrderDetail()){
 				if(orderDetail.getStatus().equals(odDetail.getStatus())){
+					if(orderDetail.getAttendDate() != null) { // si ya fue atendido
+						orderDetail.setDeliveryDate(new Date());
+					}
+					if(orderDetail.getAttendDate() == null) { // si todavia no ha sido atendido
+						orderDetail.setAttendDate(new Date());
+					}
 					countOdByStatus++;
 				}
 		}
-	
+	// si todos los pedidos han sido atendido o entregados
 	if(countOdByStatus.equals(od.getOrderDetail().size())) {
-		od.setStatus(orderDetail.getStatus());
+		od.setStatus(orderDetail.getStatus()); // actualzia al padre el estado,
+		if(od.getAttendDate() != null) {	// actualiza el padre a entregado
+			od.setDeliveryDate(new Date());
+		}
+		if(od.getAttendDate() == null) { // actualizael padre a atendido
+			od.setAttendDate(new Date());
+		}
 	}else {
 		od.setStatus(Constants.ORDER_STATUS_PROCESS);
 	}
@@ -81,10 +94,10 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	@Override
 	public void assignDeliveryMan(Integer idOrder, Integer idDeliveryMan, Integer idSuc, Integer idOrg) {
 		
-		OrderDetailEntity or = repo.getOrderDetailById(idOrder,idSuc,idOrg);
-		UserEntity u = repo.getUserbyOrganitationDyIDBySucursal(idDeliveryMan, idSuc, idOrg);
-		or.setUserDelivery(u);
-		repo.save(or);
+		///OrderDetailEntity or = repo.getOrderDetailById(idOrder,idSuc,idOrg);
+	//	UserEntity u = repo.getUserbyOrganitationDyIDBySucursal(idDeliveryMan, idSuc, idOrg);
+		//or.setUserDelivery(u);
+		//repo.save(or);
 		
 	}
 }

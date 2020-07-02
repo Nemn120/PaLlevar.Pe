@@ -20,7 +20,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 @Component
 public class RepositoryAudiTracking {
 	
-	private static final Logger log = LogManager.getLogger();
+	/*private static final Logger log = LogManager.getLogger();
 	
 	@Pointcut("execution(* com.paLLevar.app.model.repository..*.save*(java.lang.Object+,..))" + "&& args(entity,..)")
 	public void saveMethodExecution(Object entity) {
@@ -55,5 +55,6 @@ public class RepositoryAudiTracking {
 		}
 		return ob;
 	}
+	*/
 
 }
