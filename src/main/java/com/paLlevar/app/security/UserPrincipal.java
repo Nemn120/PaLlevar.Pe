@@ -28,11 +28,13 @@ public class UserPrincipal implements UserDetails, Serializable{
 	private Integer organizationId;
 	private Integer sucursalId;
 	
-	public UserPrincipal(int id, String username, String password, Collection<? extends GrantedAuthority> authorities) {
+	public UserPrincipal(int id, String username, String password, Integer organizationId, Integer sucursalId, Collection<? extends GrantedAuthority> authorities) {
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.authorities = authorities;
+		this.organizationId = organizationId;
+		this.sucursalId = sucursalId;
 	}
 	
 	public static UserPrincipal create(UserEntity user) {
@@ -41,7 +43,7 @@ public class UserPrincipal implements UserDetails, Serializable{
 		List<GrantedAuthority> authorities = profiles.stream().map(profile ->
 			new SimpleGrantedAuthority(profile.getName())).collect(Collectors.toList());
 		
-		return new UserPrincipal(user.getId(), user.getUsername(), user.getPassword(), authorities);	
+		return new UserPrincipal(user.getId(), user.getUsername(), user.getPassword(), user.getOrganizationId(), user.getSucursalId(),authorities);	
 		
 	}
 

@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="menu_product_day")
 public class MenuDayProductEntity   extends MainEntity implements Serializable{
@@ -25,10 +27,11 @@ public class MenuDayProductEntity   extends MainEntity implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id", referencedColumnName = "id")
 	private ProductEntity product;
-	
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "menu_day_id", referencedColumnName = "id")
 	private MenuDayEntity menuDay;

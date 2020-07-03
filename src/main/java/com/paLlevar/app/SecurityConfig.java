@@ -21,6 +21,8 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
+import com.paLlevar.app.security.CustomUserDetailsService;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -37,6 +39,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired	
 	private UserDetailsService userDetailsService;
+	
+	@Autowired	
+	private CustomUserDetailsService customDetailService; ;
 		
 	@Autowired
 	private DataSource dataSource;
@@ -60,7 +65,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	public void configure(AuthenticationManagerBuilder auth) throws Exception{
 		// aqui esta todos los datos del usuario que inicia sesion,
 
-		auth.userDetailsService(userDetailsService).passwordEncoder(bcrypt);
+		//auth.userDetailsService(userDetailsService).passwordEncoder(bcrypt);
+		auth.userDetailsService(customDetailService).passwordEncoder(bcrypt);
 	}
 	
 	@Override

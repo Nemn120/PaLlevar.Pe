@@ -51,16 +51,16 @@ public class OrderController {
 		return null;
 	}
 	
-	@GetMapping(path="/glop")
-	public ResponseEntity<List<OrderEntity>>  getListOrderPendding(){
-		List<OrderEntity> lista = null; //= orderService.getListOrderByStatus(Constants.ORDER_STATUS__PENDING, org, Integer);
+	@PostMapping(path="/glop")
+	public ResponseEntity<List<OrderEntity>>  getListOrderPendding(@RequestBody OrderEntity or){
+		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS__PENDING,or);
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
 		
 	}
 	
-	@GetMapping(path="/glod")
-	public ResponseEntity<List<OrderEntity>>  getListOrderDelivery(){
-		List<OrderEntity> lista = null; //orderService.getListOrderByStatus(Constants.ORDER_DETAIL_STATUS_DELIVERED, org, Integer);
+	@PostMapping(path="/glod")
+	public ResponseEntity<List<OrderEntity>>  getListOrderDelivery(@RequestBody OrderEntity or){
+		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS_DELIVERY,or);
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
 		
 	}
@@ -74,13 +74,13 @@ public class OrderController {
 			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
 	}
 	
-	@GetMapping(path="/glody/{org}/{suc}")
+	/*@GetMapping(path="/glody/{org}/{suc}")
 	public ResponseEntity<List<OrderEntity>>  getListOrderDelivery(@PathVariable("org") Integer org,@PathVariable("suc") Integer suc){
 		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS_DELIVERY,org,suc);
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);	
 	}
 	
-	@GetMapping(path="/gloc/{org}/{suc}")
+	/*@GetMapping(path="/gloc/{org}/{suc}")
 	public ResponseEntity<List<OrderEntity>> getListOrderCancel(@PathVariable("org") Integer org,@PathVariable("suc") Integer suc){
 		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS_CANCEL,org,suc);
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
@@ -113,6 +113,7 @@ public class OrderController {
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
 		
 	}
+	*/
 
 
 	
