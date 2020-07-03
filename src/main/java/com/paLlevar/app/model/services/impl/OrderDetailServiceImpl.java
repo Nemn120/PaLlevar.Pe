@@ -90,6 +90,10 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 		return odList;
 	}
 	
+	@Override
+	public List<OrderDetailEntity> getListOrderDetailByOrderId(Integer oid, Integer orgId, Integer sucursalId) {
+		return repo.getListOrderDetailByOrderId(oid, orgId, sucursalId); 
+	}
 	
 	@Override
 	public void assignDeliveryMan(Integer idOrder, Integer idDeliveryMan, Integer idSuc, Integer idOrg) {
@@ -100,6 +104,8 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 		//repo.save(or);
 		
 	}
+
+
 }
 
 
