@@ -61,19 +61,6 @@ public class OrderDetailController {
 		return null;
 	}
 	
-	/*@PostMapping(path="/godbsi/{status}")
-	public ResponseEntity<OrderDetailEntity> getOrderDetailByStatusAndId(@RequestBody OrderDetailEntity order, @PathVariable("status")String status){
-		OrderDetailEntity orderdetail = new OrderDetailEntity();
-		orderdetail = orderdetailService.getOrderDetailByStatusAndId(status,order.getId(),order.getOrganizationId(),order.getSucursalId());
-		return new ResponseEntity<OrderDetailEntity>(orderdetail,HttpStatus.OK);
-	}*/
-	
-	/*@PostMapping(path="/glodbs/{status}/{org}/{suc}")
-	public ResponseEntity<List<OrderDetailEntity>>  getListOrderDetailByStatus(@PathVariable("status")String status,@PathVariable("org")Integer org,@PathVariable("suc")Integer suc){
-		List<OrderDetailEntity> lista = orderdetailService.getListOrderDetailByStatus(status, org, suc);
-		return new ResponseEntity<List<OrderDetailEntity>>(lista,HttpStatus.OK);
-		
-	}*/
 	
 	@PostMapping(path="/glodbo")
 	public ResponseEntity<List<OrderDetailEntity>>  getListOrderDetailByOrderId(@RequestBody OrderEntity order){
@@ -82,10 +69,9 @@ public class OrderDetailController {
 		
 	}
 	
-	@PostMapping(path="/adm/{org}/{suc}")
-	public ResponseEntity<Object> assignDeliveryMan(@RequestBody OrderDetailEntity order, @RequestBody UserEntity us,@PathVariable("org") Integer org,
-			@PathVariable("suc") Integer suc) {
-		orderdetailService.assignDeliveryMan(order.getId(),us.getId(), suc, org);
+	@PostMapping(path="/admo")
+	public ResponseEntity<Object> assignDeliveryManToOrder(@RequestBody OrderDetailEntity order) {
+		orderdetailService.save(order);
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
 

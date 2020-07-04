@@ -22,7 +22,7 @@ public class OrderTest {
 		od.setOrganizationId(1);
 		od.setSucursalId(1);
 		
-		List<OrderEntity> orderList = orderService.getListOrderByStatus(Constants.ORDER_STATUS__PENDING,od.getOrganizationId(),od.getSucursalId());
+		List<OrderEntity> orderList = orderService.getListOrderByStatus(Constants.ORDER_STATUS__PENDING,od);
 		
 		orderList.forEach(x -> System.out.println(x));
 		

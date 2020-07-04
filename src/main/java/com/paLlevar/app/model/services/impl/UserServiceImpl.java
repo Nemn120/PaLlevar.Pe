@@ -68,6 +68,11 @@ public class UserServiceImpl implements UserService {
 		return repo.findOneByUsername(username);
 	}
 
+	@Override
+	public List<UserEntity> getUserListByProfileANDStatus(UserEntity user) {
+		return repo.getUserListByStatusAndProfileID(user.getStatus(),user.getSucursalId(),user.getOrganizationId(),user.getProfile().getIdProfile());
+	}
+
 	
 	
 	
