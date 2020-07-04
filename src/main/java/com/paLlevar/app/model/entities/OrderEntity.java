@@ -38,6 +38,10 @@ public class OrderEntity    extends MainEntity implements Serializable{
 	@JoinColumn(name = "client_order_id", referencedColumnName = "id")
 	private ClientEntity clientOrder;
 	
+	@ManyToOne
+	@JoinColumn(name = "user_order_id", referencedColumnName = "id")
+	private UserEntity userOrder;
+	
 	@OneToMany(mappedBy = "order" , targetEntity = OrderDetailEntity.class)
 	private List<OrderDetailEntity> orderDetail;
 	
@@ -96,6 +100,12 @@ public class OrderEntity    extends MainEntity implements Serializable{
 	}
 	public void setAttendDate(Date attendDate) {
 		this.attendDate = attendDate;
+	}
+	public UserEntity getUserOrder() {
+		return userOrder;
+	}
+	public void setUserOrder(UserEntity userOrder) {
+		this.userOrder = userOrder;
 	}
 	
 	

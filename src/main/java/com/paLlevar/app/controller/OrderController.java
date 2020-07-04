@@ -1,5 +1,6 @@
 package com.paLlevar.app.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,16 @@ public class OrderController {
 	public void deletedOrder(@PathVariable("id")Integer id) {
 		orderService.deleteById(id);
 	}
+	
+	@GetMapping(value="/globu/{id}")
+	public ResponseEntity<List<OrderEntity>>  getListOrderByUserIdAndNotStatus(@PathVariable("id")Integer id){
+		List<String> statusList = Arrays.asList(Constants.ORDER_DETAIL_STATUS_CANCEL,Constants.ORDER_STATUS_DELIVERED);
+		List<OrderEntity> lista = orderService.getListOrderByNotStatusAndUserId(statusList, id);
+		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
+		
+	}
+	
+	
 	
 	@PostMapping(path="/sobos")
 	public OrderEntity saveNewOrderByOrganizationIdAndSucursalId(@RequestBody OrderEntity or) {

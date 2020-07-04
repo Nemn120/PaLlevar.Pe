@@ -104,4 +104,9 @@ public class OrderServiceImpl implements OrderService {
 		else return false;
 	}
 
+	@Override
+	public List<OrderEntity> getListOrderByNotStatusAndUserId(List<String> status, Integer userId) {
+		return repo.getListOrderByNotStatusAndUserId(status, userId);
+	}
+
 }
