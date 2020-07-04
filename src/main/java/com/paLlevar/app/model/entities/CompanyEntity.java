@@ -1,12 +1,15 @@
 package com.paLlevar.app.model.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,6 +25,13 @@ public class CompanyEntity implements Serializable {
 	private String nombre;
 	@Column(name="ruc", length=11)
 	private String ruc;
+	@Column(name="create_date")
+	private Date createDate;
+	
+	@ManyToOne
+	@JoinColumn(name = "user_admin_id", referencedColumnName = "id")
+	private UserEntity userAdmin;
+	
 	
 	public Integer getId() {
 		return id;
@@ -41,6 +51,19 @@ public class CompanyEntity implements Serializable {
 	public void setRuc(String ruc) {
 		this.ruc = ruc;
 	}
+	public Date getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+	public UserEntity getUserAdmin() {
+		return userAdmin;
+	}
+	public void setUserAdmin(UserEntity userAdmin) {
+		this.userAdmin = userAdmin;
+	}
+	
 	
 	
 

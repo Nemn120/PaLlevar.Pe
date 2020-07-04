@@ -14,9 +14,6 @@ public class ProductServiceImpl implements ProductService{
 
 	@Autowired
 	private ProductRepository repo;
-
-	@Autowired
-	//private UserService userService;
 	
 	@Override
 	public List<ProductEntity> getAll() {
@@ -39,11 +36,13 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public List<ProductEntity> getAllProductByCompanyIdAndSucursalId(Integer companyId, Integer sucursalId) {
-		//List<Product> p = repo.getAllProductByCompanyIdAndSucursalId(companyId,sucursalId);
-		//List<User> u =  userService.getUserByCriterial(Criterio criterio);
-		return null;
-		
+	public List<ProductEntity> getAllProductByCompanyIdAndSucursalId(ProductEntity pro) {
+		return  repo.findByOrganizationIdAndSucursalId(pro.getSucursalId(),pro.getOrganizationId());
+	}
+
+	@Override
+	public List<ProductEntity> getAllProductByCompanyId(Integer companyId) {
+		return repo.findByOrganizationId(companyId);
 	}
 	
 }

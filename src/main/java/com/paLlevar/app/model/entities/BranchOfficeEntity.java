@@ -1,6 +1,7 @@
 package com.paLlevar.app.model.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,6 +26,9 @@ public class BranchOfficeEntity    implements Serializable{
 	private String direccion;
 	@Column(name="phone", length=20)
 	private String phone;
+	
+	@Column(name="create_date")
+	private Date createDate;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_admin_id", referencedColumnName = "id")
@@ -80,5 +84,14 @@ public class BranchOfficeEntity    implements Serializable{
 	public void setCompany(CompanyEntity company) {
 		this.company = company;
 	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+	
 	
 }

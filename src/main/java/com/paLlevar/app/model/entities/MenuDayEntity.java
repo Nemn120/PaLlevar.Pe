@@ -33,6 +33,8 @@ public class MenuDayEntity  extends MainEntity implements Serializable {
 	@OneToMany(mappedBy = "menuDay" , targetEntity = MenuDayProductEntity.class)
 	private List<MenuDayProductEntity> menuDayProduct;
 	
+	@Column(name="type", length=20)
+	private String type;
 	
 	public List<MenuDayProductEntity> getMenuDayProduct() {
 		return menuDayProduct;
@@ -70,6 +72,12 @@ public class MenuDayEntity  extends MainEntity implements Serializable {
 	}
 	public void setDay(String day) {
 		this.day = day;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	
