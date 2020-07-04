@@ -1,6 +1,8 @@
 package com.paLlevar.app.model.services;
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
+
 import com.paLlevar.app.model.entities.OrderDetailEntity;
 import com.paLlevar.app.model.entities.OrderEntity;
 
@@ -12,5 +14,7 @@ public interface OrderDetailService extends GenericCRUD<OrderDetailEntity, Integ
 	public List<OrderDetailEntity> getListOrderDetailByStatus(String status, Integer org, Integer suc);
 	
 	public void assignDeliveryMan(Integer idOrder, Integer idDeliveryMan, Integer idSuc, Integer idOrg);
+	
+	public List<OrderDetailEntity> getListOrderDetailByOrderId(Integer oid, Integer orgId, Integer sucursalId );
 	
 }

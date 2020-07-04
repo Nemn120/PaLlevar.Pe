@@ -53,19 +53,19 @@ public class OrderController {
 	
 	@PostMapping(path="/glop")
 	public ResponseEntity<List<OrderEntity>>  getListOrderPendding(@RequestBody OrderEntity or){
-		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS__PENDING,or);
+		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS__PENDING,or.getOrganizationId(),or.getSucursalId());
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
 		
 	}
 	
 	@PostMapping(path="/glod")
 	public ResponseEntity<List<OrderEntity>>  getListOrderDelivery(@RequestBody OrderEntity or){
-		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS_DELIVERY,or);
+		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS_DELIVERY,or.getOrganizationId(),or.getSucursalId());
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
 		
 	}
 	
-	@GetMapping(path="/cho")
+	@PostMapping(path="/cho")
 	public ResponseEntity<Object>CheckOrder(@RequestBody OrderEntity or){
 		Boolean verificar= orderService.CheckOrder(or.getId(), or.getOrganizationId(), or.getSucursalId());
 		if(verificar)
@@ -74,6 +74,12 @@ public class OrderController {
 			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
 	}
 	
+
+	@PostMapping(path="/gloa")
+	public ResponseEntity<List<OrderEntity>> getListOrderAttent(@RequestBody OrderEntity or){
+		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS_ATTENT, or.getOrganizationId(), or.getSucursalId());
+		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
+	}
 	/*@GetMapping(path="/glody/{org}/{suc}")
 	public ResponseEntity<List<OrderEntity>>  getListOrderDelivery(@PathVariable("org") Integer org,@PathVariable("suc") Integer suc){
 		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS_DELIVERY,org,suc);
@@ -94,11 +100,6 @@ public class OrderController {
 	@GetMapping(path="/glof/{org}/{suc}")
 	public ResponseEntity<List<OrderEntity>> getListOrderFinaly(@PathVariable("org") Integer org,@PathVariable("suc") Integer suc){
 		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS_FINALY, org, suc);
-		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
-	}
-	@GetMapping(path="/gloa/{org}/{suc}")
-	public ResponseEntity<List<OrderEntity>> getListOrderAttent(@PathVariable("org") Integer org,@PathVariable("suc") Integer suc){
-		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS_ATTENT, org, suc);
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
 	}
 	@GetMapping(path="/gloe/{org}/{suc}")

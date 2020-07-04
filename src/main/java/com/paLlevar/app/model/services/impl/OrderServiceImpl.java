@@ -13,6 +13,7 @@ import com.paLlevar.app.model.entities.OrderEntity;
 import com.paLlevar.app.model.repository.OrderDetailRepository;
 import com.paLlevar.app.model.repository.OrderRepository;
 import com.paLlevar.app.model.services.MenuDayService;
+import com.paLlevar.app.model.services.OrderDetailService;
 import com.paLlevar.app.model.services.OrderService;
 import com.paLlevar.app.util.Constants;
 
@@ -24,7 +25,7 @@ public class OrderServiceImpl implements OrderService {
 	private OrderRepository repo;
 	
 	@Autowired
-	private OrderDetailRepository repo2;
+	private OrderDetailService orderDetailService;
 	
 	@Autowired
 	private MenuDayService menuDayService;
@@ -83,15 +84,15 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderEntity> getListOrderByStatus(String status, OrderEntity order) {
-		List<OrderEntity> odList = repo.getListOrderByStatus(status, order.getOrganizationId(),order.getSucursalId());
+	public List<OrderEntity> getListOrderByStatus(String status, Integer org, Integer suc) {
+		List<OrderEntity> odList = repo.getListOrderByStatus(status, org, suc);
 		return odList;
 		
 	}
 
 	@Override
 	public Boolean CheckOrder(Integer oid, Integer orgId, Integer idSucursal) {
-		List<OrderDetailEntity> odList = repo2.getListOrderDetailByOrderId(oid, orgId, idSucursal);
+		List<OrderDetailEntity> odList = orderDetailService.getListOrderDetailByOrderId(oid, orgId, idSucursal);
 		Integer checkOrderDetail=0;
 		for(OrderDetailEntity odDetail : odList){
 			if(odDetail.getStatus().equals(Constants.ORDER_DETAIL_STATUS_PENDING))
