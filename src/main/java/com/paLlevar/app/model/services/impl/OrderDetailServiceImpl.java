@@ -10,6 +10,7 @@ import com.paLlevar.app.model.entities.OrderDetailEntity;
 import com.paLlevar.app.model.entities.OrderEntity;
 import com.paLlevar.app.model.entities.UserEntity;
 import com.paLlevar.app.model.repository.OrderDetailRepository;
+import com.paLlevar.app.model.repository.UserRepository;
 import com.paLlevar.app.model.services.OrderDetailService;
 import com.paLlevar.app.model.services.OrderService;
 import com.paLlevar.app.util.Constants;
@@ -19,6 +20,9 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	
 	@Autowired
 	private OrderDetailRepository repo;
+	
+	@Autowired
+	private UserRepository userrepo;
 	
 	@Autowired
 	private OrderService orderService;
@@ -94,17 +98,14 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	public List<OrderDetailEntity> getListOrderDetailByOrderId(Integer oid, Integer orgId, Integer sucursalId) {
 		return repo.getListOrderDetailByOrderId(oid, orgId, sucursalId); 
 	}
-	
+	/*
 	@Override
 	public void assignDeliveryMan(Integer idOrder, Integer idDeliveryMan, Integer idSuc, Integer idOrg) {
-		
-		///OrderDetailEntity or = repo.getOrderDetailById(idOrder,idSuc,idOrg);
-	//	UserEntity u = repo.getUserbyOrganitationDyIDBySucursal(idDeliveryMan, idSuc, idOrg);
-		//or.setUserDelivery(u);
-		//repo.save(or);
-		
-	}
-
+		OrderDetailEntity or = repo.getOrderDetailById(idOrder,idSuc,idOrg);
+		UserEntity u = userrepo.getUserbyOrganitationDyIDBySucursal(idDeliveryMan, idSuc, idOrg);
+		or.setUserDelivery(u);
+		repo.save(or);
+	}*/
 
 }
 

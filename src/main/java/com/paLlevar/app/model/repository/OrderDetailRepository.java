@@ -23,6 +23,5 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetailEntity, 
 	@Query("SELECT o FROM OrderDetailEntity o WHERE o.id=:id AND o.organizationId=:organizationId AND o.sucursalId=:sucursalId")
 	public OrderDetailEntity getOrderDetailById(@Param("id") Integer id,@Param("sucursalId") Integer idSucursal, @Param("organizationId") Integer orgId);
 	
-	@Query("SELECT u FROM UserEntity u WHERE u.id=:id AND u.organizationId=:organizationId AND u.sucursalId=:sucursalId")
-	public UserEntity getUserbyOrganitationDyIDBySucursal(@Param("id") Integer id,@Param("sucursalId") Integer idSucursal, @Param("organizationId") Integer orgId);
+	
 }

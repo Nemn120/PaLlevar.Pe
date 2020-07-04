@@ -31,7 +31,7 @@ public class UserEntity extends MainEntity implements Serializable {
 	private String nombre;
 	@Column(name="password",length=100)
 	private String password;
-	private Boolean status;
+	private String status;
 	private String address;
 	private String cellPhone;
 	private String username;
@@ -60,10 +60,11 @@ public class UserEntity extends MainEntity implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Boolean getStatus() {
+	
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(Boolean status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	public ProfileEntity getProfile() {

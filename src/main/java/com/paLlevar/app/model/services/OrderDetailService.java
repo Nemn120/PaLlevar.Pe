@@ -13,7 +13,7 @@ public interface OrderDetailService extends GenericCRUD<OrderDetailEntity, Integ
 
 	public List<OrderDetailEntity> getListOrderDetailByStatus(String status, Integer org, Integer suc);
 	
-	public void assignDeliveryMan(Integer idOrder, Integer idDeliveryMan, Integer idSuc, Integer idOrg);
+	/*public void assignDeliveryMan(Integer idOrder, Integer idDeliveryMan, Integer idSuc, Integer idOrg);*/
 	
 	public List<OrderDetailEntity> getListOrderDetailByOrderId(Integer oid, Integer orgId, Integer sucursalId );
 	

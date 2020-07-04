@@ -80,6 +80,12 @@ public class UserController {
 		return new ResponseEntity<Object>(HttpStatus.CREATED);
 	}
 	
+	@PostMapping(path="/guldm")
+	public ResponseEntity<List<UserEntity>> getListUserDeliveryMan(@RequestBody UserEntity user){
+		List<UserEntity> lista=userService.getUserListByProfileANDStatus(user);
+		return new ResponseEntity<List<UserEntity>>(lista,HttpStatus.OK);
+	}
+	
 	
 	
 }
