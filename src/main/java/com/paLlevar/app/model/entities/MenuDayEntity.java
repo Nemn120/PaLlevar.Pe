@@ -1,6 +1,7 @@
 package com.paLlevar.app.model.entities;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="menu_day")
@@ -26,7 +28,11 @@ public class MenuDayEntity  extends MainEntity implements Serializable {
 	@Column(name="description", length=200)
 	public String description;
 	
-	public Date date;
+	@Column(name = "local_date_time", columnDefinition = "TIMESTAMP")
+	private LocalDateTime localDateTime;
+	
+	@Transient
+	private LocalDateTime localDateTimeFinal;
 	@Column(name="day", length=50)
 	public String day;
 	
@@ -34,8 +40,22 @@ public class MenuDayEntity  extends MainEntity implements Serializable {
 	private List<MenuDayProductEntity> menuDayProduct;
 	
 	@Column(name="type", length=20)
-	private String type;
+	private String type; // combo , paquete, menu
 	
+	@Column(name="total",columnDefinition = "decimal(5,2)")
+	private Double total;
+	
+	@Column(name="count_used_menu")
+	private Integer countUsedMenu;
+	
+	private String status;
+	
+	public LocalDateTime getLocalDateTimeFinal() {
+		return localDateTimeFinal;
+	}
+	public void setLocalDateTimeFinal(LocalDateTime localDateTimeFinal) {
+		this.localDateTimeFinal = localDateTimeFinal;
+	}
 	public List<MenuDayProductEntity> getMenuDayProduct() {
 		return menuDayProduct;
 	}
@@ -61,11 +81,12 @@ public class MenuDayEntity  extends MainEntity implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Date getDate() {
-		return date;
+	
+	public LocalDateTime getLocalDateTime() {
+		return localDateTime;
 	}
-	public void setDate(Date date) {
-		this.date = date;
+	public void setLocalDateTime(LocalDateTime localDateTime) {
+		this.localDateTime = localDateTime;
 	}
 	public String getDay() {
 		return day;
@@ -79,6 +100,28 @@ public class MenuDayEntity  extends MainEntity implements Serializable {
 	public void setType(String type) {
 		this.type = type;
 	}
+	public Integer getCountUsedMenu() {
+		return countUsedMenu;
+	}
+	public void setCountUsedMenu(Integer countUsedMenu) {
+		this.countUsedMenu = countUsedMenu;
+	}
+	public Double getTotal() {
+		return total;
+	}
+	public void setTotal(Double total) {
+		this.total = total;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	
+	
+	
 	
 	
 	

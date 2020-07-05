@@ -27,8 +27,7 @@ public class MenuDayProductEntity   extends MainEntity implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "product_id", referencedColumnName = "id")
 	private ProductEntity product;
 	@JsonIgnore
@@ -42,12 +41,10 @@ public class MenuDayProductEntity   extends MainEntity implements Serializable{
 	private Integer quantity;
 	private Integer available;
 	@Column(name="status", length=20)
-	private String status;
+	private String status; // disponible , no disponible
 	
 	@Column(name="type", length=20)
-	private String type;
-	
-	
+	private String type; 	// combo ,men , paquete
 	
 	public Integer getId() {
 		return id;

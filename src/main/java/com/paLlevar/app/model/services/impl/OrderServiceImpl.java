@@ -62,12 +62,12 @@ public class OrderServiceImpl implements OrderService {
 		MenuDayEntity mday = new MenuDayEntity();// =menuDayService.getMenuDayByDayAndOrganizationIdAndSucursalId(order.sucursalId,order.organizationId);
 		mday.getMenuDayProduct().forEach(menuProduct->{
 			order.getOrderDetail().forEach(orderDetail ->{
-
 				
 				if(menuProduct.getProduct().getId() == orderDetail.getProduct().getId()) {
 					// HIJO
 					menuProduct.setAvailable(menuProduct.getAvailable()-1);
 					orderDetail.setStatus(Constants.ORDER_DETAIL_STATUS_PENDING);
+					menuDayService.save(mday);
 					if(menuProduct.getAvailable().equals(0)) {
 						menuProduct.setStatus(Constants.MENUDAY_STATUS_NOT_AVAILABLE);
 					}
@@ -76,16 +76,19 @@ public class OrderServiceImpl implements OrderService {
 				
 			});
 		});
-		Date fechaActual = new Date();
-		// PADRE,
+		order.setCreateDate(new Date());
 		order.setStatus(Constants.ORDER_STATUS__PENDING);
-		menuDayService.save(mday);
 		repo.save(order);
 	}
 
 	@Override
 	public List<OrderEntity> getListOrderByStatus(String status, OrderEntity order) {
 		List<OrderEntity> odList = repo.getListOrderByStatus(status, order.getSucursalId(),order.getOrganizationId());
+		for(OrderEntity od :odList) {
+			for(OrderDetailEntity odDetail : od.getOrderDetail()) {
+				odDetail.setOrderId(od.getId());
+			}
+		}	
 		return odList;	
 	}
 
@@ -98,7 +101,7 @@ public class OrderServiceImpl implements OrderService {
 				checkOrderDetail++;
 			
 		}
-		if(checkOrderDetail>0)
+		if(checkOrderDetail>0 && checkOrderDetail.equals(odList.size()))
 			return true;
 		else return false;
 	}

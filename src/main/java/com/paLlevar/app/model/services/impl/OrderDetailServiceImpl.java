@@ -49,6 +49,8 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
 	@Override
 	public void saveAttendOrderDetail(OrderDetailEntity orderDetail) {
+		orderDetail.setOrder(new OrderEntity());
+		orderDetail.getOrder().setId(orderDetail.getOrderId());
 		repo.save(orderDetail);
 		updatedListOrderDetail(orderDetail);
 	}

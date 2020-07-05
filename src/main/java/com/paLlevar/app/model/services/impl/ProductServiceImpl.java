@@ -37,7 +37,7 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	public List<ProductEntity> getAllProductByCompanyIdAndSucursalId(ProductEntity pro) {
-		return  repo.findByOrganizationIdAndSucursalId(pro.getSucursalId(),pro.getOrganizationId());
+		return  repo.findByOrganizationIdAndSucursalId(pro.getOrganizationId(),pro.getSucursalId());
 	}
 
 	@Override

@@ -18,7 +18,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer>{
 	
 	
 	@Query("SELECT u FROM UserEntity u WHERE u.status=:status AND u.organizationId=:organizationId AND u.sucursalId=:sucursalId AND u.profile.idProfile=:idProfile")
-	public List<UserEntity> getUserListByStatusAndProfileID(@Param("status") String statusU,@Param("sucursalId") Integer idSucursal, 
+	public List<UserEntity> getUserListByStatusAndProfileID(@Param("status") String status,@Param("sucursalId") Integer idSucursal, 
 			@Param("organizationId") Integer orgId, @Param("idProfile") Integer idperfil);
 	
 }

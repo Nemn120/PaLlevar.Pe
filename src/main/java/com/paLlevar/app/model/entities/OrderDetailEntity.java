@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -30,7 +31,7 @@ public class OrderDetailEntity extends MainEntity  implements Serializable{
 	public Integer id;
 	
 	@Column(name="status", length=20)
-	public String status;
+	public String status; // atendido, entregado , en camino 
 
 	@Column(name = "price", columnDefinition = "decimal(5,2)")
 	private Double price;
@@ -45,10 +46,14 @@ public class OrderDetailEntity extends MainEntity  implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "product_id", referencedColumnName = "id")
 	private ProductEntity product;
+	
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "order_id", referencedColumnName = "id")
 	private OrderEntity order;
+	
+	@Transient	// no se mapea a la bd
+	private Integer orderId;
 	
 	@Column(name="delivery_date")
 	private Date deliveryDate;
@@ -56,6 +61,14 @@ public class OrderDetailEntity extends MainEntity  implements Serializable{
 	@Column(name="attend_date")
 	private Date AttendDate;
 	
+	public Integer getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(Integer orderId) {
+		this.orderId = orderId;
+	}
+
 	public Integer getId() {
 		return id;
 	}

@@ -27,7 +27,7 @@ public class OrderEntity    extends MainEntity implements Serializable{
 	public Integer id;
 	
 	@Column(name="status", length=200)
-	public String status;
+	public String status; // en proceso, entregado, 
 
 	@Column(name = "total", columnDefinition = "decimal(5,2)")
 	private Double total;
