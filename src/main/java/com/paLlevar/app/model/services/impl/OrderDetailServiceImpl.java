@@ -13,6 +13,7 @@ import com.paLlevar.app.model.repository.OrderDetailRepository;
 import com.paLlevar.app.model.repository.UserRepository;
 import com.paLlevar.app.model.services.OrderDetailService;
 import com.paLlevar.app.model.services.OrderService;
+import com.paLlevar.app.model.services.UserService;
 import com.paLlevar.app.util.Constants;
 
 @Service
@@ -22,7 +23,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	private OrderDetailRepository repo;
 	
 	@Autowired
-	private UserRepository userrepo;
+	private UserService userService;
 	
 	@Autowired
 	private OrderService orderService;
@@ -51,30 +52,35 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	public void saveAttendOrderDetail(OrderDetailEntity orderDetail) {
 		orderDetail.setOrder(new OrderEntity());
 		orderDetail.getOrder().setId(orderDetail.getOrderId());
-		repo.save(orderDetail);
+		//repo.save(orderDetail);
 		updatedListOrderDetail(orderDetail);
 	}
 	
 	private  void updatedListOrderDetail(OrderDetailEntity orderDetail) {
-		Integer countOdByStatus=0;
-		OrderEntity od = orderService.getOneById(orderDetail.getId());
+		Integer countOdByStatus=1;
+		OrderEntity od = orderService.getOneById(orderDetail.getOrderId());
 			
-		for(OrderDetailEntity odDetail : od.getOrderDetail()){
-				if(orderDetail.getStatus().equals(odDetail.getStatus())){
-					if(orderDetail.getAttendDate() != null) { // si ya fue atendido
-						orderDetail.setDeliveryDate(new Date());
-					}
-					if(orderDetail.getAttendDate() == null) { // si todavia no ha sido atendido
-						orderDetail.setAttendDate(new Date());
-					}
-					countOdByStatus++;
-				}
+		for (OrderDetailEntity odDetail : od.getOrderDetail()) {
+			if (orderDetail.getStatus().equals(odDetail.getStatus())) {//
+				countOdByStatus++;
+			}
+			if (orderDetail.getAttendDate() != null) { // si ya fue atendido
+				orderDetail.setDeliveryDate(new Date());
+				
+			}
+			if (orderDetail.getAttendDate() == null) { // si todavia no ha sido atendido
+				orderDetail.setAttendDate(new Date());
+			}
 		}
+		repo.save(orderDetail);
 	// si todos los pedidos han sido atendido o entregados
 	if(countOdByStatus.equals(od.getOrderDetail().size())) {
 		od.setStatus(orderDetail.getStatus()); // actualzia al padre el estado,
 		if(od.getAttendDate() != null) {	// actualiza el padre a entregado
 			od.setDeliveryDate(new Date());
+			UserEntity userDelivery = userService.getOneById(orderDetail.getUserDelivery().getId());
+			userDelivery.setStatus(Constants.DELIVERY_MANY_STATUS_OCUPADO);
+			userService.save(userDelivery);
 		}
 		if(od.getAttendDate() == null) { // actualizael padre a atendido
 			od.setAttendDate(new Date());
@@ -82,6 +88,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	}else {
 		od.setStatus(Constants.ORDER_STATUS_PROCESS);
 	}
+	orderService.save(od);
 	}
 
 	@Override

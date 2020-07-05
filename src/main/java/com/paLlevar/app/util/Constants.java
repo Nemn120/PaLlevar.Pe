@@ -35,6 +35,10 @@ public class Constants {
 	public static final String TYPE_OFERT="3";
 	
 	
+	public static final String DELIVERY_MAN_STATUS_NOT_DISPONIBLE="1";
+	public static final String DELIVERY_MAN_STATUS_DISPONIBLE="2";
+	public static final String DELIVERY_MANY_STATUS_OCUPADO="3";
+	
 	
 	
 
