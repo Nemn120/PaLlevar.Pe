@@ -5,8 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.paLlevar.app.model.entities.ProductEntity;
 import com.paLlevar.app.model.services.ProductService;
-import com.paLlevar.app.security.UserPrincipal;
 
 @RestController
 @RequestMapping("/product")
@@ -29,20 +26,20 @@ public class ProductController {
 	private ProductService productService;
 	
 	
-	@GetMapping(path="/glp")
+	@GetMapping(path="/glp") // TERMINADO
 	public ResponseEntity<List<ProductEntity>>  getListProduct(){
 		List<ProductEntity>  lista=productService.getAll();
 		return new ResponseEntity<List<ProductEntity>>(lista,HttpStatus.OK);
 	}
 	// EN CASO DE LISTAR TODO POR ORGANIZACION
-	@GetMapping(value="/glpbo/{id}")
+	@GetMapping(value="/glpbo/{id}") // TERMINADO
 	public ResponseEntity<List<ProductEntity>>  getListProductByOrganizationId(@PathVariable("id")Integer id){
 		List<ProductEntity>  lista=productService.getAllProductByCompanyId(id);
 		return new ResponseEntity<List<ProductEntity>>(lista,HttpStatus.OK);
 	}
 	
 	// EN CASO DE LISTAR POR ORGANIZCION Y SUCURSAL
-	@PostMapping(path="/glpbos")
+	@PostMapping(path="/glpbos") // TERMINADO
 	public ResponseEntity<List<ProductEntity>>  getListProductByOrganizationIdAndSucursalId(@RequestBody ProductEntity pro){
 		List<ProductEntity>  lista=productService.getAllProductByCompanyIdAndSucursalId(pro);
 		return new ResponseEntity<List<ProductEntity>>(lista,HttpStatus.OK);

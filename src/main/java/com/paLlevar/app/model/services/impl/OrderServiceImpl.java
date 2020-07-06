@@ -1,5 +1,7 @@
 package com.paLlevar.app.model.services.impl;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -8,10 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.paLlevar.app.model.entities.MenuDayEntity;
+import com.paLlevar.app.model.entities.MenuDayProductEntity;
 import com.paLlevar.app.model.entities.OrderDetailEntity;
 import com.paLlevar.app.model.entities.OrderEntity;
 import com.paLlevar.app.model.repository.OrderDetailRepository;
 import com.paLlevar.app.model.repository.OrderRepository;
+import com.paLlevar.app.model.services.MenuDayProductService;
 import com.paLlevar.app.model.services.MenuDayService;
 import com.paLlevar.app.model.services.OrderDetailService;
 import com.paLlevar.app.model.services.OrderService;
@@ -28,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
 	private OrderDetailService orderDetailService;
 	
 	@Autowired
-	private MenuDayService menuDayService;
+	private MenuDayProductService menuDayProdService;
 	
 	@Override
 	public List<OrderEntity> getAll() {
@@ -58,26 +62,40 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override // actualiza el estado del menu del dia
 	public void saveOrderByOrganizationIdAndSucursalId(OrderEntity order) {
-		
-		MenuDayEntity mday = new MenuDayEntity();// =menuDayService.getMenuDayByDayAndOrganizationIdAndSucursalId(order.sucursalId,order.organizationId);
-		mday.getMenuDayProduct().forEach(menuProduct->{
-			order.getOrderDetail().forEach(orderDetail ->{
-				
-				if(menuProduct.getProduct().getId() == orderDetail.getProduct().getId()) {
-					// HIJO
-					menuProduct.setAvailable(menuProduct.getAvailable()-1);
-					orderDetail.setStatus(Constants.ORDER_DETAIL_STATUS_PENDING);
-					menuDayService.save(mday);
-					if(menuProduct.getAvailable().equals(0)) {
-						menuProduct.setStatus(Constants.MENUDAY_STATUS_NOT_AVAILABLE);
-					}
-						
+		repo.save(order);
+		if(order.getOrderDetail() != null) {
+			order.getOrderDetail().forEach(od ->{
+				od.setStatus(Constants.ORDER_DETAIL_STATUS_PENDING);
+				od.setOrganizationId(order.getOrganizationId());
+				if(order.getSucursalId() != null) {
+					od.setSucursalId(order.getSucursalId());
 				}
+				od.setUserCreateId(order.getUserCreateId());
+				od.setOrder(order);
+				MenuDayProductEntity mp =menuDayProdService.getMenuByIdAndStatus(od.getMenuProductId(),Constants.MENUD_PROD_STATUS_AVAILABLE);
+				mp.setAvailable(mp.getAvailable()-1);
+				if(mp.getAvailable().equals(0)) {
+					mp.setStatus(Constants.MENUD_PROD_STATUS_NOT_AVAILABLE);
+				}
+				menuDayProdService.save(mp);
+				od.setCreateDate(LocalDateTime.now());
+				orderDetailService.save(od);
+				
+				if(order.getTotal() !=null && order.getTotal() != 0.0)
+					order.setTotal(order.getTotal()+od.getPrice());
+				else
+					order.setTotal(od.getPrice());
+				if(order.getQuantity() !=null)
+					order.setQuantity(order.getQuantity() + 1);
+				else
+					order.setQuantity(1);
 				
 			});
-		});
-		order.setCreateDate(new Date());
-		order.setStatus(Constants.ORDER_STATUS__PENDING);
+			
+			
+		}
+		order.setCreateDate(LocalDateTime.now());
+		order.setStatus(Constants.ORDER_DETAIL_STATUS_PENDING);
 		repo.save(order);
 	}
 

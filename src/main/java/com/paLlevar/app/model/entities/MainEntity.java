@@ -1,11 +1,10 @@
 package com.paLlevar.app.model.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @MappedSuperclass
 public class MainEntity implements Serializable{
@@ -13,15 +12,16 @@ public class MainEntity implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createDate;
+	@Column(name = "create_date", columnDefinition = "TIMESTAMP")
+	private LocalDateTime createDate;
 	private Integer userCreateId;
 	private Integer organizationId;
 	private Integer sucursalId;
-	public Date getCreateDate() {
+	
+	public LocalDateTime getCreateDate() {
 		return createDate;
 	}
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(LocalDateTime createDate) {
 		this.createDate = createDate;
 	}
 	public Integer getUserCreateId() {
@@ -42,10 +42,6 @@ public class MainEntity implements Serializable{
 	public void setSucursalId(Integer sucursalId) {
 		this.sucursalId = sucursalId;
 	}
-	
-	
-	
-	
-	 
+ 
 
 }

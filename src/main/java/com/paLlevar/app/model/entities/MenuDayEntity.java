@@ -2,9 +2,7 @@ package com.paLlevar.app.model.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,8 +21,10 @@ public class MenuDayEntity  extends MainEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer id;
+	
 	@Column(name="name", length=60)
 	public String name;
+	
 	@Column(name="description", length=200)
 	public String description;
 	
@@ -33,11 +33,12 @@ public class MenuDayEntity  extends MainEntity implements Serializable {
 	
 	@Transient
 	private LocalDateTime localDateTimeFinal;
+	
 	@Column(name="day", length=50)
 	public String day;
 	
 	@OneToMany(mappedBy = "menuDay" , targetEntity = MenuDayProductEntity.class)
-	private List<MenuDayProductEntity> menuDayProduct;
+	private List<MenuDayProductEntity> menuDayProductList;
 	
 	@Column(name="type", length=20)
 	private String type; // combo , paquete, menu
@@ -50,19 +51,22 @@ public class MenuDayEntity  extends MainEntity implements Serializable {
 	
 	private String status;
 	
+	@Column(name="count_total")
+	private Integer countTotal;
+	
 	public LocalDateTime getLocalDateTimeFinal() {
 		return localDateTimeFinal;
 	}
 	public void setLocalDateTimeFinal(LocalDateTime localDateTimeFinal) {
 		this.localDateTimeFinal = localDateTimeFinal;
 	}
-	public List<MenuDayProductEntity> getMenuDayProduct() {
-		return menuDayProduct;
-	}
-	public void setMenuDayProduct(List<MenuDayProductEntity> menuDayProduct) {
-		this.menuDayProduct = menuDayProduct;
-	}
 	
+	public List<MenuDayProductEntity> getMenuDayProductList() {
+		return menuDayProductList;
+	}
+	public void setMenuDayProductList(List<MenuDayProductEntity> menuDayProductList) {
+		this.menuDayProductList = menuDayProductList;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -117,6 +121,12 @@ public class MenuDayEntity  extends MainEntity implements Serializable {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public Integer getCountTotal() {
+		return countTotal;
+	}
+	public void setCountTotal(Integer countTotal) {
+		this.countTotal = countTotal;
 	}
 	
 	

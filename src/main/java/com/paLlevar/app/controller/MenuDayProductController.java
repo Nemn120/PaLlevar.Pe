@@ -25,21 +25,33 @@ public class MenuDayProductController {
 	@Autowired
 	private MenuDayProductService menudayproductService;
 
-	@GetMapping(path="/glmdp")
+	@GetMapping(path="/glmdp")	// TERMINADO
 	public ResponseEntity<List<MenuDayProductEntity>>  getListMenuDayProduct(){
 		List<MenuDayProductEntity> lista = menudayproductService.getAll();
 		return new ResponseEntity<List<MenuDayProductEntity>>(lista,HttpStatus.OK);
 		
 	}
 	
-	@PostMapping(path="/smdp")
+	@PostMapping(path="/smdp") // TERMINADO
 	public MenuDayProductEntity saveMenuDayProduct(@RequestBody MenuDayProductEntity mdp) {
 		MenuDayProductEntity menudayproductSave = menudayproductService.save(mdp);
 		return menudayproductSave;
 	}
 	
-	@DeleteMapping(value="/dmdp/{id}")
+	@DeleteMapping(value="/dmdp/{id}")  // TERMINADO 
 	public void deletedMenuDayProduct(@PathVariable("id")Integer id) {
 		menudayproductService.deleteById(id);
+	}
+	
+	@PostMapping(path="/gmdpbmos")   // TERMINADO
+	public ResponseEntity<List<MenuDayProductEntity>>  getListMenuDayProductByMenuIdAndOrgIdAndSucId(@RequestBody MenuDayProductEntity mdp){
+		List<MenuDayProductEntity> lista = menudayproductService.getMenuDayProductListByMenuIdAndSucursalIdAndOrganizationId(mdp);
+		return new ResponseEntity<List<MenuDayProductEntity>>(lista,HttpStatus.OK);
+	}
+	
+	@PostMapping(path="/gmdpbmo") // TERMINADO
+	public ResponseEntity<List<MenuDayProductEntity>>  getListMenuDayProductByMenuIdAndOrgId(@RequestBody MenuDayProductEntity mdp){
+		List<MenuDayProductEntity> lista = menudayproductService.getMenuDayProductListByMenuIdAndOrganizationId(mdp);
+		return new ResponseEntity<List<MenuDayProductEntity>>(lista,HttpStatus.OK);
 	}
 }

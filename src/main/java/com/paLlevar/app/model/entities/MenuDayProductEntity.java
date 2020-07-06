@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -27,11 +28,12 @@ public class MenuDayProductEntity   extends MainEntity implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "product_id", referencedColumnName = "id")
 	private ProductEntity product;
+	
 	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "menu_day_id", referencedColumnName = "id")
 	private MenuDayEntity menuDay;
 	
@@ -46,6 +48,9 @@ public class MenuDayProductEntity   extends MainEntity implements Serializable{
 	@Column(name="type", length=20)
 	private String type; 	// combo ,men , paquete
 	
+	@Transient
+	private Integer menuDayId;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -59,6 +64,7 @@ public class MenuDayProductEntity   extends MainEntity implements Serializable{
 	public void setProduct(ProductEntity product) {
 		this.product = product;
 	}
+	
 	public MenuDayEntity getMenuDay() {
 		return menuDay;
 	}
@@ -94,6 +100,12 @@ public class MenuDayProductEntity   extends MainEntity implements Serializable{
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public Integer getMenuDayId() {
+		return menuDayId;
+	}
+	public void setMenuDayId(Integer menuDayId) {
+		this.menuDayId = menuDayId;
 	}
 	
 	

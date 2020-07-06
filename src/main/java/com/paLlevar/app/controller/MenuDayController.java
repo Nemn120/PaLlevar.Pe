@@ -25,47 +25,52 @@ public class MenuDayController {
 	@Autowired
 	private MenuDayService menudayService;
 
-	@GetMapping(path="/glmd")
+	@GetMapping(path="/glmd") // TERMINADO 
 	public ResponseEntity<List<MenuDayEntity>>  getListMenuDay(){
 		List<MenuDayEntity> lista = menudayService.getAll();
 		return new ResponseEntity<List<MenuDayEntity>>(lista,HttpStatus.OK);
 		
 	}
-	
-	@PostMapping(path="/smd")
-	public MenuDayEntity saveMenuDay(@RequestBody MenuDayEntity md) {
-		MenuDayEntity menudaySave = menudayService.save(md);
-		return menudaySave;
+	@GetMapping(value="/gmbi/{id}") // PENDIENTE
+	public ResponseEntity<MenuDayEntity>  getMenuByDay(@PathVariable("id")Integer id){
+		MenuDayEntity menuDay = menudayService.getOneById(id);
+		return new ResponseEntity<MenuDayEntity>(menuDay,HttpStatus.OK);
+		
 	}
-	@PostMapping(path="/gmdbf")
+	
+	@DeleteMapping(value="/dmd/{id}") //  TERMINADO
+	public void deletedMenuDay(@PathVariable("id")Integer id) {
+		menudayService.deleteMenuDayAndProductDayList(id);
+	}
+	
+	
+	@PostMapping(path="/gmdbsos") // TERMINADO
+	public ResponseEntity<List<MenuDayEntity>>  getMenuDayByStatusAndOrganizationIdAndSucursalId(@RequestBody MenuDayEntity md){
+		List<MenuDayEntity> menuDayList= menudayService.getMenuDayListByStatusAndOrgAndSuc(md);
+		return new ResponseEntity<List<MenuDayEntity>>(menuDayList,HttpStatus.OK);
+	}
+	
+	@PostMapping(path="/gmdbso") // TERMINADO
+	public ResponseEntity<List<MenuDayEntity>>  getMenuDayByStatusAndOrganizationId(@RequestBody MenuDayEntity md){
+		List<MenuDayEntity> menuDayList= menudayService.getMenuDayListByStatusAndOrg(md);
+		return new ResponseEntity<List<MenuDayEntity>>(menuDayList,HttpStatus.OK);
+	}
+	
+	@PostMapping(path="/smd") // TERMINADO
+	public Integer saveMenuDay(@RequestBody MenuDayEntity md) {
+		MenuDayEntity menudaySave = menudayService.saveMenuDay(md);
+		return menudaySave.getId();
+	}
+	@PostMapping(path="/gmdbf")  // PENDIENTE
 	public ResponseEntity<List<MenuDayEntity>>  getMenuDayByFields(@RequestBody MenuDayEntity md){
 		List<MenuDayEntity> menuDayList= menudayService.getMenuDayListByFields(md);
 		return new ResponseEntity<List<MenuDayEntity>>(menuDayList,HttpStatus.OK);
 	}
 	
-	@PostMapping(path="/emd")
+	@PostMapping(path="/emd")  // TERMINADO 
 	public ResponseEntity<MenuDayEntity> editMenuDay(@RequestBody MenuDayEntity md){
 		MenuDayEntity menuEdit= menudayService.editMenuDay(md);
 		return new ResponseEntity<MenuDayEntity>(menuEdit,HttpStatus.OK);
 	}
-	
-	@PostMapping(path="/gmdbdos")
-	public ResponseEntity<List<MenuDayEntity>>  getMenuDayByDayAndOrganizationIdAndSucursalId(@RequestBody MenuDayEntity md){
-		List<MenuDayEntity> menuDayList= menudayService.getMenuDayListByFields(md);
-		return new ResponseEntity<List<MenuDayEntity>>(menuDayList,HttpStatus.OK);
-	}
-	
-	@PostMapping(path="/gmdbdo")
-	public ResponseEntity<List<MenuDayEntity>>  getMenuDayByDayAndOrganizationId(@RequestBody MenuDayEntity md){
-		List<MenuDayEntity> menuDayList= menudayService.getMenuDayListByFields(md);
-		return new ResponseEntity<List<MenuDayEntity>>(menuDayList,HttpStatus.OK);
-	}
-	
-	@DeleteMapping(value="/dmd/{id}")
-	public void deletedMenuDay(@PathVariable("id")Integer id) {
-		menudayService.deleteById(id);
-	}
-	
-	
 	
 }

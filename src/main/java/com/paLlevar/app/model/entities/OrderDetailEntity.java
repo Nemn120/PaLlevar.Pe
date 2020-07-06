@@ -2,7 +2,6 @@ package com.paLlevar.app.model.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -55,6 +54,9 @@ public class OrderDetailEntity extends MainEntity  implements Serializable{
 	@Transient	// no se mapea a la bd
 	private Integer orderId;
 	
+	@Column(name="menu_product_id")
+	private Integer menuProductId;
+	
 	@Column(name="delivery_date")
 	private Date deliveryDate;
 	
@@ -67,6 +69,14 @@ public class OrderDetailEntity extends MainEntity  implements Serializable{
 
 	public void setOrderId(Integer orderId) {
 		this.orderId = orderId;
+	}
+
+	public Integer getMenuProductId() {
+		return menuProductId;
+	}
+
+	public void setMenuProductId(Integer menuProductId) {
+		this.menuProductId = menuProductId;
 	}
 
 	public Integer getId() {
