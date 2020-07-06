@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.paLlevar.app.model.entities.ProfileEntity;
@@ -32,10 +33,7 @@ public class UserServiceImpl implements UserService {
 	private UserRepository repo;
 	
 	@Autowired
-	private ProfileMenuOptionService profileMenuOptionService;
-	
-	@Autowired
-	private BCryptPasswordEncoder bcrypt;
+	private PasswordEncoder  bcrypt;
 
 	@Override
 	public List<UserEntity> getAll() {
