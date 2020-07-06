@@ -2,8 +2,11 @@ package com.paLlevar.app.model.services;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.paLlevar.app.model.entities.MenuDayProductEntity;
 
+@Service
 public interface MenuDayProductService extends GenericCRUD<MenuDayProductEntity, Integer>{
 	MenuDayProductEntity saveMenuDayProduct(MenuDayProductEntity menuDayProduct);
 	List<MenuDayProductEntity> getMenuDayProductListByMenuIdAndSucursalIdAndOrganizationId(MenuDayProductEntity menuDayProduct);

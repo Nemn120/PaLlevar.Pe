@@ -5,11 +5,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.paLlevar.app.model.entities.MenuOptionEntity;
 import com.paLlevar.app.model.repository.MenuOptionRepository;
 import com.paLlevar.app.model.services.MenuOptionService;
 @Service
+@Transactional
 public class MenuOptionServiceImpl implements MenuOptionService{
 
 	

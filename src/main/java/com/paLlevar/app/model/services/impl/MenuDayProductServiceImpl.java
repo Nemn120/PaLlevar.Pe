@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.paLlevar.app.model.entities.MenuDayEntity;
 import com.paLlevar.app.model.entities.MenuDayProductEntity;
@@ -12,6 +13,7 @@ import com.paLlevar.app.model.repository.MenuDayProductRepository;
 import com.paLlevar.app.model.services.MenuDayProductService;
 
 @Service
+@Transactional
 public class MenuDayProductServiceImpl implements MenuDayProductService {
 
 	@Autowired

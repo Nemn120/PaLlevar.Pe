@@ -2,10 +2,12 @@ package com.paLlevar.app.model.services;
 import java.util.List;
 
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Service;
 
 import com.paLlevar.app.model.entities.OrderDetailEntity;
 import com.paLlevar.app.model.entities.OrderEntity;
 
+@Service
 public interface OrderDetailService extends GenericCRUD<OrderDetailEntity, Integer>{
 	public void saveAttendOrderDetail(OrderDetailEntity order);
 

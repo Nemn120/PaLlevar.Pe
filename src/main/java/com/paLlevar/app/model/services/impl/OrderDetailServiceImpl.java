@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.paLlevar.app.model.entities.OrderDetailEntity;
 import com.paLlevar.app.model.entities.OrderEntity;
@@ -17,6 +18,7 @@ import com.paLlevar.app.model.services.UserService;
 import com.paLlevar.app.util.Constants;
 
 @Service
+@Transactional
 public class OrderDetailServiceImpl implements OrderDetailService {
 	
 	@Autowired
