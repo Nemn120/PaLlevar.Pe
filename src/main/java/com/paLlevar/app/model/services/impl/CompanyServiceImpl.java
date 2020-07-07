@@ -22,7 +22,7 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public CompanyEntity getOneById(Integer id) {
-		return repo.getOne(id);
+		return repo.findById(id).orElse(null);
 	}
 
 	@Override

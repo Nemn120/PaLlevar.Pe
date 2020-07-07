@@ -31,6 +31,11 @@ public class CompanyController {
 		List<CompanyEntity>  lista=companyService.getAll();
 		return new ResponseEntity<List<CompanyEntity>>(lista,HttpStatus.OK);
 	}
+	@GetMapping(value="/gcobi")
+	public ResponseEntity<CompanyEntity>  getCompanyById(@PathVariable("id")Integer id){
+		CompanyEntity  company=companyService.getOneById(id);
+		return new ResponseEntity<CompanyEntity>(company,HttpStatus.OK);
+	}
 	
 	@PostMapping(path="/sco")
 	public CompanyEntity saveCompany(@RequestBody CompanyEntity com){
