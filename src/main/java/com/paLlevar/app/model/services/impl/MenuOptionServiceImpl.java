@@ -48,9 +48,9 @@ public class MenuOptionServiceImpl implements MenuOptionService{
 		repo.getOptionsByProfileId(profileId).forEach(x -> {
 			MenuOptionEntity m = new MenuOptionEntity();
 			m.setIdMenu((Integer.parseInt(String.valueOf(x[0]))));
-			m.setIconMenu(String.valueOf(x[1]));
-			m.setNameMenu(String.valueOf(x[2]));
-			m.setUrlMenu(String.valueOf(x[3]));
+			m.setIconMenu(String.valueOf(x[2]));
+			m.setNameMenu(String.valueOf(x[5]));
+			m.setUrlMenu(String.valueOf(x[7]));
 			
 			menus.add(m);
 		});
