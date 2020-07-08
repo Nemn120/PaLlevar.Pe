@@ -35,4 +35,9 @@ public class CompanyServiceImpl implements CompanyService {
 		repo.deleteById(id);
 	}
 
+	@Override
+	public List<CompanyEntity> getCompanyListByStatus(String status) {
+		return repo.findByStatus(status);
+	}
+
 }

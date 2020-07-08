@@ -62,7 +62,7 @@ public class OrderDetailController {
 	}
 	
 	
-	@PostMapping(path="/glodbo")
+	@PostMapping(path="/glodbo") // PENDIENTE DE CORRECCION
 	public ResponseEntity<List<OrderDetailEntity>>  getListOrderDetailByOrderId(@RequestBody OrderEntity order){
 		List<OrderDetailEntity> lista = orderdetailService.getListOrderDetailByOrderId(order.getId(), order.getOrganizationId(), order.getSucursalId());
 		return new ResponseEntity<List<OrderDetailEntity>>(lista,HttpStatus.OK);

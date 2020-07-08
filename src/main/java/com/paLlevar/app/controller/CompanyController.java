@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.paLlevar.app.model.entities.CompanyEntity;
 import com.paLlevar.app.model.services.CompanyService;
+import com.paLlevar.app.util.Constants;
 
 @RestController
 @RequestMapping("/company")
@@ -31,6 +32,14 @@ public class CompanyController {
 		List<CompanyEntity>  lista=companyService.getAll();
 		return new ResponseEntity<List<CompanyEntity>>(lista,HttpStatus.OK);
 	}
+	
+	@GetMapping(path="/glcoa")
+	public ResponseEntity<List<CompanyEntity>>  getListCompanyActive(){
+		List<CompanyEntity>  lista=companyService.getCompanyListByStatus(Constants.STATUS_ON_ENTITY);
+		return new ResponseEntity<List<CompanyEntity>>(lista,HttpStatus.OK);
+	}
+	
+	
 	@GetMapping(value="/gcobi/{id}")
 	public ResponseEntity<CompanyEntity>  getCompanyById(@PathVariable("id")Integer id){
 		CompanyEntity  company=companyService.getOneById(id);

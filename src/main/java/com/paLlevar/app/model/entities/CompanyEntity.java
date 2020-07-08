@@ -32,7 +32,8 @@ public class CompanyEntity implements Serializable {
 	@JoinColumn(name = "user_admin_id", referencedColumnName = "id")
 	private UserEntity userAdmin;
 	
-	
+	@Column(name="status",length=20)
+	private String status;
 	public Integer getId() {
 		return id;
 	}
@@ -63,6 +64,13 @@ public class CompanyEntity implements Serializable {
 	public void setUserAdmin(UserEntity userAdmin) {
 		this.userAdmin = userAdmin;
 	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 	
 	
 	

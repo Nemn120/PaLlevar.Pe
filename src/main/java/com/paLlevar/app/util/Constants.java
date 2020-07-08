@@ -39,8 +39,12 @@ public class Constants {
 	public static final String DELIVERY_MAN_STATUS_DISPONIBLE="2";
 	public static final String DELIVERY_MANY_STATUS_OCUPADO="3";
 	
+	public static final String STATUS_ON_ENTITY="Activo";
+	public static final String STATUS_OFF_ENTITY="Desactivo";
+	
 	
 	
 
 }
+
 
