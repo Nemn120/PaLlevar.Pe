@@ -22,13 +22,6 @@ public class CustomUserDetailsService implements UserDetailsService{
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		/*UserEntity user = repo.findOneByUsername(username);
-		if(user != null) {
-			return UserPrincipal.create(user);
-		}
-		return null;
-		
-		*/
 		
 		UserEntity user = repo.findOneByUsername(username); //from usuario where nombre := username
 		
