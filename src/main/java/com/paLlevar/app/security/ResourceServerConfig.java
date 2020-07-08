@@ -42,7 +42,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers("/menuDay/**" ).authenticated()
                 .antMatchers("/order/**" ).authenticated()
                 .antMatchers("/orderDetail/**" ).authenticated()
-                .antMatchers("/menuDayProduct/**" ).authenticated()
+                .antMatchers("/menuDayProduct/**" ).authenticated();
                 
                 
                 
