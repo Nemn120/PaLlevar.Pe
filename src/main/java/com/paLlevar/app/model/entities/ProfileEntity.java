@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="profile")
-public class ProfileEntity   extends MainEntity implements Serializable {
+public class ProfileEntity  implements Serializable {
 
 	/**
 	 * 

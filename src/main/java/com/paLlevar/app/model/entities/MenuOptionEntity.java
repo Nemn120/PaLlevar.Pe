@@ -1,6 +1,8 @@
 package com.paLlevar.app.model.entities;
 
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="menu_option")
-public class MenuOptionEntity extends MainEntity{
+public class MenuOptionEntity implements Serializable{
 	
 	/**
 	 * 
