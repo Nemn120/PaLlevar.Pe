@@ -22,10 +22,11 @@ public class Constants {
 	
 	
 	public static final Integer ADMIN_USER_ROL=1;
-	public static final Integer CLIENT_USER_ROL=2;
-	public static final Integer MAIN_CHEF_USER_ROL=3;
-	public static final Integer MASTER_DELIVERY_USER_ROL=4;
-	public static final Integer DELIVERY_USER_ROL=5;
+	public static final Integer ADMIN_NEG_USER_ROL=2;
+	public static final Integer CLIENT_USER_ROL=6;
+	public static final Integer MAIN_CHEF_USER_ROL=4;
+	public static final Integer ADMIN_DELIVERY_USER_ROL=5;
+	public static final Integer DELIVERY_MAN_USER_ROL=3;
 	
 	public static final String OFFERT_ON_STATUS="1";
 	public static final String OFFERT_OFF_STATUS="2";
@@ -41,8 +42,7 @@ public class Constants {
 	
 	public static final String STATUS_ON_ENTITY="Activo";
 	public static final String STATUS_OFF_ENTITY="Desactivo";
-	
-	
+	 
 	
 
 }

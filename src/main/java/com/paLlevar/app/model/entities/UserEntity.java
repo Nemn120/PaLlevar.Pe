@@ -1,6 +1,7 @@
 package com.paLlevar.app.model.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,10 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 
 @Entity
 @Table(name="user_organization")
@@ -38,6 +35,12 @@ public class UserEntity extends MainEntity implements Serializable {
 	private String employeeCode;
 	private String documentTypeId;
 	private String documentNumber;
+	@Column(name="date_birth")
+	private Date dateBirth;
+
+	@Column(name="last_name",length=70)
+	private String lastName;
+	
 	@ManyToOne
 	@JoinColumn(name = "profile_id", referencedColumnName = "idProfile")
 	private ProfileEntity profile;
@@ -110,6 +113,20 @@ public class UserEntity extends MainEntity implements Serializable {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public Date getDateBirth() {
+		return dateBirth;
+	}
+	public void setDateBirth(Date dateBirth) {
+		this.dateBirth = dateBirth;
+	}
+	
+	
 	
 
 }
