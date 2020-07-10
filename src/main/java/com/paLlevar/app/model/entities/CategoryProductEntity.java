@@ -11,6 +11,8 @@ import javax.persistence.Id;
 
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="category_product")
 public class CategoryProductEntity extends MainEntity implements Serializable {
@@ -26,6 +28,8 @@ public class CategoryProductEntity extends MainEntity implements Serializable {
 	@Column(name="path_photo", length=100)
 	private String pathPhoto;
 	
+	@Column(name = "photo", updatable = false)
+	private byte[] photo;
 	public Integer getId() {
 		return id;
 	}
@@ -49,6 +53,12 @@ public class CategoryProductEntity extends MainEntity implements Serializable {
 	}
 	public void setPathPhoto(String pathPhoto) {
 		this.pathPhoto = pathPhoto;
+	}
+	public byte[] getPhoto() {
+		return photo;
+	}
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
 	}
 	
 	

@@ -12,8 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-//@Where(clause="deleted=false" )
 @Table(name="product")
 public class ProductEntity  extends MainEntity  implements Serializable{
 	
@@ -28,6 +29,10 @@ public class ProductEntity  extends MainEntity  implements Serializable{
 	private String description;
 	@Column(name="path_photo", length=100)
 	private String pathPhoto;
+	
+	@Column(name = "photo", updatable = false)
+	private byte[] photo;
+	
 	
 	@ManyToOne
 	@JoinColumn(name = "category_product_id", referencedColumnName = "id")
@@ -73,7 +78,15 @@ public class ProductEntity  extends MainEntity  implements Serializable{
 	public void setCategoryProduct(CategoryProductEntity categoryProduct) {
 		this.categoryProduct = categoryProduct;
 	}
-	
-	
 
+	public byte[] getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
+	}
+
+
+	
 }

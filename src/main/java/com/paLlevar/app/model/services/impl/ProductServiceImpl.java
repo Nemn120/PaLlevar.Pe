@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.paLlevar.app.model.entities.ProductEntity;
 import com.paLlevar.app.model.repository.ProductRepository;
 import com.paLlevar.app.model.services.ProductService;
 
 @Service
+@Transactional
 public class ProductServiceImpl implements ProductService{
 
 	@Autowired
@@ -22,11 +24,14 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	public ProductEntity getOneById(Integer id) {
-		return repo.getOne(id);
+		return repo.findById(id).orElse(new ProductEntity());
 	}
 
 	@Override
 	public ProductEntity save(ProductEntity t) {
+		if(t.getId() != null && t.getPhoto().length>0) {
+			repo.updatePhoto(t.getId(), t.getPhoto());
+		}
 		return repo.save(t);
 	}
 

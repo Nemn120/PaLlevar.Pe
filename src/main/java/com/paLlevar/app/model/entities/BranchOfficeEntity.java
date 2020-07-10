@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="branch_office")
 public class BranchOfficeEntity    implements Serializable{
@@ -37,6 +39,10 @@ public class BranchOfficeEntity    implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "company_id", referencedColumnName = "id")
 	private CompanyEntity company;
+	
+	@JsonIgnore
+	@Column(name = "photo", updatable = false)
+	private byte[] photo;
 	public Integer getId() {
 		return id;
 	}
@@ -91,6 +97,14 @@ public class BranchOfficeEntity    implements Serializable{
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	public byte[] getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
 	}
 	
 	

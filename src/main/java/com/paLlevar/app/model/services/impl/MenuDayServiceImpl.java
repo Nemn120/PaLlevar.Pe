@@ -53,7 +53,7 @@ public class MenuDayServiceImpl implements MenuDayService {
 					t.setCountTotal(menuDayProduct.getQuantity());
 				
 				menuDayProduct.setOrganizationId(t.getOrganizationId());
-				menuDayProduct.setSucursalId(t.getSucursalId());
+				//menuDayProduct.setSucursalId(t.getSucursalId());
 				menuDayProduct.setType(t.getType());
 				if(t.getUserCreateId() != null)
 					menuDayProduct.setUserCreateId(t.getUserCreateId());

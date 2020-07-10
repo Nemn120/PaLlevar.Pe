@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="company")
 public class CompanyEntity implements Serializable {
@@ -31,6 +33,10 @@ public class CompanyEntity implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "user_admin_id", referencedColumnName = "id")
 	private UserEntity userAdmin;
+	
+	@JsonIgnore
+	@Column(name = "photo", updatable = false)
+	private byte[] photo;
 	
 	@Column(name="status",length=20)
 	private String status;
@@ -69,6 +75,12 @@ public class CompanyEntity implements Serializable {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public byte[] getPhoto() {
+		return photo;
+	}
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
 	}
 	
 	

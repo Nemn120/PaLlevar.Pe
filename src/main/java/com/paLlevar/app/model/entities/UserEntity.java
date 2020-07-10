@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="user_organization")
 public class UserEntity extends MainEntity implements Serializable {
@@ -41,6 +43,9 @@ public class UserEntity extends MainEntity implements Serializable {
 	@Column(name="last_name",length=70)
 	private String lastName;
 	
+	@JsonIgnore
+	@Column(name = "photo", updatable = false)
+	private byte[] photo;
 	@ManyToOne
 	@JoinColumn(name = "profile_id", referencedColumnName = "idProfile")
 	private ProfileEntity profile;
@@ -124,6 +129,12 @@ public class UserEntity extends MainEntity implements Serializable {
 	}
 	public void setDateBirth(Date dateBirth) {
 		this.dateBirth = dateBirth;
+	}
+	public byte[] getPhoto() {
+		return photo;
+	}
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
 	}
 	
 	

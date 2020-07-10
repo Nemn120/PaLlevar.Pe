@@ -1,9 +1,11 @@
 package com.paLlevar.app.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.paLlevar.app.model.entities.ProductEntity;
 import com.paLlevar.app.model.services.ProductService;
@@ -45,8 +49,18 @@ public class ProductController {
 		return new ResponseEntity<List<ProductEntity>>(lista,HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/gp/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	public ResponseEntity<byte[]> getPhoto(@PathVariable("id") Integer id) {
+		ProductEntity c = productService.getOneById(id);
+		 byte[]	data = c.getPhoto();
+		return new ResponseEntity<byte[]>(data, HttpStatus.OK);
+	}
+
+	
 	@PostMapping(path="/sp")
-	public ProductEntity saveProduct(@RequestBody ProductEntity pr){
+	public ProductEntity saveProduct(@RequestPart("product") ProductEntity pr, @RequestPart("file") MultipartFile file) throws IOException{
+		if(file.getBytes().length >0)
+			pr.setPhoto(file.getBytes());
 		ProductEntity productSave = productService.save(pr);
 		return productSave;
 	}
@@ -54,7 +68,6 @@ public class ProductController {
 	public void deletedProduct(@PathVariable("id")Integer id) {
 		productService.deleteById(id);
 	}
-	
 	
 	
 }
