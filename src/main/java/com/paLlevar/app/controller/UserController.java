@@ -104,6 +104,9 @@ public class UserController {
 	
 	@PostMapping(path="/guldm")
 	public ResponseEntity<List<UserEntity>> getListUserDeliveryMan(@RequestBody UserEntity user){
+		user.setProfile(new ProfileEntity());
+		user.getProfile().setIdProfile(Constants.DELIVERY_MAN_USER_ROL);
+		user.setStatus(Constants.DELIVERY_MAN_STATUS_DISPONIBLE);
 		List<UserEntity> lista=userService.getUserListByProfileANDStatus(user);
 		return new ResponseEntity<List<UserEntity>>(lista,HttpStatus.OK);
 	}

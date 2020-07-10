@@ -56,7 +56,7 @@ public class MenuDayController {
 		return new ResponseEntity<List<MenuDayEntity>>(menuDayList,HttpStatus.OK);
 	}
 	
-	@PostMapping(path="/smd") // TERMINADO
+	@PostMapping(path="/smd") // TERMINADO 100%
 	public Integer saveMenuDay(@RequestBody MenuDayEntity md) {
 		MenuDayEntity menudaySave = menudayService.saveMenuDay(md);
 		return menudaySave.getId();

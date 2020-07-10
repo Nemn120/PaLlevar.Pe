@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<UserEntity> getUserListByProfileANDStatus(UserEntity user) {
-		return repo.getUserListByStatusAndProfileID(user.getStatus(),user.getSucursalId(),user.getOrganizationId(),user.getProfile().getIdProfile());
+		return repo.getUserListByStatusAndProfileID(user.getStatus(),user.getOrganizationId(),user.getProfile().getIdProfile());
 	}
 
 	

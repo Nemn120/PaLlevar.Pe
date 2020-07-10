@@ -33,10 +33,6 @@ public class OrderEntity    extends MainEntity implements Serializable{
 	private Double total;
 	
 	private Integer quantity;
-
-	@ManyToOne
-	@JoinColumn(name = "client_order_id", referencedColumnName = "id")
-	private ClientEntity clientOrder;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_order_id", referencedColumnName = "id")
@@ -50,6 +46,15 @@ public class OrderEntity    extends MainEntity implements Serializable{
 	
 	@Column(name="attend_date")
 	private Date attendDate;
+	
+	@Column(name="address")
+	private String address;
+	
+	@Column(name="phone")
+	private String phone;
+	
+	@Column(name="company_name")
+	private String companyName;
 	
 	
 	public List<OrderDetailEntity> getOrderDetail() {
@@ -83,12 +88,7 @@ public class OrderEntity    extends MainEntity implements Serializable{
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
-	public ClientEntity getClientOrder() {
-		return clientOrder;
-	}
-	public void setClientOrder(ClientEntity clientOrder) {
-		this.clientOrder = clientOrder;
-	}
+
 	public Date getDeliveryDate() {
 		return deliveryDate;
 	}
@@ -106,6 +106,18 @@ public class OrderEntity    extends MainEntity implements Serializable{
 	}
 	public void setUserOrder(UserEntity userOrder) {
 		this.userOrder = userOrder;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	
 	

@@ -38,7 +38,7 @@ public class MenuDayServiceImpl implements MenuDayService {
 
 	@Override
 	public MenuDayEntity saveMenuDay(MenuDayEntity t) {
-		//repo.save(t);
+		repo.save(t);
 		if(t.getMenuDayProductList() != null) {
 			t.getMenuDayProductList().forEach(menuDayProduct ->{
 				menuDayProduct.setStatus(Constants.MENUD_PROD_STATUS_AVAILABLE);

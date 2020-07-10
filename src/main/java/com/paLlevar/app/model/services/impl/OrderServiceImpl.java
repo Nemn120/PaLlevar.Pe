@@ -70,7 +70,7 @@ public class OrderServiceImpl implements OrderService {
 				if(order.getSucursalId() != null) {
 					od.setSucursalId(order.getSucursalId());
 				}
-				od.setUserCreateId(order.getUserCreateId());
+				od.setUserCreateId(order.getUserOrder().getId());
 				od.setOrder(order);
 				MenuDayProductEntity mp =menuDayProdService.getMenuByIdAndStatus(od.getMenuProductId(),Constants.MENUD_PROD_STATUS_AVAILABLE);
 				mp.setAvailable(mp.getAvailable()-1);
@@ -99,9 +99,9 @@ public class OrderServiceImpl implements OrderService {
 		repo.save(order);
 	}
 
-	@Override
+	@Override // TRA DE UNA SOLA ORGANIZACION 
 	public List<OrderEntity> getListOrderByStatus(String status, OrderEntity order) {
-		List<OrderEntity> odList = repo.getListOrderByStatus(status, order.getSucursalId(),order.getOrganizationId());
+		List<OrderEntity> odList = repo.findByOrganizationIdAndStatus(order.getOrganizationId(),status);
 		for(OrderEntity od :odList) {
 			for(OrderDetailEntity odDetail : od.getOrderDetail()) {
 				odDetail.setOrderId(od.getId());
