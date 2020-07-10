@@ -11,12 +11,18 @@ import com.paLlevar.app.model.entities.OrderEntity;
 public interface OrderDetailService extends GenericCRUD<OrderDetailEntity, Integer>{
 	public void saveAttendOrderDetail(OrderDetailEntity order);
 
-	public OrderDetailEntity getOrderDetailByStatusAndId(String status,Integer id, Integer organization, Integer sucursal);
+	//public OrderDetailEntity getOrderDetailByStatusAndId(String status,Integer id, Integer organization, Integer sucursal);
 
-	public List<OrderDetailEntity> getListOrderDetailByStatus(String status, Integer org, Integer suc);
+	public OrderDetailEntity getOrderDetailByStatusAndId(String status,Integer id, Integer organization);
+
+	//public List<OrderDetailEntity> getListOrderDetailByStatus(String status, Integer org, Integer suc);
+	
+	public List<OrderDetailEntity> getListOrderDetailByStatus(String status, Integer org);
 	
 	/*public void assignDeliveryMan(Integer idOrder, Integer idDeliveryMan, Integer idSuc, Integer idOrg);*/
 	
-	public List<OrderDetailEntity> getListOrderDetailByOrderId(Integer oid, Integer orgId, Integer sucursalId );
+	//public List<OrderDetailEntity> getListOrderDetailByOrderId(Integer oid, Integer orgId, Integer sucursalId );
+	
+	public List<OrderDetailEntity> getListOrderDetailByOrderId(Integer oid, Integer orgId);
 	
 }

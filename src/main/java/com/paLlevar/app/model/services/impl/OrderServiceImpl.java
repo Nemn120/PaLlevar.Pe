@@ -111,8 +111,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public Boolean CheckOrder(Integer oid, Integer orgId, Integer idSucursal) {
-		List<OrderDetailEntity> odList = orderDetailService.getListOrderDetailByOrderId(oid, orgId, idSucursal);
+	public Boolean CheckOrder(Integer oid, Integer orgId) {
+		List<OrderDetailEntity> odList = orderDetailService.getListOrderDetailByOrderId(oid, orgId);
 		Integer checkOrderDetail=0;
 		for(OrderDetailEntity odDetail : odList){
 			if(odDetail.getStatus().equals(Constants.ORDER_DETAIL_STATUS_PENDING))

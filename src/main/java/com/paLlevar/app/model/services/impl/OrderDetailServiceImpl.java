@@ -93,13 +93,19 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	orderService.save(od);
 	}
 
+	//@Override
+	//public OrderDetailEntity getOrderDetailByStatusAndId(String status, Integer id, Integer organization, Integer sucursal) {
+	//	OrderDetailEntity orderdetail = repo.getOrderDetailByStatusAndId(status, id, organization, sucursal);
+	//	return orderdetail;
+	//}
+	
 	@Override
-	public OrderDetailEntity getOrderDetailByStatusAndId(String status, Integer id, Integer organization, Integer sucursal) {
-		OrderDetailEntity orderdetail = repo.getOrderDetailByStatusAndId(status, id, organization, sucursal);
+	public OrderDetailEntity getOrderDetailByStatusAndId(String status, Integer id, Integer organization) {
+		OrderDetailEntity orderdetail = repo.getOrderDetailByStatusAndId(status, id, organization);
 		return orderdetail;
 	}
 
-	@Override
+	/*@Override
 	public List<OrderDetailEntity> getListOrderDetailByStatus(String status, Integer org, Integer suc) {
 		List<OrderDetailEntity> odList = repo.getListOrderDetailByStatus(status, org, suc);
 		return odList;
@@ -108,6 +114,17 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	@Override
 	public List<OrderDetailEntity> getListOrderDetailByOrderId(Integer oid, Integer orgId, Integer sucursalId) {
 		return repo.getListOrderDetailByOrderId(oid, orgId, sucursalId); 
+	}*/
+	
+	@Override
+	public List<OrderDetailEntity> getListOrderDetailByStatus(String status, Integer org) {
+		List<OrderDetailEntity> odList = repo.getListOrderDetailByStatus(status, org);
+		return odList;
+	}
+	
+	@Override
+	public List<OrderDetailEntity> getListOrderDetailByOrderId(Integer oid, Integer orgId) {
+		return repo.getListOrderDetailByOrderId(oid, orgId); 
 	}
 	/*
 	@Override

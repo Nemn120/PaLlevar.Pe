@@ -35,13 +35,16 @@ public class MenuDayServiceImpl implements MenuDayService {
 		return repo.findById(id).orElse(null);
 	}
 
+
 	@Override
 	public MenuDayEntity saveMenuDay(MenuDayEntity t) {
-		repo.save(t);
+		//repo.save(t);
 		if(t.getMenuDayProductList() != null) {
 			t.getMenuDayProductList().forEach(menuDayProduct ->{
 				menuDayProduct.setStatus(Constants.MENUD_PROD_STATUS_AVAILABLE);
-				menuDayProduct.setMenuDay(t);
+				menuDayProduct.setMenuDay(new MenuDayEntity());
+				menuDayProduct.getMenuDay().setId(t.getId());
+				menuDayProduct.setMenuDayId(t.getId());
 			
 				if(t.getTotal() !=null && t.getTotal() != 0.0)
 					t.setTotal(t.getTotal()+menuDayProduct.getPrice());

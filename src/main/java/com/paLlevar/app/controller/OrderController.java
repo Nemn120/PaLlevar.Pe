@@ -63,7 +63,7 @@ public class OrderController {
 	
 	@PostMapping(path="/cho")
 	public ResponseEntity<Object>CheckOrder(@RequestBody OrderEntity or){
-		Boolean verificar= orderService.CheckOrder(or.getId(), or.getOrganizationId(), or.getSucursalId());
+		Boolean verificar= orderService.CheckOrder(or.getId(), or.getOrganizationId());
 		if(verificar)
 			return new ResponseEntity<Object>(HttpStatus.OK);
 		else 

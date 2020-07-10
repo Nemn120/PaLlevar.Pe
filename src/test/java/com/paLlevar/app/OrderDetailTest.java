@@ -105,9 +105,9 @@ class OrderDetailTest {
 		orderdetail3.setOrder(order1);
 		orderDetailService.save(orderdetail3);
 		
-		assertThat(orderService.CheckOrder(1, 1, 1));
+		assertThat(orderService.CheckOrder(1, 1));
 		
-		assertThat((orderDetailService.getOrderDetailByStatusAndId(Constants.ORDER_DETAIL_STATUS_PENDING,orderdetail1.getId() ,1, 1).getProduct().getDescription()).equals(orderdetail1.getProduct().getDescription()));
+		assertThat((orderDetailService.getOrderDetailByStatusAndId(Constants.ORDER_DETAIL_STATUS_PENDING,orderdetail1.getId() ,1).getProduct().getDescription()).equals(orderdetail1.getProduct().getDescription()));
 		
 	}
 
