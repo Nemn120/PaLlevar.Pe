@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.paLlevar.app.model.entities.CategoryProductEntity;
 import com.paLlevar.app.model.entities.ProductEntity;
 import com.paLlevar.app.model.repository.ProductRepository;
 import com.paLlevar.app.model.services.ProductService;
@@ -29,11 +30,19 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	public ProductEntity save(ProductEntity t) {
+		if(t.getPhoto() != null &&  t.getPhoto().length>0) {
+			repo.updatePhoto(t.getId(),t.getPhoto());
+		}
 		return repo.save(t);
 	}
 
 	@Override
 	public void deleteById(Integer id) {
+		ProductEntity pro= repo.findById(id).orElse(null);
+		if( pro != null && pro.getCategoryProduct() != null) {
+			pro.setCategoryProduct(null);
+			repo.save(pro);
+		}
 		repo.deleteById(id);
 	}
 
