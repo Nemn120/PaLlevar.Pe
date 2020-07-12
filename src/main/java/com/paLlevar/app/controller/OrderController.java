@@ -74,7 +74,6 @@ public class OrderController {
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
 	}
 	
-	
 	@PostMapping(path="/glop")
 	public ResponseEntity<List<OrderEntity>>  getListOrderPendding(@RequestBody OrderEntity or){
 		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS__PENDING,or);

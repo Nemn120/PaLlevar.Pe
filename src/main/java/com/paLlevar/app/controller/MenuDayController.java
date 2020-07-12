@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.paLlevar.app.model.entities.MenuDayEntity;
 import com.paLlevar.app.model.services.MenuDayService;
+import com.paLlevar.app.util.Constants;
 
 @RestController
 @RequestMapping("/menuDay")
@@ -52,6 +53,7 @@ public class MenuDayController {
 	
 	@PostMapping(path="/gmdbso") // TERMINADO
 	public ResponseEntity<List<MenuDayEntity>>  getMenuDayByStatusAndOrganizationId(@RequestBody MenuDayEntity md){
+		md.setStatus(Constants.MENUD_PROD_STATUS_AVAILABLE);
 		List<MenuDayEntity> menuDayList= menudayService.getMenuDayListByStatusAndOrg(md);
 		return new ResponseEntity<List<MenuDayEntity>>(menuDayList,HttpStatus.OK);
 	}

@@ -61,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override // actualiza el estado del menu del dia
-	public void saveOrderByOrganizationIdAndSucursalId(OrderEntity order) {
+	public OrderEntity saveOrderByOrganizationIdAndSucursalId(OrderEntity order) {
 		repo.save(order);
 		if(order.getOrderDetail() != null) {
 			order.getOrderDetail().forEach(od ->{
@@ -96,7 +96,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 		order.setCreateDate(LocalDateTime.now());
 		order.setStatus(Constants.ORDER_DETAIL_STATUS_PENDING);
-		repo.save(order);
+		return repo.save(order);
 	}
 
 	@Override // TRA DE UNA SOLA ORGANIZACION 
