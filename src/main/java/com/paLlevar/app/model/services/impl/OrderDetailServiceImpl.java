@@ -11,7 +11,6 @@ import com.paLlevar.app.model.entities.OrderDetailEntity;
 import com.paLlevar.app.model.entities.OrderEntity;
 import com.paLlevar.app.model.entities.UserEntity;
 import com.paLlevar.app.model.repository.OrderDetailRepository;
-import com.paLlevar.app.model.repository.UserRepository;
 import com.paLlevar.app.model.services.OrderDetailService;
 import com.paLlevar.app.model.services.OrderService;
 import com.paLlevar.app.model.services.UserService;
