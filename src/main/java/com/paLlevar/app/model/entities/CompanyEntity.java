@@ -27,6 +27,8 @@ public class CompanyEntity implements Serializable {
 	private String nombre;
 	@Column(name="ruc", length=11)
 	private String ruc;
+	@Column(name="description")
+	private String description;
 	@Column(name="create_date")
 	private Date createDate;
 	
@@ -40,6 +42,7 @@ public class CompanyEntity implements Serializable {
 	
 	@Column(name="status",length=20)
 	private String status;
+
 	public Integer getId() {
 		return id;
 	}
@@ -81,6 +84,12 @@ public class CompanyEntity implements Serializable {
 	}
 	public void setPhoto(byte[] photo) {
 		this.photo = photo;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	
