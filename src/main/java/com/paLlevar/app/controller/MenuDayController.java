@@ -53,7 +53,7 @@ public class MenuDayController {
 	
 	@PostMapping(path="/gmdbso") // TERMINADO
 	public ResponseEntity<List<MenuDayEntity>>  getMenuDayByStatusAndOrganizationId(@RequestBody MenuDayEntity md){
-		md.setStatus(Constants.MENUD_PROD_STATUS_AVAILABLE);
+		md.setStatus(Constants.STATUS_ON_ENTITY);
 		List<MenuDayEntity> menuDayList= menudayService.getMenuDayListByStatusAndOrg(md);
 		return new ResponseEntity<List<MenuDayEntity>>(menuDayList,HttpStatus.OK);
 	}

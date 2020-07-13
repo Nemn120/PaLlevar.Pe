@@ -27,6 +27,9 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public CompanyEntity save(CompanyEntity t) {
+		if(t.getPhoto() != null &&  t.getPhoto().length>0) {
+			repo.updatePhoto(t.getId(),t.getPhoto());
+		}
 		return repo.save(t);
 	}
 
