@@ -10,7 +10,7 @@ public interface MenuDayRepository extends MenuDayCustomRepository ,  JpaReposit
 
 	List<MenuDayEntity> findByStatusAndOrganizationIdAndSucursalId(String status, Integer organizationId, Integer sucursalId);
 	List<MenuDayEntity> findByStatusAndOrganizationId(String status, Integer organizationId);
-	
+	List<MenuDayEntity> findByOrganizationId(Integer organizationId);
 	
 }
 

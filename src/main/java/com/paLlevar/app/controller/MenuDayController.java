@@ -1,5 +1,6 @@
 package com.paLlevar.app.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,14 @@ public class MenuDayController {
 	@DeleteMapping(value="/dmd/{id}") //  TERMINADO
 	public void deletedMenuDay(@PathVariable("id")Integer id) {
 		menudayService.deleteMenuDayAndProductDayList(id);
+	}
+	
+	@GetMapping(path="/glpbo/{id}") // TERMINADO
+	public ResponseEntity<List<MenuDayEntity>>  getMenuDayByOrganizationId(@PathVariable("id")Integer id){
+		List<MenuDayEntity> menuDayList= menudayService.getMenuDayListByOrg(id);
+		if(menuDayList == null )
+			menuDayList = new ArrayList<MenuDayEntity>();
+		return new ResponseEntity<List<MenuDayEntity>>(menuDayList,HttpStatus.OK);
 	}
 	
 	

@@ -119,6 +119,11 @@ public class MenuDayServiceImpl implements MenuDayService {
 		}
 	}
 
+	@Override
+	public List<MenuDayEntity> getMenuDayListByOrg(Integer orgId) {
+		return repo.findByOrganizationId(orgId);
+	}
+
 
 }
 

@@ -16,6 +16,6 @@ public interface MenuDayService extends GenericCRUD<MenuDayEntity, Integer>{
 	
 	public List<MenuDayEntity> getMenuDayListByStatusAndOrgAndSuc(MenuDayEntity menuDay);
 	public List<MenuDayEntity> getMenuDayListByStatusAndOrg(MenuDayEntity menuDay); 
-	
+	public List<MenuDayEntity> getMenuDayListByOrg(Integer orgId);
 	
 }
