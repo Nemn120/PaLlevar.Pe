@@ -13,4 +13,6 @@ public interface MenuDayProductService extends GenericCRUD<MenuDayProductEntity,
 	List<MenuDayProductEntity> getMenuDayProductListByMenuIdAndOrganizationId(MenuDayProductEntity menuDayProduct);
 	public List<MenuDayProductEntity> getListMenuProductByMenuId(Integer idMenu);
 	public MenuDayProductEntity getMenuByIdAndStatus(Integer id, String status);
+	public List<MenuDayProductEntity> getListByOrganizationIdAndStatus(Integer id, String status);
+	public List<MenuDayProductEntity> getListByOrganizationIdAndStatusAndType(Integer id, String status,String type);
 }

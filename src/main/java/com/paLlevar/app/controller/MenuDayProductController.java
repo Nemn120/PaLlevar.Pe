@@ -1,3 +1,5 @@
+
+
 package com.paLlevar.app.controller;
 
 import java.util.List;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.paLlevar.app.model.entities.MenuDayProductEntity;
 import com.paLlevar.app.model.services.MenuDayProductService;
+import com.paLlevar.app.util.Constants;
 
 @RestController
 @RequestMapping("/menuDayProduct")
@@ -54,4 +57,17 @@ public class MenuDayProductController {
 		List<MenuDayProductEntity> lista = menudayproductService.getMenuDayProductListByMenuIdAndOrganizationId(mdp);
 		return new ResponseEntity<List<MenuDayProductEntity>>(lista,HttpStatus.OK);
 	}
+	
+	@PostMapping(value="/glmbod") // TERMINADO
+	public ResponseEntity<List<MenuDayProductEntity>>  getListByOrgAndStatus(@RequestBody MenuDayProductEntity mdp){
+		List<MenuDayProductEntity> lista = menudayproductService.getListByOrganizationIdAndStatus(mdp.getOrganizationId(),Constants.MENUD_PROD_STATUS_AVAILABLE);
+		return new ResponseEntity<List<MenuDayProductEntity>>(lista,HttpStatus.OK);
+	}
+	@PostMapping(value="/glmbot") // TERMINADO
+	public ResponseEntity<List<MenuDayProductEntity>>  getListByOrgAndStatusAndType(@RequestBody MenuDayProductEntity mdp){
+		List<MenuDayProductEntity> lista = menudayproductService.getListByOrganizationIdAndStatusAndType(mdp.getOrganizationId(),Constants.MENUD_PROD_STATUS_AVAILABLE,mdp.getType());
+		return new ResponseEntity<List<MenuDayProductEntity>>(lista,HttpStatus.OK);
+	}
+	
+	
 }

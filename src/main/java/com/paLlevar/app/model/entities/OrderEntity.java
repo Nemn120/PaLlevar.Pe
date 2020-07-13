@@ -53,10 +53,6 @@ public class OrderEntity    extends MainEntity implements Serializable{
 	@Column(name="phone")
 	private String phone;
 	
-	@Column(name="company_name")
-	private String companyName;
-	
-	
 	public List<OrderDetailEntity> getOrderDetail() {
 		return orderDetail;
 	}
@@ -119,13 +115,5 @@ public class OrderEntity    extends MainEntity implements Serializable{
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getCompanyName() {
-		return companyName;
-	}
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
-	}
 	
-	
-
 }

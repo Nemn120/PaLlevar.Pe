@@ -51,7 +51,6 @@ public class OrderController {
 		List<String> statusList = Arrays.asList(Constants.ORDER_DETAIL_STATUS_CANCEL,Constants.ORDER_STATUS_DELIVERED);
 		List<OrderEntity> lista = orderService.getListOrderByNotStatusAndUserId(statusList, id);
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
-		
 	}
 	
 	@PostMapping(path="/sobos")

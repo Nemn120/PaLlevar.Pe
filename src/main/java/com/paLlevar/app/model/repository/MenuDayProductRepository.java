@@ -19,5 +19,11 @@ public interface MenuDayProductRepository extends JpaRepository<MenuDayProductEn
 	List<MenuDayProductEntity> getListMenuProductByMenuId(@Param("idMenu")Integer idMenu);
 	
 	MenuDayProductEntity findByIdAndStatus(Integer id, String status);
+	
+	List<MenuDayProductEntity> findByOrganizationIdAndStatus(Integer organizationId, String status);
+	
+	List<MenuDayProductEntity> findByOrganizationIdAndStatusAndType(Integer organizationId, String status,String type);
+	
+	
 }
 

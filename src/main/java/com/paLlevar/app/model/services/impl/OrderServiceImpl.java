@@ -66,10 +66,7 @@ public class OrderServiceImpl implements OrderService {
 		if(order.getOrderDetail() != null) {
 			order.getOrderDetail().forEach(od ->{
 				od.setStatus(Constants.ORDER_DETAIL_STATUS_PENDING);
-				od.setOrganizationId(order.getOrganizationId());
-				if(order.getSucursalId() != null) {
-					od.setSucursalId(order.getSucursalId());
-				}
+				//od.setOrganizationId(order.getOrganizationId());
 				od.setUserCreateId(order.getUserOrder().getId());
 				od.setOrder(order);
 				MenuDayProductEntity mp =menuDayProdService.getMenuByIdAndStatus(od.getMenuProductId(),Constants.MENUD_PROD_STATUS_AVAILABLE);
