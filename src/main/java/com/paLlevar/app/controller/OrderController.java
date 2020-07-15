@@ -54,10 +54,24 @@ public class OrderController {
 	}
 	
 	@PostMapping(path="/sobos")
-	public OrderEntity saveNewOrderByOrganizationId(@RequestBody OrderEntity or) {
+	public ResponseEntity<OrderEntity> saveNewOrderByOrganizationId(@RequestBody OrderEntity or) {
 		orderService.saveOrderByOrganizationIdAndSucursalId(or);
-		return null;
+		return new ResponseEntity<OrderEntity> (new OrderEntity(),HttpStatus.OK);
 	}
+	
+	@PostMapping(path="/sdoo")
+	public  ResponseEntity<OrderEntity> saveDeliveryOrderByOrg(@RequestBody OrderEntity or) {
+		orderService.deliveryOrder(or);
+		return new ResponseEntity<OrderEntity> (new OrderEntity(),HttpStatus.OK);
+	}
+	
+	@PostMapping(path="/saoo")
+	public  ResponseEntity<OrderEntity> saveAttendOrderByOrg(@RequestBody OrderEntity or) {
+		orderService.attendOrder(or);
+		return new ResponseEntity<OrderEntity> (new OrderEntity(),HttpStatus.OK);
+	}
+	
+	
 	@PostMapping(path="/cho")
 	public ResponseEntity<Object>CheckOrder(@RequestBody OrderEntity or){
 		Boolean verificar= orderService.CheckOrder(or.getId(), or.getOrganizationId());

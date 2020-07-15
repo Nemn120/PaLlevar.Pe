@@ -53,6 +53,9 @@ public class OrderEntity    extends MainEntity implements Serializable{
 	@Column(name="phone")
 	private String phone;
 	
+	@Column(name="user_delivery_id")
+	private Integer userDeliveryId;
+	
 	public List<OrderDetailEntity> getOrderDetail() {
 		return orderDetail;
 	}
@@ -115,5 +118,12 @@ public class OrderEntity    extends MainEntity implements Serializable{
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+	public Integer getUserDeliveryId() {
+		return userDeliveryId;
+	}
+	public void setUserDeliveryId(Integer userDeliveryId) {
+		this.userDeliveryId = userDeliveryId;
+	}
+	
 	
 }

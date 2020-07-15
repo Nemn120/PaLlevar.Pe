@@ -36,7 +36,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
 	@Override
 	public OrderDetailEntity getOneById(Integer id) {
-		return repo.getOne(id);
+		return repo.findById(id).orElse(new OrderDetailEntity());
 	}
 
 	@Override

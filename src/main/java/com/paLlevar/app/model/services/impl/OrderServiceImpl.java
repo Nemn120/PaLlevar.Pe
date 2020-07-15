@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,12 +14,14 @@ import com.paLlevar.app.model.entities.MenuDayEntity;
 import com.paLlevar.app.model.entities.MenuDayProductEntity;
 import com.paLlevar.app.model.entities.OrderDetailEntity;
 import com.paLlevar.app.model.entities.OrderEntity;
+import com.paLlevar.app.model.entities.UserEntity;
 import com.paLlevar.app.model.repository.OrderDetailRepository;
 import com.paLlevar.app.model.repository.OrderRepository;
 import com.paLlevar.app.model.services.MenuDayProductService;
 import com.paLlevar.app.model.services.MenuDayService;
 import com.paLlevar.app.model.services.OrderDetailService;
 import com.paLlevar.app.model.services.OrderService;
+import com.paLlevar.app.model.services.UserService;
 import com.paLlevar.app.util.Constants;
 
 @Service
@@ -33,6 +36,9 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Autowired
 	private MenuDayProductService menuDayProdService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@Override
 	public List<OrderEntity> getAll() {
@@ -62,8 +68,8 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override // actualiza el estado del menu del dia
 	public OrderEntity saveOrderByOrganizationIdAndSucursalId(OrderEntity order) {
+		
 		repo.save(order);
-		if(order.getOrderDetail() != null) {
 			order.getOrderDetail().forEach(od ->{
 				od.setStatus(Constants.ORDER_DETAIL_STATUS_PENDING);
 				//od.setOrganizationId(order.getOrganizationId());
@@ -90,7 +96,6 @@ public class OrderServiceImpl implements OrderService {
 			});
 			
 			
-		}
 		order.setCreateDate(LocalDateTime.now());
 		order.setStatus(Constants.ORDER_DETAIL_STATUS_PENDING);
 		return repo.save(order);
@@ -124,6 +129,49 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<OrderEntity> getListOrderByNotStatusAndUserId(List<String> status, Integer userId) {
 		return repo.getListOrderByNotStatusAndUserId(status, userId);
+	}
+
+	@Override
+	public void deliveryOrder(OrderEntity order) {
+		order.getOrderDetail().forEach(od->{
+			od.setStatus(Constants.ORDER_DETAIL_STATUS_DELIVERY);
+			od.setDeliveryDate(new Date());
+			od.setUserDelivery(new UserEntity());
+			od.getUserDelivery().setId(order.getUserDeliveryId());
+			UserEntity userDelivery = userService.getOneById(order.getUserDeliveryId());
+			userDelivery.setStatus(Constants.DELIVERY_MANY_STATUS_OCUPADO);
+			userService.save(userDelivery);
+			
+			orderDetailService.save(od);
+		});
+		order.setDeliveryDate(new Date());
+		order.setStatus(Constants.ORDER_STATUS_DELIVERY);
+		repo.save(order);
+		
+	}
+
+	@Override
+	public void attendOrder(OrderEntity order) {
+		order.getOrderDetail().forEach(od ->{
+			if(od.getUserAttend() != null) {
+				od.setAttendDate(new Date());
+				od.setStatus(Constants.ORDER_DETAIL_STATUS_ATTENT);
+				//od.setUserAttend(new UserEntity());
+				//od.getUserAttend().setId(order.getu);
+				
+				orderDetailService.save(od);
+			}
+		});
+		OrderEntity oe = repo.findById(order.getId()).get();
+		long cantidad = oe.getOrderDetail().stream().filter(x ->
+			Constants.ORDER_DETAIL_STATUS_ATTENT.equals(x.status)).count();
+		if(cantidad == oe.getOrderDetail().size()) {
+			oe.setStatus(Constants.ORDER_STATUS_ATTENT);
+			oe.setAttendDate(new Date());
+		}
+		else
+			oe.setStatus(Constants.ORDER_STATUS_PROCESS);
+		repo.save(oe);
 	}
 
 }
