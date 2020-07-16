@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "order_header")
@@ -55,6 +56,9 @@ public class OrderEntity    extends MainEntity implements Serializable{
 	
 	@Column(name="user_delivery_id")
 	private Integer userDeliveryId;
+	
+	@Transient
+	private Integer userAttendId;
 	
 	public List<OrderDetailEntity> getOrderDetail() {
 		return orderDetail;
@@ -123,6 +127,12 @@ public class OrderEntity    extends MainEntity implements Serializable{
 	}
 	public void setUserDeliveryId(Integer userDeliveryId) {
 		this.userDeliveryId = userDeliveryId;
+	}
+	public Integer getUserAttendId() {
+		return userAttendId;
+	}
+	public void setUserAttendId(Integer userAttendId) {
+		this.userAttendId = userAttendId;
 	}
 	
 	

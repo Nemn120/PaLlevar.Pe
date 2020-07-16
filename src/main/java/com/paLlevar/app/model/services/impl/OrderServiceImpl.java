@@ -153,11 +153,11 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public void attendOrder(OrderEntity order) {
 		order.getOrderDetail().forEach(od ->{
-			if(od.getUserAttend() != null) {
+			if(order.getUserAttendId()!= null) {
 				od.setAttendDate(new Date());
 				od.setStatus(Constants.ORDER_DETAIL_STATUS_ATTENT);
-				//od.setUserAttend(new UserEntity());
-				//od.getUserAttend().setId(order.getu);
+				od.setUserAttend(new UserEntity());
+				od.getUserAttend().setId(order.getUserAttendId());
 				
 				orderDetailService.save(od);
 			}
