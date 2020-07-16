@@ -137,6 +137,7 @@ public class OrderServiceImpl implements OrderService {
 			od.setStatus(Constants.ORDER_DETAIL_STATUS_DELIVERY);
 			od.setDeliveryDate(new Date());
 			od.setUserDelivery(new UserEntity());
+			od.setOrder(order);
 			od.getUserDelivery().setId(order.getUserDeliveryId());
 			UserEntity userDelivery = userService.getOneById(order.getUserDeliveryId());
 			userDelivery.setStatus(Constants.DELIVERY_MANY_STATUS_OCUPADO);
@@ -154,6 +155,7 @@ public class OrderServiceImpl implements OrderService {
 	public void attendOrder(OrderEntity order) {
 		order.getOrderDetail().forEach(od ->{
 			if(order.getUserAttendId()!= null) {
+				od.setOrder(order);
 				od.setAttendDate(new Date());
 				od.setStatus(Constants.ORDER_DETAIL_STATUS_ATTENT);
 				od.setUserAttend(new UserEntity());
