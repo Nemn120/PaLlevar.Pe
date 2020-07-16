@@ -89,7 +89,8 @@ public class OrderController {
 	
 	@PostMapping(path="/glop")
 	public ResponseEntity<List<OrderEntity>>  getListOrderPendding(@RequestBody OrderEntity or){
-		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS__PENDING,or);
+		List<String> statusList = Arrays.asList(Constants.ORDER_STATUS_PROCESS,Constants.ORDER_STATUS__PENDING);
+		List<OrderEntity> lista = orderService.getListOrderStatusAndOrgId(statusList,or.getOrganizationId());
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
 		
 	}

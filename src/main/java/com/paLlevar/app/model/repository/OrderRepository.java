@@ -19,5 +19,9 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Integer>{
 	// TRAE LOS PEDIDOS SEGUN EL ESTADO
 	@Query("SELECT o FROM OrderEntity o WHERE  o.userOrder.id=:userId AND o.status not in (:status) ")
 	public List<OrderEntity> getListOrderByNotStatusAndUserId(@Param("status") List<String> status, @Param("userId") Integer userId);
+	
+	@Query("SELECT o FROM OrderEntity o WHERE  o.organizationId.id=:orgId AND o.status in (:status) ")
+	public List<OrderEntity> getListOrderByStatusAndOrgId(@Param("status") List<String> status, @Param("orgId") Integer orgId);
+	
 
 }

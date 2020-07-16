@@ -174,4 +174,9 @@ public class OrderServiceImpl implements OrderService {
 		repo.save(oe);
 	}
 
+	@Override
+	public List<OrderEntity> getListOrderStatusAndOrgId(List<String> status, Integer orgId) {
+		return repo.getListOrderByStatusAndOrgId(status, orgId);
+	}
+
 }
