@@ -72,14 +72,14 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override // actualiza el estado del menu del dia
 	public OrderEntity saveOrderByOrganizationIdAndSucursalId(OrderEntity order) {
-		
+		order.setOrganizationId(order.getOrderDetail().get(0).getOrganizationId());
 		repo.save(order);
 			order.getOrderDetail().forEach(od ->{
 				od.setStatus(Constants.ORDER_DETAIL_STATUS_PENDING);
-				//od.setOrganizationId(order.getOrganizationId());
+				od.setOrganizationId(order.getOrganizationId());
 				od.setUserCreateId(order.getUserOrder().getId());
 				od.setOrder(order);
-				od.setCompanyName(companyService.getOneById(od.getOrganizationId()).getNombre());
+				//od.setCompanyName(companyService.getOneById(od.getOrganizationId()).getNombre());
 				MenuDayProductEntity mp =menuDayProdService.getMenuByIdAndStatus(od.getMenuProductId(),Constants.MENUD_PROD_STATUS_AVAILABLE);
 				mp.setAvailable(mp.getAvailable()-1);
 				if(mp.getAvailable().equals(0)) {

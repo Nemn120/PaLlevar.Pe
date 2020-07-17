@@ -57,6 +57,9 @@ public class OrderEntity    extends MainEntity implements Serializable{
 	@Column(name="user_delivery_id")
 	private Integer userDeliveryId;
 	
+	@Column(name="reference")
+	private String reference;
+	
 	@Transient
 	private Integer userAttendId;
 	
@@ -133,6 +136,12 @@ public class OrderEntity    extends MainEntity implements Serializable{
 	}
 	public void setUserAttendId(Integer userAttendId) {
 		this.userAttendId = userAttendId;
+	}
+	public String getReference() {
+		return reference;
+	}
+	public void setReference(String reference) {
+		this.reference = reference;
 	}
 	
 	
