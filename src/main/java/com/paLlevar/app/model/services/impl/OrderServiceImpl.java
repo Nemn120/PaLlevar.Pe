@@ -17,6 +17,7 @@ import com.paLlevar.app.model.entities.OrderEntity;
 import com.paLlevar.app.model.entities.UserEntity;
 import com.paLlevar.app.model.repository.OrderDetailRepository;
 import com.paLlevar.app.model.repository.OrderRepository;
+import com.paLlevar.app.model.services.CompanyService;
 import com.paLlevar.app.model.services.MenuDayProductService;
 import com.paLlevar.app.model.services.MenuDayService;
 import com.paLlevar.app.model.services.OrderDetailService;
@@ -39,6 +40,9 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private CompanyService companyService;
 	
 	@Override
 	public List<OrderEntity> getAll() {
@@ -75,6 +79,7 @@ public class OrderServiceImpl implements OrderService {
 				//od.setOrganizationId(order.getOrganizationId());
 				od.setUserCreateId(order.getUserOrder().getId());
 				od.setOrder(order);
+				od.setCompanyName(companyService.getOneById(od.getOrganizationId()).getNombre());
 				MenuDayProductEntity mp =menuDayProdService.getMenuByIdAndStatus(od.getMenuProductId(),Constants.MENUD_PROD_STATUS_AVAILABLE);
 				mp.setAvailable(mp.getAvailable()-1);
 				if(mp.getAvailable().equals(0)) {

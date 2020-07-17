@@ -94,4 +94,12 @@ public class MenuDayProductServiceImpl implements MenuDayProductService {
 		return repo.findByOrganizationIdAndStatusAndType(id, status, type);
 	}
 
+	@Override
+	public void deleteMenuDayProduct(MenuDayProductEntity menuProduct) {
+		menuProduct.setMenuDay(new MenuDayEntity());
+		menuProduct.setMenuDayId(null);
+		repo.save(menuProduct);
+		repo.delete(menuProduct);
+	}
+
 }

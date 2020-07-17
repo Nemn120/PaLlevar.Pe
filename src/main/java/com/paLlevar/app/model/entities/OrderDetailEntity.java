@@ -63,6 +63,9 @@ public class OrderDetailEntity extends MainEntity  implements Serializable{
 	@Column(name="attend_date")
 	private Date AttendDate;
 	
+	@Column(name="company_name")
+	private String companyName;
+	
 	public Integer getOrderId() {
 		return orderId;
 	}
@@ -150,6 +153,14 @@ public class OrderDetailEntity extends MainEntity  implements Serializable{
 
 	public void setAttendDate(Date attendDate) {
 		AttendDate = attendDate;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 	
 	

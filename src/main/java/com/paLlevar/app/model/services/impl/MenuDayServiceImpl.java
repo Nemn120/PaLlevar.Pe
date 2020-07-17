@@ -77,11 +77,11 @@ public class MenuDayServiceImpl implements MenuDayService {
 	
 	@Override
 	public List<MenuDayEntity> getMenuDayListByFields(MenuDayEntity menuDay) {
-		
-		return repo.getMenuDayByFields(menuDay);
+		List<MenuDayEntity> aux =  repo.getMenuDayByFields(menuDay);
+		return this.copyMenuDay(aux);
 	}
 
-	@Override
+	@Override // MENU DAY
 	public MenuDayEntity editMenuDay(MenuDayEntity menuDay) {
 		
 		return repo.save(menuDay);
@@ -94,12 +94,14 @@ public class MenuDayServiceImpl implements MenuDayService {
 
 	@Override
 	public List<MenuDayEntity> getMenuDayListByStatusAndOrgAndSuc(MenuDayEntity md) {
-		return repo.findByStatusAndOrganizationIdAndSucursalId(md.getStatus(), md.getOrganizationId(),md.getSucursalId());
+		List<MenuDayEntity> aux = repo.findByStatusAndOrganizationIdAndSucursalId(md.getStatus(), md.getOrganizationId(),md.getSucursalId());
+		return this.copyMenuDay(aux);
 	}
 
 	@Override
 	public List<MenuDayEntity> getMenuDayListByStatusAndOrg(MenuDayEntity md) {
-		return repo.findByStatusAndOrganizationId(md.getStatus(), md.getOrganizationId());
+		List<MenuDayEntity> aux = repo.findByStatusAndOrganizationId(md.getStatus(), md.getOrganizationId());
+		return this.copyMenuDay(aux);
 	}
 
 	@Override
@@ -118,10 +120,17 @@ public class MenuDayServiceImpl implements MenuDayService {
 			return false;
 		}
 	}
+	private List<MenuDayEntity> copyMenuDay(List<MenuDayEntity> md) {
+		md.forEach(x -> {
+			x.getMenuDayProductList().forEach(data -> data.setMenuDayId(data.getMenuDay().getId()));
+		});
+		return md;
+	}
 
 	@Override
 	public List<MenuDayEntity> getMenuDayListByOrg(Integer orgId) {
-		return repo.findByOrganizationId(orgId);
+		List<MenuDayEntity> aux = repo.findByOrganizationId(orgId);
+		return this.copyMenuDay(aux);
 	}
 
 
