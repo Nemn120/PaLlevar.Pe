@@ -42,6 +42,12 @@ public class CompanyEntity implements Serializable {
 	
 	@Column(name="status",length=20)
 	private String status;
+	
+	@Column(name="estimated_time")
+	private Integer estimatedTime;
+	
+	@Column(name="qualification")
+	private Double qualification;
 
 	public Integer getId() {
 		return id;
@@ -90,6 +96,18 @@ public class CompanyEntity implements Serializable {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public Integer getEstimatedTime() {
+		return estimatedTime;
+	}
+	public void setEstimatedTime(Integer estimatedTime) {
+		this.estimatedTime = estimatedTime;
+	}
+	public Double getQualification() {
+		return qualification;
+	}
+	public void setQualification(Double qualification) {
+		this.qualification = qualification;
 	}
 	
 	
