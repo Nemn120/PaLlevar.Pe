@@ -87,19 +87,10 @@ public class UserController {
 		return new ResponseEntity<Object>(HttpStatus.CREATED);
 	}
 	
-	@PostMapping(path="radmin",produces = "application/json", consumes = "application/json")
-	private ResponseEntity<Object> registerAdmin(@RequestBody UserEntity usuario){
-		usuario.setProfile(new ProfileEntity());
-		usuario.getProfile().setIdProfile(Constants.ADMIN_USER_ROL);
-		userService.registerUserByProfile(usuario);
-		return new ResponseEntity<Object>(HttpStatus.CREATED);
-	}
-	@PostMapping(path="rchef",produces = "application/json", consumes = "application/json")
-	private ResponseEntity<Object> registerCheft(@RequestBody UserEntity usuario){
-		usuario.setProfile(new ProfileEntity());
-		usuario.getProfile().setIdProfile(Constants.MAIN_CHEF_USER_ROL);
-		userService.registerUserByProfile(usuario);
-		return new ResponseEntity<Object>(HttpStatus.CREATED);
+	@GetMapping(value="/gubo/{id}")
+	public  ResponseEntity<List<UserEntity>>getUserListByOrg(@PathVariable("id")Integer id) {
+		List<UserEntity> userList= userService.getUserListByOrganizationId(id);
+		return new ResponseEntity<List<UserEntity>>(userList,HttpStatus.OK);
 	}
 	
 	@PostMapping(path="/guldm")

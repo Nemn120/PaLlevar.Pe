@@ -35,4 +35,10 @@ public class ProfileServiceImpl implements ProfileService{
 		
 	}
 
+	@Override
+	public List<ProfileEntity> getProfileListNotIdProfile(List<String> listProfile) {
+		return repo.findByNameNotIn(listProfile);
+	}
+
+	
 }

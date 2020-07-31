@@ -11,4 +11,5 @@ public interface UserService extends GenericCRUD<UserEntity, Integer>{
 	UserEntity getUserByUsername(String username);
 	UserEntity registerUserByProfile(UserEntity user);
 	List<UserEntity> getUserListByProfileANDStatus(UserEntity user);
+	List<UserEntity> getUserListByOrganizationId(Integer idOrg);
 }

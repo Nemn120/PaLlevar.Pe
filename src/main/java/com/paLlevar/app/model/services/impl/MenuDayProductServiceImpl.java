@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.paLlevar.app.model.entities.MenuDayEntity;
 import com.paLlevar.app.model.entities.MenuDayProductEntity;
+import com.paLlevar.app.model.entities.ProductEntity;
 import com.paLlevar.app.model.repository.MenuDayProductRepository;
 import com.paLlevar.app.model.services.MenuDayProductService;
 
@@ -45,6 +46,10 @@ public class MenuDayProductServiceImpl implements MenuDayProductService {
 
 	@Override
 	public void deleteById(Integer id) {
+		MenuDayProductEntity md =repo.findById(id).orElse(new MenuDayProductEntity());
+		md.setProduct(new ProductEntity());
+		md.setMenuDay(new MenuDayEntity());
+		repo.save(md);
 		repo.deleteById(id);
 	}
 

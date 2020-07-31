@@ -26,4 +26,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer>{
 	@Query("UPDATE UserEntity set photo =:photo where id =:id")
 	void updatePhoto(@Param("id") Integer id, @Param("photo") byte[] photo);
 	
+	List<UserEntity> findByOrganizationId(Integer id);
 }
