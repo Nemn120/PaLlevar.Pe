@@ -69,9 +69,11 @@ public class UserController {
 	
 	
 	@PostMapping(path="/su")
-	public UserEntity saveUser(@RequestBody UserEntity us) {
-		UserEntity userSave = userService.save(us);
-		return userSave;
+	public ResponseEntity<Object> saveUserCompany(@RequestBody UserEntity us) {
+		/*us.setProfile(new ProfileEntity());
+		us.getProfile().setIdProfile(us.getProfile().getIdProfile());*/
+		UserEntity userSave = userService.registerUserByProfile(us);
+		return new ResponseEntity<Object>(userSave,HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping(value="/du/{id}")

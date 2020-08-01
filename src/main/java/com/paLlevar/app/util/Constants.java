@@ -36,9 +36,9 @@ public class Constants {
 	public static final String TYPE_OFERT="3";
 	
 	
-	public static final String DELIVERY_MAN_STATUS_NOT_DISPONIBLE="1";
-	public static final String DELIVERY_MAN_STATUS_DISPONIBLE="2";
-	public static final String DELIVERY_MANY_STATUS_OCUPADO="3";
+	public static final String DELIVERY_MAN_STATUS_NOT_DISPONIBLE="NO DISPONIBLE";
+	public static final String DELIVERY_MAN_STATUS_DISPONIBLE="DISPONIBLE";
+	public static final String DELIVERY_MANY_STATUS_OCUPADO="OCUPADO";
 	
 	public static final String STATUS_ON_ENTITY="Activo";
 	public static final String STATUS_OFF_ENTITY="Desactivo";
