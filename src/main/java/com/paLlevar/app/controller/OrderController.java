@@ -1,7 +1,9 @@
 package com.paLlevar.app.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -54,9 +56,16 @@ public class OrderController {
 	}
 	
 	@PostMapping(path="/sobos")
-	public ResponseEntity<OrderEntity> saveNewOrderByOrganizationId(@RequestBody OrderEntity or) {
-		orderService.saveOrderByOrganizationIdAndSucursalId(or);
-		return new ResponseEntity<OrderEntity> (new OrderEntity(),HttpStatus.OK);
+	public ResponseEntity<?> saveNewOrderByOrganizationId(@RequestBody OrderEntity or) {
+		Map<String,Object> response = new HashMap<>();
+		try {
+			orderService.saveOrderByOrganizationIdAndSucursalId(or);
+			response.put("message", "Pedido registrado con éxito");
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
+		}catch(Exception e){
+			response.put("error", "Error al realizar pedido");
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	@PostMapping(path="/sdoo")

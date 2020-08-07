@@ -30,6 +30,7 @@ public class ProductEntity  extends MainEntity  implements Serializable{
 	@Column(name="path_photo", length=100)
 	private String pathPhoto;
 	
+	@JsonIgnore
 	@Column(name = "photo", updatable = false)
 	private byte[] photo;
 	

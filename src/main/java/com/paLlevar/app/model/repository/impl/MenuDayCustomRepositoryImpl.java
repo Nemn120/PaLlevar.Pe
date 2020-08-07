@@ -5,27 +5,21 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.paLlevar.app.model.entities.MenuDayEntity;
 import com.paLlevar.app.model.repository.MenuDayCustomRepository;
 
 public class MenuDayCustomRepositoryImpl implements MenuDayCustomRepository {
-	
-	/*static EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.paLLevar.app.model.repository.impl");
-	
-	public static EntityManager getEntityManager() {
-	    return emf.createEntityManager();
-	}
-	
-	
-	private EntityManager em = MenuDayCustomRepositoryImpl.getEntityManager();
-	*/
-	
+
+	 @PersistenceContext
+	 private EntityManager em;
+
 	@Override
 	public List<MenuDayEntity> getMenuDayByFields(MenuDayEntity menuday) {
-		/*StringBuffer queryString = new StringBuffer(
-				"SELECT md From MenuDayEntity od where od.organizationId=:organizationId");
+		StringBuffer queryString = new StringBuffer(
+				"SELECT md From MenuDayEntity md where md.organizationId=:organizationId");
 		
 		if(menuday.getSucursalId() != null) {
 			queryString.append(" AND md.sucursalId=:sucursalId");
@@ -75,9 +69,9 @@ public class MenuDayCustomRepositoryImpl implements MenuDayCustomRepository {
 			query.setParameter("endDate",menuday.getLocalDateTimeFinal());
 			
 		}
-		*/
-		//return query.getResultList();
-		return null;
+		
+		return query.getResultList();
+		//return null;
 	
 	}
 	

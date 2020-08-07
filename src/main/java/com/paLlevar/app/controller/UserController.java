@@ -1,7 +1,9 @@
 package com.paLlevar.app.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.paLlevar.app.model.entities.CategoryProductEntity;
-import com.paLlevar.app.model.entities.CompanyEntity;
 import com.paLlevar.app.model.entities.ProfileEntity;
 import com.paLlevar.app.model.entities.UserEntity;
 import com.paLlevar.app.model.services.UserService;
@@ -39,16 +39,15 @@ public class UserController {
 	}
 	
 	@PostMapping(path="/gubu",produces = "application/json")
-	public ResponseEntity<UserEntity>  getUserByUsername(@RequestBody String username){
+	public ResponseEntity<?>  getUserByUsername(@RequestBody String username){
 		UserEntity user; 
 		try {
 			user= userService.getUserByUsername(username);
+			return new ResponseEntity<UserEntity>(user,HttpStatus.OK);
+			
 		}catch(Exception e) {
-			user=null;
-
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encuentra el usuario");
 		}
-		return new ResponseEntity<UserEntity>(user,HttpStatus.OK);
-		
 	}
 	
 	@GetMapping(value = "/gp/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
@@ -59,19 +58,24 @@ public class UserController {
 	}
 	
 	@PostMapping(path="/uu")
-	public UserEntity updatedUser(@RequestPart("user") UserEntity pr, @RequestPart("file") MultipartFile file) throws IOException{
-		if(file.getBytes().length >0)
-			pr.setPhoto(file.getBytes());
-		UserEntity companySave = userService.save(pr);
-		return companySave;
+	public ResponseEntity<?> updatedUser(@RequestPart("user") UserEntity pr, @RequestPart("file") MultipartFile file) throws IOException{
+		Map<String,Object> response = new HashMap<>();
+		try {
+			if(file.getBytes().length >0)
+				pr.setPhoto(file.getBytes());
+			userService.save(pr);
+			response.put(Constants.MESSAGE_BODY_RESPONSE, "Perfil actualizado con éxito");
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
+		}catch(Exception e) {
+			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al actualizar perfil");
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	
 	
 	@PostMapping(path="/su")
 	public ResponseEntity<Object> saveUserCompany(@RequestBody UserEntity us) {
-		/*us.setProfile(new ProfileEntity());
-		us.getProfile().setIdProfile(us.getProfile().getIdProfile());*/
 		UserEntity userSave = userService.registerUserByProfile(us);
 		return new ResponseEntity<Object>(userSave,HttpStatus.CREATED);
 	}

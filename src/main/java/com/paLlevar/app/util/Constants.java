@@ -46,6 +46,9 @@ public class Constants {
 	public static final String PROFILE_ROOT="ADMIN";
 	public static final String PROFILE_CLIENT="CLIENT";
 	
+	public static final String MESSAGE_BODY_RESPONSE="message";
+	public static final String MESSAGE_TITLE_RESPONSE="title";
+	
 
 }
 

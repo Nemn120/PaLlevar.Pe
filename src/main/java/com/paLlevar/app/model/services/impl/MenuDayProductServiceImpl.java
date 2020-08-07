@@ -12,6 +12,7 @@ import com.paLlevar.app.model.entities.MenuDayProductEntity;
 import com.paLlevar.app.model.entities.ProductEntity;
 import com.paLlevar.app.model.repository.MenuDayProductRepository;
 import com.paLlevar.app.model.services.MenuDayProductService;
+import com.paLlevar.app.util.Constants;
 
 @Service
 @Transactional
@@ -40,6 +41,8 @@ public class MenuDayProductServiceImpl implements MenuDayProductService {
 				t.setMenuDay(new MenuDayEntity());
 				t.getMenuDay().setId(t.getMenuDayId());
 			}
+		}else {
+			// CONDICION 
 		}
 		return repo.save(t);
 	}
