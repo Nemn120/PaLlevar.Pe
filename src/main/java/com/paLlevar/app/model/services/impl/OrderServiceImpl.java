@@ -230,7 +230,6 @@ public class OrderServiceImpl implements OrderService {
 			}
 			
 			repo.deleteById(order.getId());
-			
 			return true;
 			
 		}catch(Exception e) {
