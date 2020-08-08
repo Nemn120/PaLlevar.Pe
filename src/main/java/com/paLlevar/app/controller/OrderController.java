@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.paLlevar.app.model.entities.OrderEntity;
 import com.paLlevar.app.model.services.OrderService;
+import com.paLlevar.app.model.services.dto.SearchOrderByDeliveryManDTO;
 import com.paLlevar.app.util.Constants;
 
 @RestController
@@ -136,6 +137,27 @@ public class OrderController {
 		
 	}
 	
+	@PostMapping(path="/golbdi")
+	public ResponseEntity<List<OrderEntity>>  getOrderListByDeliveyId(@RequestBody SearchOrderByDeliveryManDTO sobd){
+		List<OrderEntity> orderList =  orderService.getOrderListByDeliveyId(sobd);
+		return new ResponseEntity<List<OrderEntity>>(orderList, HttpStatus.OK);
+	}
+	
+	@PostMapping(path="/cor")
+	public ResponseEntity<Object> cancelOrder(@RequestBody OrderEntity or){
+		Boolean check = orderService.isCancel(or);
+		if(check){
+			Boolean checkDelete = orderService.deleteOrderAndListOrderDetail(or);
+			if(checkDelete)
+				return new ResponseEntity<Object>(HttpStatus.OK);
+			else 
+				return new ResponseEntity<Object>(HttpStatus.NOT_MODIFIED);
+				
+		}
+		else 
+			return new ResponseEntity<Object>(HttpStatus.NOT_MODIFIED);
+		
+	}
 
 	
 	

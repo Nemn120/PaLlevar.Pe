@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-
+import com.paLlevar.app.model.entities.OrderEntity;
 import com.paLlevar.app.model.repository.OrderCustomRepository;
 import com.paLlevar.app.model.services.dto.SearchOrderByDeliveryManDTO;
 
@@ -17,7 +17,7 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository{
 	 private EntityManager em;
 	 
 	@Override
-	public List<Object[]> getOrderListByDeliveyId(SearchOrderByDeliveryManDTO sobd) {
+	public List<OrderEntity> getOrderListByDeliveyId(SearchOrderByDeliveryManDTO sobd) {
 		StringBuffer queryString = new StringBuffer(
 				"SELECT or From OrderEntity or where or.userDeliveryId=:userDeliveryId");
 		
@@ -29,7 +29,7 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository{
 			queryString.append(" AND or.CreateDate BETWEEN :initDate AND :finalDate"); //getCreateDate
 		}
 		
-		Query query = em.createQuery(queryString.toString());
+		Query query = em.createQuery(queryString.toString(), OrderEntity.class);
 		
 		query.setParameter("userDeliveryId",sobd.getDeliveyId());
 		

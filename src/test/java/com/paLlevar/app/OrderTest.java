@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.paLlevar.app.model.entities.OrderEntity;
 import com.paLlevar.app.model.services.OrderService;
+import com.paLlevar.app.model.services.dto.SearchOrderByDeliveryManDTO;
 import com.paLlevar.app.util.Constants;
 
 @SpringBootTest
@@ -25,6 +26,12 @@ public class OrderTest {
 		List<OrderEntity> orderList = orderService.getListOrderByStatus(Constants.ORDER_STATUS__PENDING,od);
 		
 		orderList.forEach(x -> System.out.println(x));
+		
+		//SearchOrderByDeliveryManDTO so = new SearchOrderByDeliveryManDTO();
+		//so.setDeliveyId(1);
+		
+		
+		
 		
 	}
 }

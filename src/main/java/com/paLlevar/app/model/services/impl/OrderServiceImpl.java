@@ -2,9 +2,12 @@ package com.paLlevar.app.model.services.impl;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.persistence.criteria.Order;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +26,7 @@ import com.paLlevar.app.model.services.MenuDayService;
 import com.paLlevar.app.model.services.OrderDetailService;
 import com.paLlevar.app.model.services.OrderService;
 import com.paLlevar.app.model.services.UserService;
+import com.paLlevar.app.model.services.dto.SearchOrderByDeliveryManDTO;
 import com.paLlevar.app.util.Constants;
 
 @Service
@@ -186,5 +190,54 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderEntity> getListOrderStatusAndOrgId(List<String> status, Integer orgId) {
 		return repo.getListOrderByStatusAndOrgId(status, orgId);
 	}
+
+	@Override
+	public List<OrderEntity> getOrderListByDeliveyId(SearchOrderByDeliveryManDTO sobd) {
+		List<OrderEntity> listResult = repo.getOrderListByDeliveyId(sobd);
+		return this.copyOrder(listResult);
+	}
+	
+	private List<OrderEntity> copyOrder(List<OrderEntity> or) {
+		or.forEach(x -> {
+			x.getOrderDetail().forEach(data -> data.setOrderId(data.getOrder().getId()));
+		});
+		return or;
+	}
+	
+	@Override
+	public Boolean isCancel(OrderEntity or) {
+		OrderEntity order = this.getOneById(or.getId());
+		if(order.getStatus().equals(Constants.ORDER_STATUS__PENDING)) {
+			
+			LocalDateTime time = LocalDateTime.now();
+			LocalDateTime timelimit = order.getCreateDate().plusMinutes(5);
+
+			return time.isBefore(timelimit);
+		}
+		return false;
+	}
+	
+	@Override
+	public Boolean deleteOrderAndListOrderDetail(OrderEntity order) {
+		List<OrderDetailEntity> odList = order.getOrderDetail();
+		
+		try {
+			if(odList != null) {
+				odList.forEach(x ->{
+				orderDetailService.deleteById(x.getId());
+				});
+				
+			}
+			
+			repo.deleteById(order.getId());
+			
+			return true;
+			
+		}catch(Exception e) {
+			
+			return false;
+		}
+	}
+	
 
 }
