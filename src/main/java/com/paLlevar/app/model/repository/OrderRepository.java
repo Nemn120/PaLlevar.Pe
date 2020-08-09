@@ -27,5 +27,7 @@ public interface OrderRepository extends OrderCustomRepository, JpaRepository<Or
 	@Query("UPDATE OrderEntity set status=:status where id=:id")
 	void updateOrderStatus(@Param("id") Integer id, @Param("status") String status);
 	
-	
+	@Modifying
+	@Query("UPDATE OrderEntity set phone=:phone, address=:address, reference=:reference where id=:id")
+	void updateOrder(@Param("id") Integer id, @Param("phone") String phone, @Param("address") String address, @Param("reference") String reference);
 }

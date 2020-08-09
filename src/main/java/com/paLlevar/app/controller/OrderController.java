@@ -170,6 +170,19 @@ public class OrderController {
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@PostMapping(path="/upor")
+	public ResponseEntity<?> updateOrder(@RequestBody OrderEntity o){
+		Map<String,Object> response = new HashMap<>();
+		try {
+			orderService.updateOrder(o);
+			response.put(Constants.MESSAGE_BODY_RESPONSE, "Order actualizado con éxito");
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
+		}catch(Exception e) {
+			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al actualizar order");
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 	
 	

@@ -23,4 +23,5 @@ public interface OrderService extends GenericCRUD<OrderEntity, Integer>{
 	
 	public boolean isCancel(OrderEntity or);
 	public boolean cancelOrderAndListOrderDetail(OrderEntity order);
+	public void updateOrder(OrderEntity o); 
 }

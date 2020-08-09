@@ -226,6 +226,11 @@ public class OrderServiceImpl implements OrderService {
 			return false;
 		}
 	}
+
+	@Override
+	public void updateOrder(OrderEntity o) {
+		repo.updateOrder(o.getId(), o.getPhone(), o.getAddress(), o.getReference());
+	}
 	
 
 }
