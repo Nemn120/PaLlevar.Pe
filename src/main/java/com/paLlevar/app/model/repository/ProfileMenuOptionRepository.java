@@ -11,7 +11,4 @@ import com.paLlevar.app.model.entities.ProfileMenuOptionEntity;
 public interface ProfileMenuOptionRepository extends JpaRepository<ProfileMenuOptionEntity,Integer>{
 	@Query("Select opc from ProfileMenuOptionEntity opc  where opc.profile.idProfile=:profileId")
 	List<ProfileMenuOptionEntity> getOptionsByProfileId(@Param("profileId") Integer profileId);
-
-	
-
 }

@@ -8,6 +8,7 @@ public class SearchSalesByFieldsDTO {
 	private Integer categoryId;
 	private LocalDateTime initDate;
 	private LocalDateTime finalDate;
+	private Integer organizationId;
 	
 	public Integer getProductId() {
 		return productId;
@@ -38,6 +39,12 @@ public class SearchSalesByFieldsDTO {
 	}
 	public void setFinalDate(LocalDateTime finalDate) {
 		this.finalDate = finalDate;
+	}
+	public Integer getOrganizationId() {
+		return organizationId;
+	}
+	public void setOrganizationId(Integer organizationId) {
+		this.organizationId = organizationId;
 	}
 	
 	

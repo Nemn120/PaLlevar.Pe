@@ -1,7 +1,11 @@
 package com.paLlevar.app.model.services.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +18,7 @@ import com.paLlevar.app.model.repository.OrderDetailRepository;
 import com.paLlevar.app.model.services.OrderDetailService;
 import com.paLlevar.app.model.services.OrderService;
 import com.paLlevar.app.model.services.UserService;
+import com.paLlevar.app.model.services.dto.SearchSalesByFieldsDTO;
 import com.paLlevar.app.util.Constants;
 
 @Service
@@ -91,30 +96,13 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	}
 	orderService.save(od);
 	}
-
-	//@Override
-	//public OrderDetailEntity getOrderDetailByStatusAndId(String status, Integer id, Integer organization, Integer sucursal) {
-	//	OrderDetailEntity orderdetail = repo.getOrderDetailByStatusAndId(status, id, organization, sucursal);
-	//	return orderdetail;
-	//}
-	
 	@Override
 	public OrderDetailEntity getOrderDetailByStatusAndId(String status, Integer id, Integer organization) {
 		OrderDetailEntity orderdetail = repo.getOrderDetailByStatusAndId(status, id, organization);
 		return orderdetail;
 	}
 
-	/*@Override
-	public List<OrderDetailEntity> getListOrderDetailByStatus(String status, Integer org, Integer suc) {
-		List<OrderDetailEntity> odList = repo.getListOrderDetailByStatus(status, org, suc);
-		return odList;
-	}
-	
-	@Override
-	public List<OrderDetailEntity> getListOrderDetailByOrderId(Integer oid, Integer orgId, Integer sucursalId) {
-		return repo.getListOrderDetailByOrderId(oid, orgId, sucursalId); 
-	}*/
-	
+
 	@Override
 	public List<OrderDetailEntity> getListOrderDetailByStatus(String status, Integer org) {
 		List<OrderDetailEntity> odList = repo.getListOrderDetailByStatus(status, org);
@@ -125,14 +113,29 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	public List<OrderDetailEntity> getListOrderDetailByOrderId(Integer oid, Integer orgId) {
 		return repo.getListOrderDetailByOrderId(oid, orgId); 
 	}
-	/*
+
 	@Override
-	public void assignDeliveryMan(Integer idOrder, Integer idDeliveryMan, Integer idSuc, Integer idOrg) {
-		OrderDetailEntity or = repo.getOrderDetailById(idOrder,idSuc,idOrg);
-		UserEntity u = userrepo.getUserbyOrganitationDyIDBySucursal(idDeliveryMan, idSuc, idOrg);
-		or.setUserDelivery(u);
-		repo.save(or);
-	}*/
+	public List<Map<String, Object>> getSalesByFieldsGroupByMenuProduct(SearchSalesByFieldsDTO ssbf) {
+		List<Object[]> listResult = repo.getSalesByFieldsGroupByMenuProduct(ssbf);
+		if(listResult != null) {
+			List<Map<String,Object>> result = new ArrayList<Map<String,Object>>();
+			AtomicInteger index = new AtomicInteger();
+			listResult.forEach(res ->{
+				Map<String,Object> map = new HashMap<String,Object>();
+				map.put("index",index.incrementAndGet());
+				map.put("productName",res[0]);
+				map.put("categoryName",res[1]);
+				map.put("price",res[2]);
+				map.put("countSales",res[3]);
+				map.put("sumSales",res[4]);
+				map.put("menuProductId",res[5]);
+				
+				result.add(map);
+			});
+			return result;
+		}
+		return null;
+	}
 
 }
 

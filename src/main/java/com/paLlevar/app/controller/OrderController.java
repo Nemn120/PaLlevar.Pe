@@ -51,6 +51,7 @@ public class OrderController {
 	@GetMapping(value="/globu/{id}")
 	public ResponseEntity<List<OrderEntity>>  getListOrderByUserIdAndNotStatus(@PathVariable("id")Integer id){
 		List<String> statusList = Arrays.asList(Constants.ORDER_DETAIL_STATUS_CANCEL,Constants.ORDER_STATUS_DELIVERED);
+		
 		List<OrderEntity> lista = orderService.getListOrderByNotStatusAndUserId(statusList, id);
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
 	}
@@ -59,7 +60,7 @@ public class OrderController {
 	public ResponseEntity<?> saveNewOrderByOrganizationId(@RequestBody OrderEntity or) {
 		Map<String,Object> response = new HashMap<>();
 		try {
-			orderService.saveOrderByOrganizationIdAndSucursalId(or);
+			response.put("data", orderService.saveOrderByOrganizationIdAndSucursalId(or));
 			response.put("message", "Pedido registrado con éxito");
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
 		}catch(Exception e){

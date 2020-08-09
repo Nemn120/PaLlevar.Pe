@@ -10,9 +10,8 @@ import org.springframework.data.repository.query.Param;
 import com.paLlevar.app.model.entities.UserEntity;
 
 public interface UserRepository extends JpaRepository<UserEntity, Integer>{
-	UserEntity findOneByUsername(String username);
 	
-	//UserEntity 
+	UserEntity findOneByUsername(String username);
 	
 	@Query("SELECT u FROM UserEntity u WHERE u.id=:id AND u.organizationId=:organizationId AND u.sucursalId=:sucursalId")
 	public UserEntity getUserbyOrganitationDyIDBySucursal(@Param("id") Integer id,@Param("sucursalId") Integer idSucursal, @Param("organizationId") Integer orgId);
