@@ -3,11 +3,11 @@ package com.paLlevar.app.model.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.paLlevar.app.model.entities.OrderDetailEntity;
-import com.paLlevar.app.model.entities.UserEntity;
 
 public interface OrderDetailRepository extends JpaRepository<OrderDetailEntity, Integer>{
 	
@@ -34,6 +34,10 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetailEntity, 
 	
 	@Query("SELECT o FROM OrderDetailEntity o WHERE o.id=:id AND o.organizationId=:organizationId")
 	public OrderDetailEntity getOrderDetailById(@Param("id") Integer id, @Param("organizationId") Integer orgId);
+	
+	@Modifying
+	@Query("UPDATE OrderDetailEntity set status=:status where order_id=:id")
+	void updateOrderDetailStatus(@Param("id") Integer id, @Param("status") String status);
 	
 	
 }

@@ -1,28 +1,24 @@
 package com.paLlevar.app.model.services.impl;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.persistence.criteria.Order;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.paLlevar.app.model.entities.MenuDayEntity;
+
 import com.paLlevar.app.model.entities.MenuDayProductEntity;
 import com.paLlevar.app.model.entities.OrderDetailEntity;
 import com.paLlevar.app.model.entities.OrderEntity;
 import com.paLlevar.app.model.entities.UserEntity;
-import com.paLlevar.app.model.repository.OrderDetailRepository;
 import com.paLlevar.app.model.repository.OrderRepository;
 import com.paLlevar.app.model.services.CompanyService;
 import com.paLlevar.app.model.services.MenuDayProductService;
-import com.paLlevar.app.model.services.MenuDayService;
 import com.paLlevar.app.model.services.OrderDetailService;
 import com.paLlevar.app.model.services.OrderService;
 import com.paLlevar.app.model.services.UserService;
@@ -192,20 +188,20 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderEntity> getOrderListByDeliveyId(SearchOrderByDeliveryManDTO sobd) {
-		List<OrderEntity> listResult = repo.getOrderListByDeliveyId(sobd);
-		return this.copyOrder(listResult);
+	public List<OrderEntity> getOrderListByDeliveryId(SearchOrderByDeliveryManDTO sobd) {
+		return  repo.getOrderListByDeliveryId(sobd);
+		
 	}
 	
-	private List<OrderEntity> copyOrder(List<OrderEntity> or) {
+	/*private List<OrderEntity> copyOrder(List<OrderEntity> or) {
 		or.forEach(x -> {
 			x.getOrderDetail().forEach(data -> data.setOrderId(data.getOrder().getId()));
 		});
 		return or;
-	}
+	}*/
 	
 	@Override
-	public Boolean isCancel(OrderEntity or) {
+	public boolean isCancel(OrderEntity or) {
 		OrderEntity order = this.getOneById(or.getId());
 		if(order.getStatus().equals(Constants.ORDER_STATUS__PENDING)) {
 			
@@ -218,18 +214,11 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	@Override
-	public Boolean deleteOrderAndListOrderDetail(OrderEntity order) {
-		List<OrderDetailEntity> odList = order.getOrderDetail();
+	public boolean cancelOrderAndListOrderDetail(OrderEntity order) {
 		
-		try {
-			if(odList != null) {
-				odList.forEach(x ->{
-				orderDetailService.deleteById(x.getId());
-				});
-				
-			}
-			
-			repo.deleteById(order.getId());
+		try {			
+			orderDetailService.updateOrderDetailStatus(order.getId(), Constants.ORDER_DETAIL_STATUS_CANCEL);
+			repo.updateOrderStatus(order.getId(), Constants.ORDER_STATUS_CANCEL);
 			return true;
 			
 		}catch(Exception e) {

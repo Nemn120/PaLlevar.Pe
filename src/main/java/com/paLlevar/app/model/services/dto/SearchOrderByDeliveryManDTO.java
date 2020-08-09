@@ -4,17 +4,17 @@ import java.time.LocalDateTime;
 
 public class SearchOrderByDeliveryManDTO {
 
-	private Integer deliveyId;
+	private Integer deliveryId;
 	private LocalDateTime initDate;
 	private LocalDateTime finalDate;
 	private String status;
 	
 	
-	public Integer getDeliveyId() {
-		return deliveyId;
+	public Integer getDeliveryId() {
+		return deliveryId;
 	}
-	public void setDeliveyId(Integer deliveyId) {
-		this.deliveyId = deliveyId;
+	public void setDeliveryId(Integer deliveyId) {
+		this.deliveryId = deliveyId;
 	}
 	public LocalDateTime getInitDate() {
 		return initDate;

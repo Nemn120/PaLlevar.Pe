@@ -1,11 +1,10 @@
 package com.paLlevar.app.model.services;
 import java.util.List;
 
-import org.springframework.data.repository.query.Param;
+
 import org.springframework.stereotype.Service;
 
 import com.paLlevar.app.model.entities.OrderDetailEntity;
-import com.paLlevar.app.model.entities.OrderEntity;
 
 @Service
 public interface OrderDetailService extends GenericCRUD<OrderDetailEntity, Integer>{
@@ -24,5 +23,7 @@ public interface OrderDetailService extends GenericCRUD<OrderDetailEntity, Integ
 	//public List<OrderDetailEntity> getListOrderDetailByOrderId(Integer oid, Integer orgId, Integer sucursalId );
 	
 	public List<OrderDetailEntity> getListOrderDetailByOrderId(Integer oid, Integer orgId);
+	
+	public boolean updateOrderDetailStatus( Integer id, String status);
 	
 }

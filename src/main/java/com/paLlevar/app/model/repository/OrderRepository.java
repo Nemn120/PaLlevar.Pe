@@ -3,10 +3,10 @@ package com.paLlevar.app.model.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import com.paLlevar.app.model.entities.OrderEntity;
-import com.paLlevar.app.model.entities.ProductEntity;
 
 public interface OrderRepository extends OrderCustomRepository, JpaRepository<OrderEntity, Integer>{
 	@Query("SELECT o FROM OrderEntity o WHERE o.organizationId=:organizationId AND o.status=:status AND o.sucursalId=:sucursalId ")
@@ -23,6 +23,9 @@ public interface OrderRepository extends OrderCustomRepository, JpaRepository<Or
 	@Query("SELECT o FROM OrderEntity o WHERE  o.organizationId=:orgId AND o.status in (:status) ")
 	public List<OrderEntity> getListOrderByStatusAndOrgId(@Param("status") List<String> status, @Param("orgId") Integer orgId);
 	
-
-	public Boolean IsCancel(OrderEntity or);
+	@Modifying
+	@Query("UPDATE OrderEntity set status=:status where id=:id")
+	void updateOrderStatus(@Param("id") Integer id, @Param("status") String status);
+	
+	
 }

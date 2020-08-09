@@ -1,11 +1,9 @@
 package com.paLlevar.app.model.services;
 import java.util.List;
 
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+
 import org.springframework.stereotype.Service;
 
-import com.paLlevar.app.model.entities.OrderDetailEntity;
 import com.paLlevar.app.model.entities.OrderEntity;
 import com.paLlevar.app.model.services.dto.SearchOrderByDeliveryManDTO;
 
@@ -21,8 +19,8 @@ public interface OrderService extends GenericCRUD<OrderEntity, Integer>{
 	public void deliveryOrder(OrderEntity order);
 	public void attendOrder(OrderEntity order);
 	
-	public List<OrderEntity> getOrderListByDeliveyId(SearchOrderByDeliveryManDTO sobd);
+	public List<OrderEntity> getOrderListByDeliveryId(SearchOrderByDeliveryManDTO sobd);
 	
-	public Boolean isCancel(OrderEntity or);
-	public Boolean deleteOrderAndListOrderDetail(OrderEntity order);
+	public boolean isCancel(OrderEntity or);
+	public boolean cancelOrderAndListOrderDetail(OrderEntity order);
 }
