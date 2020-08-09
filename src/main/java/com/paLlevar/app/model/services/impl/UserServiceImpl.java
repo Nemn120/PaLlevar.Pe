@@ -72,6 +72,12 @@ public class UserServiceImpl implements UserService {
 		return repo.findByOrganizationId(idOrg);
 	}
 
+	@Override
+	public void updateStatusById(Integer id, String status) {
+		repo.updateStatusById(id, status);
+		
+	}
+
 	
 	
 	

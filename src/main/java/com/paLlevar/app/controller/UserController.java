@@ -72,8 +72,6 @@ public class UserController {
 		}
 	}
 	
-	
-	
 	@PostMapping(path="/su")
 	public ResponseEntity<Object> saveUserCompany(@RequestBody UserEntity us) {
 		UserEntity userSave = userService.registerUserByProfile(us);
@@ -84,7 +82,19 @@ public class UserController {
 	public void deletedUser(@PathVariable("id")Integer id) {
 		userService.deleteById(id);
 	}
-	
+	@PostMapping(path="/usu")
+	public ResponseEntity<?> updateStatusUser(@RequestBody UserEntity user) throws IOException{
+		Map<String,Object> response = new HashMap<>();
+		try {
+			userService.updateStatusById(user.getId(), user.getStatus());
+			response.put(Constants.MESSAGE_BODY_RESPONSE, "Estado actualizado con éxito");
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
+		}catch(Exception e) {
+			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al actualizar estado");
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 	@PostMapping(path="rcli",produces = "application/json", consumes = "application/json")
 	private ResponseEntity<Object> registerClient(@RequestBody UserEntity usuario){
 		usuario.setProfile(new ProfileEntity());
