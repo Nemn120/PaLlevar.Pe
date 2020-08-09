@@ -1,8 +1,8 @@
 package com.paLlevar.app.model.entities;
 
 import java.io.Serializable;
-import java.util.Date;
-
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,10 +27,33 @@ public class CompanyEntity implements Serializable {
 	private String nombre;
 	@Column(name="ruc", length=11)
 	private String ruc;
+	
+	@Column(name="business_name")
+	private String businessName;
+	
 	@Column(name="description")
 	private String description;
-	@Column(name="create_date")
-	private Date createDate;
+	
+	@Column(name="address")
+	private String address;
+	
+	@Column(name="phone")
+	private String phone;
+	
+	@Column(name = "responsible_payment_name", length = 450)
+	private String responsiblePaymentName;
+
+	@Column(name = "responsible_payment_phone", length = 45)
+	private String responsiblePaymentPhone;
+
+	@Column(name = "responsible_payment_email", length = 450)
+	private String responsiblePaymentEmail;
+	
+	@Column(name = "aniversary_date", columnDefinition="DATE")
+	private LocalDate anniversaryDate;
+	
+	@Column(name="create_date", columnDefinition="TIMESTAMP")
+	private LocalDateTime createDate;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_admin_id", referencedColumnName = "id")
@@ -40,6 +63,12 @@ public class CompanyEntity implements Serializable {
 	@Column(name = "photo", updatable = false)
 	private byte[] photo;
 	
+	@Column(name = "business_line_code")
+	private String businessLineCode;
+
+	@Column(name = "payment_method")
+	private String  paymentMethodCode;
+
 	@Column(name="status",length=20)
 	private String status;
 	
@@ -48,6 +77,77 @@ public class CompanyEntity implements Serializable {
 	
 	@Column(name="qualification")
 	private Double qualification;
+	
+	@Column(name="attention_schedule")
+	private String attentionSchedule;
+	
+	public String getBusinessLineCode() {
+		return businessLineCode;
+	}
+	public void setBusinessLineCode(String businessLineCode) {
+		this.businessLineCode = businessLineCode;
+	}
+	public String getPaymentMethodCode() {
+		return paymentMethodCode;
+	}
+	public void setPaymentMethodCode(String paymentMethodCode) {
+		this.paymentMethodCode = paymentMethodCode;
+	}
+	public String getBusinessName() {
+		return businessName;
+	}
+	public void setBusinessName(String businessName) {
+		this.businessName = businessName;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getResponsiblePaymentName() {
+		return responsiblePaymentName;
+	}
+	public void setResponsiblePaymentName(String responsiblePaymentName) {
+		this.responsiblePaymentName = responsiblePaymentName;
+	}
+	public String getResponsiblePaymentPhone() {
+		return responsiblePaymentPhone;
+	}
+	public void setResponsiblePaymentPhone(String responsiblePaymentPhone) {
+		this.responsiblePaymentPhone = responsiblePaymentPhone;
+	}
+	public String getResponsiblePaymentEmail() {
+		return responsiblePaymentEmail;
+	}
+	public void setResponsiblePaymentEmail(String responsiblePaymentEmail) {
+		this.responsiblePaymentEmail = responsiblePaymentEmail;
+	}
+	public LocalDate getAnniversaryDate() {
+		return anniversaryDate;
+	}
+	public void setAnniversaryDate(LocalDate anniversaryDate) {
+		this.anniversaryDate = anniversaryDate;
+	}
+	public LocalDateTime getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(LocalDateTime createDate) {
+		this.createDate = createDate;
+	}
+
+	public String getAttentionSchedule() {
+		return attentionSchedule;
+	}
+	public void setAttentionSchedule(String attentionSchedule) {
+		this.attentionSchedule = attentionSchedule;
+	}
 
 	public Integer getId() {
 		return id;
@@ -67,12 +167,7 @@ public class CompanyEntity implements Serializable {
 	public void setRuc(String ruc) {
 		this.ruc = ruc;
 	}
-	public Date getCreateDate() {
-		return createDate;
-	}
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
+	
 	public UserEntity getUserAdmin() {
 		return userAdmin;
 	}
@@ -109,9 +204,6 @@ public class CompanyEntity implements Serializable {
 	public void setQualification(Double qualification) {
 		this.qualification = qualification;
 	}
-	
-	
-	
-	
+
 
 }
