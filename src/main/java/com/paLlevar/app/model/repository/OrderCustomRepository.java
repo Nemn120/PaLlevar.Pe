@@ -7,5 +7,5 @@ import com.paLlevar.app.model.services.dto.SearchOrderByDeliveryManDTO;
 
 public interface OrderCustomRepository {
 
-	public List<OrderEntity> getOrderListByDeliveyId(SearchOrderByDeliveryManDTO sobd);
+	public List<OrderEntity> getOrderListByDeliveryId(SearchOrderByDeliveryManDTO sobd);
 }

@@ -134,6 +134,17 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 		repo.save(or);
 	}*/
 
+	@Override
+	public boolean updateOrderDetailStatus(Integer id, String status) {
+		try{
+			repo.updateOrderDetailStatus(id, status);
+			return true;
+		}catch(Exception e) {
+
+			return false;
+		}
+	}
+
 }
 
 

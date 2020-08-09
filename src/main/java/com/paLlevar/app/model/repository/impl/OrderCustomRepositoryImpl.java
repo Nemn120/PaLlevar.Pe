@@ -17,7 +17,7 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository{
 	 private EntityManager em;
 	 
 	@Override
-	public List<OrderEntity> getOrderListByDeliveyId(SearchOrderByDeliveryManDTO sobd) {
+	public List<OrderEntity> getOrderListByDeliveryId(SearchOrderByDeliveryManDTO sobd) {
 		StringBuffer queryString = new StringBuffer(
 				"SELECT o From OrderEntity o where o.userDeliveryId=:userDeliveryId");
 		
@@ -31,7 +31,7 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository{
 		
 		Query query = em.createQuery(queryString.toString(), OrderEntity.class);
 		
-		query.setParameter("userDeliveryId",sobd.getDeliveyId());
+		query.setParameter("userDeliveryId",sobd.getDeliveryId());
 		
 		if(sobd.getStatus() != null) {
 			query.setParameter("status",sobd.getStatus());
@@ -48,3 +48,4 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository{
 	}
 
 }
+
