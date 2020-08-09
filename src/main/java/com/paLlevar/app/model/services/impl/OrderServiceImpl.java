@@ -156,6 +156,7 @@ public class OrderServiceImpl implements OrderService {
 			orderDetailService.save(od);
 		});
 		order.setDeliveryDate(new Date());
+		order.setUserDeliveryId(order.getUserDeliveryId());
 		order.setStatus(Constants.ORDER_STATUS_DELIVERY);
 		repo.save(order);
 		
@@ -193,15 +194,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public List<OrderEntity> getOrderListByDeliveyId(SearchOrderByDeliveryManDTO sobd) {
-		List<OrderEntity> listResult = repo.getOrderListByDeliveyId(sobd);
-		return this.copyOrder(listResult);
-	}
-	
-	private List<OrderEntity> copyOrder(List<OrderEntity> or) {
-		or.forEach(x -> {
-			x.getOrderDetail().forEach(data -> data.setOrderId(data.getOrder().getId()));
-		});
-		return or;
+		return repo.getOrderListByDeliveyId(sobd);
 	}
 	
 	@Override

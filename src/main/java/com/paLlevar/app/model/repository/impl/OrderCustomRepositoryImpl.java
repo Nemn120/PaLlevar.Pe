@@ -19,14 +19,14 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository{
 	@Override
 	public List<OrderEntity> getOrderListByDeliveyId(SearchOrderByDeliveryManDTO sobd) {
 		StringBuffer queryString = new StringBuffer(
-				"SELECT or From OrderEntity or where or.userDeliveryId=:userDeliveryId");
+				"SELECT o From OrderEntity o where o.userDeliveryId=:userDeliveryId");
 		
 		if(sobd.getStatus() != null) {
-			queryString.append(" AND or.status=:status");
+			queryString.append(" AND o.status=:status");
 		}
 		
 		if(sobd.getInitDate()!= null && sobd.getFinalDate()!=null) {
-			queryString.append(" AND or.CreateDate BETWEEN :initDate AND :finalDate"); //getCreateDate
+			queryString.append(" AND o.createDate BETWEEN :initDate AND :finalDate"); //getCreateDate
 		}
 		
 		Query query = em.createQuery(queryString.toString(), OrderEntity.class);
@@ -43,7 +43,7 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository{
 			
 		}
 		
-		return   query.getResultList();
+		return query.getResultList();
 		//return null;
 	}
 

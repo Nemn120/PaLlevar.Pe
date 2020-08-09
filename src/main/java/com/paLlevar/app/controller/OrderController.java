@@ -140,6 +140,7 @@ public class OrderController {
 	@PostMapping(path="/golbdi")
 	public ResponseEntity<List<OrderEntity>>  getOrderListByDeliveyId(@RequestBody SearchOrderByDeliveryManDTO sobd){
 		List<OrderEntity> orderList =  orderService.getOrderListByDeliveyId(sobd);
+				
 		return new ResponseEntity<List<OrderEntity>>(orderList, HttpStatus.OK);
 	}
 	

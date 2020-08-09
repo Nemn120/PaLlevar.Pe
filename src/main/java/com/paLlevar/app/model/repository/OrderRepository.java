@@ -23,6 +23,4 @@ public interface OrderRepository extends OrderCustomRepository, JpaRepository<Or
 	@Query("SELECT o FROM OrderEntity o WHERE  o.organizationId=:orgId AND o.status in (:status) ")
 	public List<OrderEntity> getListOrderByStatusAndOrgId(@Param("status") List<String> status, @Param("orgId") Integer orgId);
 	
-
-	public Boolean IsCancel(OrderEntity or);
 }
