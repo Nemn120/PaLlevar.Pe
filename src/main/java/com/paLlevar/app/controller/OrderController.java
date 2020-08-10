@@ -176,10 +176,10 @@ public class OrderController {
 		Map<String,Object> response = new HashMap<>();
 		try {
 			orderService.updateOrder(o);
-			response.put(Constants.MESSAGE_BODY_RESPONSE, "Order actualizado con éxito");
+			response.put(Constants.MESSAGE_BODY_RESPONSE, "Datos del pedido actualizado con éxito");
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
 		}catch(Exception e) {
-			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al actualizar order");
+			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al actualizar pedido");
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
