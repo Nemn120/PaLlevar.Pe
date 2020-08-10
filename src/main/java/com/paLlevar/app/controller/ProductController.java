@@ -30,20 +30,20 @@ public class ProductController {
 	private ProductService productService;
 	
 	
-	@GetMapping(path="/glp") // TERMINADO
+	@GetMapping(path="/glp") 
 	public ResponseEntity<List<ProductEntity>>  getListProduct(){
 		List<ProductEntity>  lista=productService.getAll();
 		return new ResponseEntity<List<ProductEntity>>(lista,HttpStatus.OK);
 	}
-	// EN CASO DE LISTAR TODO POR ORGANIZACION
-	@GetMapping(value="/glpbo/{id}") // TERMINADO
+
+	@GetMapping(value="/glpbo/{id}") 
 	public ResponseEntity<List<ProductEntity>>  getListProductByOrganizationId(@PathVariable("id")Integer id){
 		List<ProductEntity>  lista=productService.getAllProductByCompanyId(id);
 		return new ResponseEntity<List<ProductEntity>>(lista,HttpStatus.OK);
 	}
 	
-	// EN CASO DE LISTAR POR ORGANIZCION Y SUCURSAL
-	@PostMapping(path="/glpbos") // TERMINADO
+
+	@PostMapping(path="/glpbos") 
 	public ResponseEntity<List<ProductEntity>>  getListProductByOrganizationIdAndSucursalId(@RequestBody ProductEntity pro){
 		List<ProductEntity>  lista=productService.getAllProductByCompanyIdAndSucursalId(pro);
 		return new ResponseEntity<List<ProductEntity>>(lista,HttpStatus.OK);

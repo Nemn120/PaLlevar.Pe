@@ -10,8 +10,7 @@ import org.springframework.data.repository.query.Param;
 import com.paLlevar.app.model.entities.ProductEntity;
 
 public interface ProductRepository extends JpaRepository<ProductEntity, Integer>{
-	
-	//@Query("SELECT FROM PRODUCT P WHERE P.companyId =:idCompany AND/ P.sucursalId=:idSucursal")
+
 	List<ProductEntity> findByOrganizationIdAndSucursalId(Integer organizationId,Integer sucursalId);
 	List<ProductEntity> findByOrganizationId(Integer organizationId);
 	@Modifying

@@ -1,6 +1,8 @@
 package com.paLlevar.app.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,7 @@ import com.paLlevar.app.model.entities.OrderDetailEntity;
 import com.paLlevar.app.model.entities.OrderEntity;
 import com.paLlevar.app.model.entities.UserEntity;
 import com.paLlevar.app.model.services.OrderDetailService;
+import com.paLlevar.app.model.services.dto.SearchSalesByFieldsDTO;
 import com.paLlevar.app.util.Constants;
 
 @RestController
@@ -74,6 +77,19 @@ public class OrderDetailController {
 		orderdetailService.save(order);
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
+	@PostMapping(path="/gsbfmp")
+	public ResponseEntity<?> getSalesByFieldsGroupByMenuProduct(@RequestBody SearchSalesByFieldsDTO salesDTO) {
+		Map<String,Object> response = new HashMap<>();
+
+		try {
+			response.put("data", orderdetailService.getSalesByFieldsGroupByMenuProduct(salesDTO));
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
+		}catch(Exception e) {
+			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al realizar la peticion");
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 
 	
 }

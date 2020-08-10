@@ -41,8 +41,6 @@ public class MenuDayProductServiceImpl implements MenuDayProductService {
 				t.setMenuDay(new MenuDayEntity());
 				t.getMenuDay().setId(t.getMenuDayId());
 			}
-		}else {
-			// CONDICION 
 		}
 		return repo.save(t);
 	}
@@ -61,9 +59,7 @@ public class MenuDayProductServiceImpl implements MenuDayProductService {
 		menuDayProduct.setCreateDate(LocalDateTime.now());
 		if (menuDayProduct.getQuantity() != null)
 			menuDayProduct.setAvailable(menuDayProduct.getQuantity());
-
 		return repo.save(menuDayProduct);
-
 	}
 
 	@Override
@@ -82,13 +78,11 @@ public class MenuDayProductServiceImpl implements MenuDayProductService {
 
 	@Override
 	public List<MenuDayProductEntity> getListMenuProductByMenuId(Integer idMenu) {
-
 		return repo.getListMenuProductByMenuId(idMenu);
 	}
 
 	@Override
 	public MenuDayProductEntity getMenuByIdAndStatus(Integer id, String status) {
-
 		return repo.findByIdAndStatus(id, status);
 	}
 

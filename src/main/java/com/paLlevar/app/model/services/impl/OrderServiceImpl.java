@@ -1,17 +1,11 @@
 package com.paLlevar.app.model.services.impl;
 
 import java.time.LocalDateTime;
-
 import java.util.Date;
 import java.util.List;
-
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-
 import com.paLlevar.app.model.entities.MenuDayProductEntity;
 import com.paLlevar.app.model.entities.OrderDetailEntity;
 import com.paLlevar.app.model.entities.OrderEntity;
@@ -70,7 +64,7 @@ public class OrderServiceImpl implements OrderService {
 		
 	}
 
-	@Override // actualiza el estado del menu del dia
+	@Override
 	public OrderEntity saveOrderByOrganizationIdAndSucursalId(OrderEntity order) {
 		order.setOrganizationId(order.getOrderDetail().get(0).getOrganizationId());
 		order.setCompanyName(companyService.getOneById(order.getOrderDetail().get(0).getOrganizationId()).getNombre());
@@ -80,7 +74,6 @@ public class OrderServiceImpl implements OrderService {
 				od.setOrganizationId(order.getOrganizationId());
 				od.setUserCreateId(order.getUserOrder().getId());
 				od.setOrder(order);
-				//od.setCompanyName(companyService.getOneById();
 				MenuDayProductEntity mp =menuDayProdService.getMenuByIdAndStatus(od.getMenuProductId(),Constants.MENUD_PROD_STATUS_AVAILABLE);
 				mp.setAvailable(mp.getAvailable()-1);
 				if(mp.getAvailable().equals(0)) {
@@ -98,16 +91,15 @@ public class OrderServiceImpl implements OrderService {
 					order.setQuantity(order.getQuantity() + 1);
 				else
 					order.setQuantity(1);
-				
 			});
-			
 			
 		order.setCreateDate(LocalDateTime.now());
 		order.setStatus(Constants.ORDER_DETAIL_STATUS_PENDING);
+		
 		return repo.save(order);
 	}
 
-	@Override // TRA DE UNA SOLA ORGANIZACION 
+	@Override 
 	public List<OrderEntity> getListOrderByStatus(String status, OrderEntity order) {
 		List<OrderEntity> odList = repo.findByOrganizationIdAndStatus(order.getOrganizationId(),status);
 		for(OrderEntity od :odList) {
@@ -125,7 +117,6 @@ public class OrderServiceImpl implements OrderService {
 		for(OrderDetailEntity odDetail : odList){
 			if(odDetail.getStatus().equals(Constants.ORDER_DETAIL_STATUS_PENDING))
 				checkOrderDetail++;
-			
 		}
 		if(checkOrderDetail>0 && checkOrderDetail.equals(odList.size()))
 			return true;
@@ -148,13 +139,11 @@ public class OrderServiceImpl implements OrderService {
 			UserEntity userDelivery = userService.getOneById(order.getUserDeliveryId());
 			userDelivery.setStatus(Constants.DELIVERY_MANY_STATUS_OCUPADO);
 			userService.save(userDelivery);
-			
 			orderDetailService.save(od);
 		});
 		order.setDeliveryDate(new Date());
 		order.setStatus(Constants.ORDER_STATUS_DELIVERY);
 		repo.save(order);
-		
 	}
 
 	@Override
@@ -166,7 +155,6 @@ public class OrderServiceImpl implements OrderService {
 				od.setStatus(Constants.ORDER_DETAIL_STATUS_ATTENT);
 				od.setUserAttend(new UserEntity());
 				od.getUserAttend().setId(order.getUserAttendId());
-				
 				orderDetailService.save(od);
 			}
 		});

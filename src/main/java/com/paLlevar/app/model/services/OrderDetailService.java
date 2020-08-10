@@ -1,10 +1,9 @@
 package com.paLlevar.app.model.services;
 import java.util.List;
-
-
+import java.util.Map;
 import org.springframework.stereotype.Service;
-
 import com.paLlevar.app.model.entities.OrderDetailEntity;
+import com.paLlevar.app.model.services.dto.SearchSalesByFieldsDTO;
 
 @Service
 public interface OrderDetailService extends GenericCRUD<OrderDetailEntity, Integer>{
@@ -25,5 +24,7 @@ public interface OrderDetailService extends GenericCRUD<OrderDetailEntity, Integ
 	public List<OrderDetailEntity> getListOrderDetailByOrderId(Integer oid, Integer orgId);
 	
 	public boolean updateOrderDetailStatus( Integer id, String status);
+
+	public List<Map<String, Object>>  getSalesByFieldsGroupByMenuProduct(SearchSalesByFieldsDTO ssbf);
 	
 }

@@ -13,6 +13,7 @@ import com.paLlevar.app.model.entities.MenuDayProductEntity;
 import com.paLlevar.app.model.repository.MenuDayRepository;
 import com.paLlevar.app.model.services.MenuDayProductService;
 import com.paLlevar.app.model.services.MenuDayService;
+import com.paLlevar.app.model.services.dto.SummaryOrderDTO;
 import com.paLlevar.app.util.Constants;
 
 @Service
@@ -54,22 +55,18 @@ public class MenuDayServiceImpl implements MenuDayService {
 					t.setCountTotal(t.getCountTotal()+menuDayProduct.getQuantity());
 				else
 					t.setCountTotal(menuDayProduct.getQuantity());
-				
 				menuDayProduct.setOrganizationId(t.getOrganizationId());
-				//menuDayProduct.setSucursalId(t.getSucursalId());
 				menuDayProduct.setType(t.getType());
 				if(t.getUserCreateId() != null)
 					menuDayProduct.setUserCreateId(t.getUserCreateId());
 				
 				menuDayProductService.save(menuDayProduct);
-				
 			});
 		}
 		t.setLocalDateTime(LocalDateTime.now());
 		return repo.save(t);
 	}
 	
-
 	@Override
 	public void deleteById(Integer id) {
 		repo.deleteById(id);
@@ -81,9 +78,8 @@ public class MenuDayServiceImpl implements MenuDayService {
 		return this.copyMenuDay(aux);
 	}
 
-	@Override // MENU DAY
+	@Override
 	public MenuDayEntity editMenuDay(MenuDayEntity menuDay) {
-		
 		return repo.save(menuDay);
 	}
 

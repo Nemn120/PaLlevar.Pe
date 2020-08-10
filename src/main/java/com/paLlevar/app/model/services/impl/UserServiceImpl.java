@@ -1,6 +1,5 @@
 package com.paLlevar.app.model.services.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
