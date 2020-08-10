@@ -142,7 +142,7 @@ public class OrderController {
 		Map<String,Object> response = new HashMap<>();
 		try {
 			List<OrderEntity> orderList =  orderService.getOrderListByDeliveryId(sobd);
-			response.put("data", orderList);
+			response.put("dataList", orderList);
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 		}catch(Exception e){
 			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error");
