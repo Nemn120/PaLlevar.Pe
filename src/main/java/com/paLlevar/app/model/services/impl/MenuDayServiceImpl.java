@@ -13,7 +13,6 @@ import com.paLlevar.app.model.entities.MenuDayProductEntity;
 import com.paLlevar.app.model.repository.MenuDayRepository;
 import com.paLlevar.app.model.services.MenuDayProductService;
 import com.paLlevar.app.model.services.MenuDayService;
-import com.paLlevar.app.model.services.dto.SummaryOrderDTO;
 import com.paLlevar.app.util.Constants;
 
 @Service
