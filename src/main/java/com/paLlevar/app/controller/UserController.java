@@ -138,6 +138,21 @@ public class UserController {
 		return new ResponseEntity<List<UserEntity>>(lista,HttpStatus.OK);
 	}
 	
+	@PostMapping(path="/gludmos")
+	public ResponseEntity<?> getListUserDeliveryManByOrganizationANDStatus(@RequestBody UserEntity user){
+		Map<String,Object> response= new HashMap<>();
+		log.info("Funcion: "+"getListUserDeliveryManByOrganizationANDStatus()");
+		try {
+			response.put("dataList",userService.getUserListByOrganizationIdANDbyStatus(user));
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
+		} catch (Exception e) {
+			log.error("Se produjo un error: "+e.getMessage().toString());
+			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al realizar la peticion");
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}
+	}
+	
 	
 	
 }
