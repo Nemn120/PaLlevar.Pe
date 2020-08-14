@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,6 +32,7 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
 	@GetMapping(path="/glur")
 	public ResponseEntity<List<UserEntity>>  getListUser(){
@@ -116,6 +119,21 @@ public class UserController {
 		user.setStatus(Constants.DELIVERY_MAN_STATUS_DISPONIBLE);
 		List<UserEntity> lista=userService.getUserListByProfileANDStatus(user);
 		return new ResponseEntity<List<UserEntity>>(lista,HttpStatus.OK);
+	}
+	
+	@PostMapping(path="/gludmos")
+	public ResponseEntity<?> getListUserDeliveryManByOrganizationANDStatus(@RequestBody UserEntity user){
+		Map<String,Object> response= new HashMap<>();
+		log.info("Funcion: "+"getListUserDeliveryManByOrganizationANDStatus()");
+		try {
+			response.put("dataList",userService.getUserListByOrganizationIdANDbyStatus(user));
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
+		} catch (Exception e) {
+			log.error("Se produjo un error: "+e.getMessage().toString());
+			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al realizar la peticion");
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}
 	}
 	
 	
