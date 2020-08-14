@@ -4,6 +4,8 @@ package com.paLlevar.app.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,8 @@ import com.paLlevar.app.util.Constants;
 public class MenuDayProductController {
 
 	String path = "http://localhost:8080/menudayproduct";
+	private static final Logger log = LoggerFactory.getLogger(MenuDayProductController.class);
+
 
 	@Autowired
 	private MenuDayProductService menudayproductService;
@@ -37,7 +41,14 @@ public class MenuDayProductController {
 	
 	@PostMapping(path="/smdp") // TERMINADO
 	public MenuDayProductEntity saveMenuDayProduct(@RequestBody MenuDayProductEntity mdp) {
-		MenuDayProductEntity menudayproductSave = menudayproductService.save(mdp);
+		MenuDayProductEntity menudayproductSave = new MenuDayProductEntity();
+		if(mdp.getId()!=null) {
+			log.info("Actualizar MenuDayProduct"+", Funcion: "+"saveEditMenuDayProduct");
+			menudayproductSave=menudayproductService.saveEditMenuDayProduct(mdp);
+		}else {
+			log.info("Nuevo MenuDayProduct"+", Funcion: "+"save");
+			menudayproductSave=menudayproductService.save(mdp);
+		}
 		return menudayproductSave;
 	}
 	
