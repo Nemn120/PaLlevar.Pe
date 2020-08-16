@@ -41,7 +41,16 @@ public class MenuDayProductController {
 	@PostMapping(path="/smdp") 
 	public MenuDayProductEntity saveMenuDayProduct(@RequestBody MenuDayProductEntity mdp) {
 		logger.info("MenuDayProductController.saveMenuDayProduct()");
-		MenuDayProductEntity menudayproductSave = menudayproductService.save(mdp);
+		MenuDayProductEntity menudayproductSave = new MenuDayProductEntity();
+		mdp.setMenuDay(new MenuDayEntity());
+		mdp.getMenuDay().setId(mdp.getMenuDayId()); // 
+		if(mdp.getId()!=null) {
+			log.info("Actualizar MenuDayProduct"+", Funcion: "+"saveEditMenuDayProduct");
+			menudayproductSave=menudayproductService.saveEditMenuDayProduct(mdp);
+		}else {
+			log.info("Nuevo MenuDayProduct"+", Funcion: "+"save");
+			menudayproductSave=menudayproductService.save(mdp);
+		}
 		return menudayproductSave;
 	}
 	

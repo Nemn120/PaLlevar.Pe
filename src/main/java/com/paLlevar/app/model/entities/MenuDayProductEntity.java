@@ -41,6 +41,8 @@ public class MenuDayProductEntity   extends MainEntity implements Serializable{
 	private Double price;
 	
 	private Integer quantity;
+	@Transient
+	private Integer quantityAdd;
 	private Integer available;
 	@Column(name="status", length=20)
 	private String status; // disponible , no disponible
@@ -51,6 +53,12 @@ public class MenuDayProductEntity   extends MainEntity implements Serializable{
 	@Transient
 	private Integer menuDayId;
 	
+	public Integer getQuantityAdd() {
+		return quantityAdd;
+	}
+	public void setQuantityAdd(Integer quantityAdd) {
+		this.quantityAdd = quantityAdd;
+	}
 	public Integer getId() {
 		return id;
 	}

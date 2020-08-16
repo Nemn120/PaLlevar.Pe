@@ -148,8 +148,7 @@ public class UserController {
 		} catch (Exception e) {
 			logger.error("Se produjo un error: "+e.getMessage().toString());
 			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al realizar la peticion");
-			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
-			
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);			
 		}
 	}
 	
