@@ -228,8 +228,12 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public void updateOrder(OrderEntity o) {
-		repo.updateOrder(o.getId(), o.getPhone(), o.getAddress(), o.getReference());
+	public boolean updateOrder(OrderEntity o) {
+		if(o.getStatus().equals(Constants.ORDER_STATUS__PENDING) || o.getStatus().equals(Constants.ORDER_STATUS_PROCESS)) {
+			repo.updateOrder(o.getId(), o.getPhone(), o.getAddress(), o.getReference());
+			return true;
+		}else
+			return false;
 	}
 	
 

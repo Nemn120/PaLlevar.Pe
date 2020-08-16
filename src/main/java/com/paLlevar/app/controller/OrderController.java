@@ -175,9 +175,15 @@ public class OrderController {
 	public ResponseEntity<?> updateOrder(@RequestBody OrderEntity o){
 		Map<String,Object> response = new HashMap<>();
 		try {
-			orderService.updateOrder(o);
-			response.put(Constants.MESSAGE_BODY_RESPONSE, "Order actualizado con éxito");
-			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
+			boolean check = orderService.updateOrder(o);
+			if(check) {
+				response.put(Constants.MESSAGE_BODY_RESPONSE, "Order actualizado con éxito");
+				return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
+			}else {
+				response.put(Constants.MESSAGE_BODY_RESPONSE, "No se puede actualizar la orden, porque la orden se encuentra en " + o.getStatus());
+				return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
+			}
+			
 		}catch(Exception e) {
 			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al actualizar order");
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
