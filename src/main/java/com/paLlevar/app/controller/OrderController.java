@@ -30,9 +30,33 @@ public class OrderController {
 	String path = "http://localhost:8080/order";
 	private static final Logger logger = LogManager.getLogger(OrderController.class);	
 
-	
 	@Autowired
 	private OrderService orderService;
+	
+	@PostMapping(path="/cor")
+	public ResponseEntity<?> cancelOrder(@RequestBody OrderEntity or){
+		logger.info("OrderController.cancelOrder()");
+		Map<String,Object> response = new HashMap<>();
+		boolean check = orderService.isCancel(or);
+		if(check){
+			Boolean checkDelete = orderService.cancelOrderAndListOrderDetail(or);
+			if(checkDelete) {
+				logger.warn("Pedido:"+or.getId() + "cancelado");
+				response.put(Constants.MESSAGE_BODY_RESPONSE, "Se canceló correctamente su orden");
+				return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
+			}
+			else { 
+				logger.warn("Pedido:"+or.getId() + "no pudo ser cancelado");
+				response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al cancelar la orden");
+				return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+		else {
+			logger.warn("Pedido:"+or.getId() + "excedio el limite de tiempo");
+			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al cancelar la orden, el pedido excedió el limite de tiempo permitido");
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 	@GetMapping(path="/glo")
 	public ResponseEntity<List<OrderEntity>>  getListOrder(){
@@ -162,7 +186,7 @@ public class OrderController {
 		Map<String,Object> response = new HashMap<>();
 		try {
 			List<OrderEntity> orderList =  orderService.getOrderListByDeliveryId(sobd);
-			response.put("data", orderList);
+			response.put(Constants.DATA_RESPONSE, orderList);
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 		}catch(Exception e){
 			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error");
@@ -170,27 +194,7 @@ public class OrderController {
 		}
 	}
 	
-	@PostMapping(path="/cor")
-	public ResponseEntity<?> cancelOrder(@RequestBody OrderEntity or){
-		logger.info("OrderController.cancelOrder()");
-		Map<String,Object> response = new HashMap<>();
-		boolean check = orderService.isCancel(or);
-		if(check){
-			Boolean checkDelete = orderService.cancelOrderAndListOrderDetail(or);
-			if(checkDelete) {
-				response.put(Constants.MESSAGE_BODY_RESPONSE, "Se canceló correctamente su orden");
-				return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
-			}
-			else { 
-				response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al cancelar la orden");
-				return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-		}
-		else {
-			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al cancelar la orden, el pedido excedió el limite de tiempo permitido");
-			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+
 	
 	@PostMapping(path="/upor")
 	public ResponseEntity<?> updateOrder(@RequestBody OrderEntity o){

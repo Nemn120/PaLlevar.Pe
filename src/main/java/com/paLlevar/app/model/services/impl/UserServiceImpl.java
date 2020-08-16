@@ -79,7 +79,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<UserEntity> getUserListByOrganizationIdANDbyStatus(UserEntity user) {
-		return repo.getListUserByOrganization(user);
+		//return repo.getListUserByOrganization(user);
+		return null;
 	}
 
 	

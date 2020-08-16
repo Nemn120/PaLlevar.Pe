@@ -48,6 +48,7 @@ public class Constants {
 	
 	public static final String MESSAGE_BODY_RESPONSE="message";
 	public static final String MESSAGE_TITLE_RESPONSE="title";
+	public static final String DATA_RESPONSE="data";
 	
 
 }

@@ -56,7 +56,6 @@ public class ProductController {
 	
 	@GetMapping(value = "/gp/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<byte[]> getPhoto(@PathVariable("id") Integer id) {
-		logger.info("ProductController.getPhoto()");
 		ProductEntity c = productService.getOneById(id);
 		 byte[]	data = c.getPhoto();
 		return new ResponseEntity<byte[]>(data, HttpStatus.OK);
