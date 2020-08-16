@@ -56,9 +56,13 @@ public class MenuDayProductServiceImpl implements MenuDayProductService {
 
 	@Override
 	public MenuDayProductEntity saveEditMenuDayProduct(MenuDayProductEntity menuDayProduct) {
-		menuDayProduct.setCreateDate(LocalDateTime.now());
-		if (menuDayProduct.getQuantity() != null)
-			menuDayProduct.setAvailable(menuDayProduct.getQuantity());
+		
+		if(Constants.MENUD_PROD_STATUS_AVAILABLE.equals(menuDayProduct.getStatus()) && menuDayProduct.getAvailable() == 0)
+			return null;
+		if(menuDayProduct.getQuantityAdd() != null && menuDayProduct.getQuantityAdd() != 0) {
+			menuDayProduct.setQuantity(menuDayProduct.getQuantity()+ menuDayProduct.getQuantityAdd());
+			menuDayProduct.setAvailable(menuDayProduct.getAvailable()+ menuDayProduct.getQuantityAdd());
+		}
 		return repo.save(menuDayProduct);
 	}
 

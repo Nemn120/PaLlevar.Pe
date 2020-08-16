@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.paLlevar.app.model.entities.MenuDayEntity;
 import com.paLlevar.app.model.entities.MenuDayProductEntity;
 import com.paLlevar.app.model.services.MenuDayProductService;
 import com.paLlevar.app.util.Constants;
@@ -42,6 +43,8 @@ public class MenuDayProductController {
 	@PostMapping(path="/smdp") // TERMINADO
 	public MenuDayProductEntity saveMenuDayProduct(@RequestBody MenuDayProductEntity mdp) {
 		MenuDayProductEntity menudayproductSave = new MenuDayProductEntity();
+		mdp.setMenuDay(new MenuDayEntity());
+		mdp.getMenuDay().setId(mdp.getMenuDayId()); // 
 		if(mdp.getId()!=null) {
 			log.info("Actualizar MenuDayProduct"+", Funcion: "+"saveEditMenuDayProduct");
 			menudayproductSave=menudayproductService.saveEditMenuDayProduct(mdp);
