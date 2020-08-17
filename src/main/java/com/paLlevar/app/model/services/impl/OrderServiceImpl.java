@@ -3,9 +3,14 @@ package com.paLlevar.app.model.services.impl;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.paLlevar.app.controller.CategoryProductController;
 import com.paLlevar.app.model.entities.MenuDayProductEntity;
 import com.paLlevar.app.model.entities.OrderDetailEntity;
 import com.paLlevar.app.model.entities.OrderEntity;
@@ -22,6 +27,8 @@ import com.paLlevar.app.util.Constants;
 @Service
 @Transactional
 public class OrderServiceImpl implements OrderService {
+	
+	private static final Logger logger = LogManager.getLogger(OrderServiceImpl.class);	
 
 	@Autowired
 	private OrderRepository repo;
@@ -66,9 +73,11 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public OrderEntity saveOrderByOrganizationIdAndSucursalId(OrderEntity order) {
+		logger.info("OrderServiceImpl.saveOrderByOrganizationIdAndSucursalId()");
 		order.setOrganizationId(order.getOrderDetail().get(0).getOrganizationId());
 		order.setCompanyName(companyService.getOneById(order.getOrderDetail().get(0).getOrganizationId()).getNombre());
 		repo.save(order);
+		logger.trace("Se guardo la orden");
 			order.getOrderDetail().forEach(od ->{
 				od.setStatus(Constants.ORDER_DETAIL_STATUS_PENDING);
 				od.setOrganizationId(order.getOrganizationId());
@@ -78,11 +87,12 @@ public class OrderServiceImpl implements OrderService {
 				mp.setAvailable(mp.getAvailable()-1);
 				if(mp.getAvailable().equals(0)) {
 					mp.setStatus(Constants.MENUD_PROD_STATUS_NOT_AVAILABLE);
+					logger.trace("Menu: "+mp.getId() + " estado : "+Constants.MENUD_PROD_STATUS_NOT_AVAILABLE);
 				}
 				menuDayProdService.save(mp);
 				od.setCreateDate(LocalDateTime.now());
 				orderDetailService.save(od);
-				
+				logger.trace("Platillo : "+od.getProduct().getName() + " se registro con exito");
 				if(order.getTotal() !=null && order.getTotal() != 0.0)
 					order.setTotal(order.getTotal()+od.getPrice());
 				else
@@ -95,7 +105,7 @@ public class OrderServiceImpl implements OrderService {
 			
 		order.setCreateDate(LocalDateTime.now());
 		order.setStatus(Constants.ORDER_DETAIL_STATUS_PENDING);
-		
+		logger.trace("Orden : "+order.getId()+ " estado : "+Constants.ORDER_DETAIL_STATUS_PENDING);
 		return repo.save(order);
 	}
 
@@ -129,21 +139,35 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public void deliveryOrder(OrderEntity order) {
+	public boolean deliveryOrder(OrderEntity order) {
+		logger.info("OrderServiceImpl.deliveryOrder()");
+		UserEntity userDelivery = userService.getOneById(order.getUserDeliveryId());
+		if(userDelivery == null) {
+			logger.error("El delivery:"+order.getId()+ " no existe en la BD");
+			return false;	
+		}
+		if(order.getOrderDetail() == null){
+			logger.error("La orden:"+order.getId()+ " no contiene platos a entregar");
+			return false;
+		}
 		order.getOrderDetail().forEach(od->{
 			od.setStatus(Constants.ORDER_DETAIL_STATUS_DELIVERY);
 			od.setDeliveryDate(new Date());
 			od.setUserDelivery(new UserEntity());
 			od.setOrder(order);
 			od.getUserDelivery().setId(order.getUserDeliveryId());
-			UserEntity userDelivery = userService.getOneById(order.getUserDeliveryId());
-			userDelivery.setStatus(Constants.DELIVERY_MANY_STATUS_OCUPADO);
-			userService.save(userDelivery);
 			orderDetailService.save(od);
 		});
+		userDelivery.setStatus(Constants.DELIVERY_MANY_STATUS_OCUPADO);
+		userService.save(userDelivery);
+		logger.trace("Delivery Man : "+userDelivery.getId()+ " cambio a  estado : "+Constants.DELIVERY_MANY_STATUS_OCUPADO);
 		order.setDeliveryDate(new Date());
 		order.setStatus(Constants.ORDER_STATUS_DELIVERY);
+		logger.trace("Orden: "+order.getId()+ " cambio a  estado : "+Constants.ORDER_STATUS_DELIVERY);
 		repo.save(order);
+		return true;
+		
+		
 	}
 
 	@Override
@@ -185,10 +209,8 @@ public class OrderServiceImpl implements OrderService {
 	public boolean isCancel(OrderEntity or) {
 		OrderEntity order = this.getOneById(or.getId());
 		if(order.getStatus().equals(Constants.ORDER_STATUS__PENDING)) {
-			
 			LocalDateTime time = LocalDateTime.now();
 			LocalDateTime timelimit = order.getCreateDate().plusMinutes(5);
-
 			return time.isBefore(timelimit);
 		}
 		return false;
@@ -196,20 +218,21 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Override
 	public boolean cancelOrderAndListOrderDetail(OrderEntity order) {
-		
+		logger.info("OrderServiceImpl.cancelOrderAndListOrderDetail()");
 		try {			
 			orderDetailService.updateOrderDetailStatus(order.getId(), Constants.ORDER_DETAIL_STATUS_CANCEL);
 			repo.updateOrderStatus(order.getId(), Constants.ORDER_STATUS_CANCEL);
+			logger.trace("Orden : "+order.getId()+ " estado: "+Constants.ORDER_STATUS_CANCEL);
 			return true;
-			
 		}catch(Exception e) {
-			
+			logger.trace("Orden : "+order.getId()+" no pudo ser cancelado");
 			return false;
 		}
 	}
 
 	@Override
 	public void updateOrder(OrderEntity o) {
+		logger.info("OrderServiceImpl.updateOrder()");
 		repo.updateOrder(o.getId(), o.getPhone(), o.getAddress(), o.getReference());
 	}
 	

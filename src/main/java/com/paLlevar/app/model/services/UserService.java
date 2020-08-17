@@ -13,4 +13,5 @@ public interface UserService extends GenericCRUD<UserEntity, Integer>{
 	List<UserEntity> getUserListByProfileANDStatus(UserEntity user);
 	List<UserEntity> getUserListByOrganizationId(Integer idOrg);
 	void updateStatusById(Integer id,String status);
+	List<UserEntity> getUserListByOrganizationIdANDbyStatus(UserEntity user);
 }

@@ -3,6 +3,8 @@ package com.paLlevar.app.controller;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,19 +29,22 @@ import com.paLlevar.app.util.Constants;
 public class CompanyController {
 
 	String path = "http://localhost:8080/company";
-	
+	private static final Logger logger = LogManager.getLogger(CompanyController.class);	
+
 	@Autowired
 	private CompanyService companyService;
 	
 	
 	@GetMapping(path="/glco")
 	public ResponseEntity<List<CompanyEntity>>  getListCompany(){
+		logger.info("CompanyController.getListCompany()");
 		List<CompanyEntity>  lista=companyService.getAll();
 		return new ResponseEntity<List<CompanyEntity>>(lista,HttpStatus.OK);
 	}
 	
 	@GetMapping(path="/glcoa")
 	public ResponseEntity<List<CompanyEntity>>  getListCompanyActive(){
+		logger.info("CompanyController.getListCompanyActive()");
 		List<CompanyEntity>  lista=companyService.getCompanyListByStatus(Constants.STATUS_ON_ENTITY);
 		return new ResponseEntity<List<CompanyEntity>>(lista,HttpStatus.OK);
 	}
@@ -47,6 +52,7 @@ public class CompanyController {
 	
 	@GetMapping(value="/gcobi/{id}")
 	public ResponseEntity<CompanyEntity>  getCompanyById(@PathVariable("id")Integer id){
+		logger.info("CompanyController.getCompanyById()");
 		CompanyEntity  company=companyService.getOneById(id);
 		return new ResponseEntity<CompanyEntity>(company,HttpStatus.OK);
 	}
@@ -60,14 +66,18 @@ public class CompanyController {
 	
 	@PostMapping(path="/sco")
 	public CompanyEntity saveCompany(@RequestPart("company") CompanyEntity pr, @RequestPart("file") MultipartFile file) throws IOException{
+		logger.info("CompanyController.saveCompany()");
 		if(file.getBytes().length >0)
 			pr.setPhoto(file.getBytes());
+		else
+			logger.warn("No se almaceno foto en la compañia " + pr.getNombre());
 		CompanyEntity companySave = companyService.save(pr);
 		return companySave;
 	}
 	
 	@DeleteMapping(value="/dco/{id}")
 	public void deletedCompany(@PathVariable("id")Integer id) {
+		logger.info("CompanyController.deletedCompany()");
 		companyService.deleteById(id);
 	}
 }

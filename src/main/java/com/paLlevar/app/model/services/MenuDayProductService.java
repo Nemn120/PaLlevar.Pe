@@ -8,7 +8,7 @@ import com.paLlevar.app.model.entities.MenuDayProductEntity;
 
 @Service
 public interface MenuDayProductService extends GenericCRUD<MenuDayProductEntity, Integer>{
-	MenuDayProductEntity saveMenuDayProduct(MenuDayProductEntity menuDayProduct);
+	MenuDayProductEntity saveEditMenuDayProduct(MenuDayProductEntity menuDayProduct);
 	List<MenuDayProductEntity> getMenuDayProductListByMenuIdAndSucursalIdAndOrganizationId(MenuDayProductEntity menuDayProduct);
 	List<MenuDayProductEntity> getMenuDayProductListByMenuIdAndOrganizationId(MenuDayProductEntity menuDayProduct);
 	public List<MenuDayProductEntity> getListMenuProductByMenuId(Integer idMenu);

@@ -1,12 +1,12 @@
 package com.paLlevar.app.controller.response;
 
 import java.io.Serializable;
+
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_NULL)
-
 public abstract class AbstractResponse<T> implements Serializable{
 	private static final long serialVersionUID = 1L;	
 	public static final String SUCCESS = "1";

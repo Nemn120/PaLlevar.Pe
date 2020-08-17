@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,13 +28,39 @@ import com.paLlevar.app.util.Constants;
 public class OrderController {
 
 	String path = "http://localhost:8080/order";
+	private static final Logger logger = LogManager.getLogger(OrderController.class);	
 
-	
 	@Autowired
 	private OrderService orderService;
+	
+	@PostMapping(path="/cor")
+	public ResponseEntity<?> cancelOrder(@RequestBody OrderEntity or){
+		logger.info("OrderController.cancelOrder()");
+		Map<String,Object> response = new HashMap<>();
+		boolean check = orderService.isCancel(or);
+		if(check){
+			Boolean checkDelete = orderService.cancelOrderAndListOrderDetail(or);
+			if(checkDelete) {
+				logger.warn("Pedido:"+or.getId() + "cancelado");
+				response.put(Constants.MESSAGE_BODY_RESPONSE, "Se canceló correctamente su orden");
+				return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
+			}
+			else { 
+				logger.warn("Pedido:"+or.getId() + "no pudo ser cancelado");
+				response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al cancelar la orden");
+				return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+		else {
+			logger.warn("Pedido:"+or.getId() + "excedio el limite de tiempo");
+			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al cancelar la orden, el pedido excedió el limite de tiempo permitido");
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 	@GetMapping(path="/glo")
 	public ResponseEntity<List<OrderEntity>>  getListOrder(){
+		logger.info("OrderController.getListOrder()");
 		List<OrderEntity> lista = orderService.getAll();
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
 		
@@ -40,17 +68,20 @@ public class OrderController {
 	
 	@PostMapping(path="/so")
 	public OrderEntity saveOrder(@RequestBody OrderEntity or) {
+		logger.info("OrderController.saveOrder()");
 		OrderEntity orderSave = orderService.save(or);
 		return orderSave;
 	}
 	
 	@DeleteMapping(value="/do/{id}")
 	public void deletedOrder(@PathVariable("id")Integer id) {
+		logger.info("OrderController.deletedOrder()");
 		orderService.deleteById(id);
 	}
 	
 	@GetMapping(value="/globu/{id}")
 	public ResponseEntity<List<OrderEntity>>  getListOrderByUserIdAndNotStatus(@PathVariable("id")Integer id){
+		logger.info("OrderController.getListOrderByUserIdAndNotStatus()");
 		List<String> statusList = Arrays.asList(Constants.ORDER_DETAIL_STATUS_CANCEL,Constants.ORDER_STATUS_DELIVERED);
 		List<OrderEntity> lista = orderService.getListOrderByNotStatusAndUserId(statusList, id);
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
@@ -58,25 +89,30 @@ public class OrderController {
 	
 	@PostMapping(path="/sobos")
 	public ResponseEntity<?> saveNewOrderByOrganizationId(@RequestBody OrderEntity or) {
+		logger.info("OrderController.saveNewOrderByOrganizationId()");
+
 		Map<String,Object> response = new HashMap<>();
 		try {
-			orderService.saveOrderByOrganizationIdAndSucursalId(or);
+			response.put(Constants.DATA_RESPONSE, orderService.saveOrderByOrganizationIdAndSucursalId(or));
 			response.put("message", "Pedido registrado con éxito");
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
 		}catch(Exception e){
 			response.put("error", "Error al realizar pedido");
+			logger.error("ERORR ==> ",e);
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@PostMapping(path="/sdoo")
 	public  ResponseEntity<OrderEntity> saveDeliveryOrderByOrg(@RequestBody OrderEntity or) {
+		logger.info("OrderController.saveDeliveryOrderByOrg()");
 		orderService.deliveryOrder(or);
 		return new ResponseEntity<OrderEntity> (new OrderEntity(),HttpStatus.OK);
 	}
 	
 	@PostMapping(path="/saoo")
 	public  ResponseEntity<OrderEntity> saveAttendOrderByOrg(@RequestBody OrderEntity or) {
+		logger.info("OrderController.saveAttendOrderByOrg()");
 		orderService.attendOrder(or);
 		return new ResponseEntity<OrderEntity> (new OrderEntity(),HttpStatus.OK);
 	}
@@ -84,6 +120,7 @@ public class OrderController {
 	
 	@PostMapping(path="/cho")
 	public ResponseEntity<Object>CheckOrder(@RequestBody OrderEntity or){
+		logger.info("OrderController.CheckOrder()");
 		Boolean verificar= orderService.CheckOrder(or.getId(), or.getOrganizationId());
 		if(verificar)
 			return new ResponseEntity<Object>(HttpStatus.OK);
@@ -93,12 +130,14 @@ public class OrderController {
 
 	@PostMapping(path="/gloa")
 	public ResponseEntity<List<OrderEntity>> getListOrderAttent(@RequestBody OrderEntity or){
+		logger.info("OrderController.getListOrderAttent()");
 		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS_ATTENT, or);
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
 	}
 	
 	@PostMapping(path="/glop")
 	public ResponseEntity<List<OrderEntity>>  getListOrderPendding(@RequestBody OrderEntity or){
+		logger.info("OrderController.getListOrderPendding()");
 		List<String> statusList = Arrays.asList(Constants.ORDER_STATUS_PROCESS,Constants.ORDER_STATUS__PENDING);
 		List<OrderEntity> lista = orderService.getListOrderStatusAndOrgId(statusList,or.getOrganizationId());
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
@@ -107,6 +146,7 @@ public class OrderController {
 	
 	@PostMapping(path="/glody")
 	public ResponseEntity<List<OrderEntity>>  getListOrderDelivery(@RequestBody OrderEntity or){
+		logger.info("OrderController.getListOrderDelivery()");
 		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS_DELIVERY,or);
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
 		
@@ -114,24 +154,28 @@ public class OrderController {
 	
 	@PostMapping(path="/gloc")
 	public ResponseEntity<List<OrderEntity>> getListOrderCancel(@RequestBody OrderEntity or){
+		logger.info("OrderController.getListOrderCancel()");
 		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS_CANCEL,or);
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
 	}
 
 	@PostMapping(path="/glopr")
 	public ResponseEntity<List<OrderEntity>> getListOrderProcess(@RequestBody OrderEntity or){
+		logger.info("OrderController.getListOrderProcess()");
 		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS_PROCESS,or);
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
 	}
 
 	@PostMapping(path="/gloe")
 	public ResponseEntity<List<OrderEntity>> getListOrderError(@RequestBody OrderEntity or){
+		logger.info("OrderController.getListOrderError()");
 		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS_ERROR, or);
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
 	}
 	
 	@PostMapping(path="/glod")
 	public ResponseEntity<List<OrderEntity>>  getListOrderDelivered(@RequestBody OrderEntity or){
+		logger.info("OrderController.getListOrderDelivered()");
 		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS_DELIVERED,or);
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
 		
@@ -139,10 +183,11 @@ public class OrderController {
 	
 	@PostMapping(path="/golbdi")
 	public ResponseEntity<?>  getOrderListByDeliveryId(@RequestBody SearchOrderByDeliveryManDTO sobd){
+		logger.info("OrderController.getOrderListByDeliveryId()");
 		Map<String,Object> response = new HashMap<>();
 		try {
 			List<OrderEntity> orderList =  orderService.getOrderListByDeliveryId(sobd);
-			response.put("data", orderList);
+			response.put(Constants.DATA_RESPONSE, orderList);
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 		}catch(Exception e){
 			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error");
@@ -150,29 +195,11 @@ public class OrderController {
 		}
 	}
 	
-	@PostMapping(path="/cor")
-	public ResponseEntity<?> cancelOrder(@RequestBody OrderEntity or){
-		Map<String,Object> response = new HashMap<>();
-		boolean check = orderService.isCancel(or);
-		if(check){
-			Boolean checkDelete = orderService.cancelOrderAndListOrderDetail(or);
-			if(checkDelete) {
-				response.put(Constants.MESSAGE_BODY_RESPONSE, "Se canceló correctamente su orden");
-				return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
-			}
-			else { 
-				response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al cancelar la orden");
-				return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-		}
-		else {
-			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al cancelar la orden, el pedido excedió el limite de tiempo permitido");
-			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+
 	
 	@PostMapping(path="/upor")
 	public ResponseEntity<?> updateOrder(@RequestBody OrderEntity o){
+		logger.info("OrderController.updateOrder()");
 		Map<String,Object> response = new HashMap<>();
 		try {
 			orderService.updateOrder(o);
@@ -180,6 +207,7 @@ public class OrderController {
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
 		}catch(Exception e) {
 			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al actualizar pedido");
+			logger.error("ERROR ==>", e);
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
