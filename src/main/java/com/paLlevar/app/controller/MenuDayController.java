@@ -39,13 +39,13 @@ public class MenuDayController {
 	}
 	
 	@GetMapping(value="/gmbi/{id}")
-	public ResponseEntity<MenuDayEntity>  getMenuByDay(@PathVariable("id")Integer id){
+	public ResponseEntity<MenuDayEntity>  getMenuDayByID(@PathVariable("id")Integer id){
 		logger.info("MenuDayController.getMenuByDay()");
 		MenuDayEntity menuDay = menudayService.getOneById(id);
 		return new ResponseEntity<MenuDayEntity>(menuDay,HttpStatus.OK);
 		
 	}
-	
+
 	@DeleteMapping(value="/dmd/{id}") 
 	public void deletedMenuDay(@PathVariable("id")Integer id) {
 		logger.info("MenuDayController.deletedMenuDay()");

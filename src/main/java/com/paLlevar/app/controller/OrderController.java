@@ -93,11 +93,12 @@ public class OrderController {
 
 		Map<String,Object> response = new HashMap<>();
 		try {
-			orderService.saveOrderByOrganizationIdAndSucursalId(or);
+			response.put(Constants.DATA_RESPONSE, orderService.saveOrderByOrganizationIdAndSucursalId(or));
 			response.put("message", "Pedido registrado con éxito");
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
 		}catch(Exception e){
 			response.put("error", "Error al realizar pedido");
+			logger.error("ERORR ==> ",e);
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
