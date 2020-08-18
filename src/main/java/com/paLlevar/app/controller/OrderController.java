@@ -90,7 +90,6 @@ public class OrderController {
 	@PostMapping(path="/sobos")
 	public ResponseEntity<?> saveNewOrderByOrganizationId(@RequestBody OrderEntity or) {
 		logger.info("OrderController.saveNewOrderByOrganizationId()");
-
 		Map<String,Object> response = new HashMap<>();
 		try {
 			response.put(Constants.DATA_RESPONSE, orderService.saveOrderByOrganizationIdAndSucursalId(or));

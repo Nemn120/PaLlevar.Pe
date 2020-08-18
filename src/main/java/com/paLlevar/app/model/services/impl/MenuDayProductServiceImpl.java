@@ -56,9 +56,6 @@ public class MenuDayProductServiceImpl implements MenuDayProductService {
 
 	@Override
 	public MenuDayProductEntity saveEditMenuDayProduct(MenuDayProductEntity menuDayProduct) {
-		
-		if(Constants.MENUD_PROD_STATUS_AVAILABLE.equals(menuDayProduct.getStatus()) && menuDayProduct.getAvailable() == 0)
-			return null;
 		if(menuDayProduct.getQuantityAdd() != null && menuDayProduct.getQuantityAdd() != 0) {
 			menuDayProduct.setQuantity(menuDayProduct.getQuantity()+ menuDayProduct.getQuantityAdd());
 			menuDayProduct.setAvailable(menuDayProduct.getAvailable()+ menuDayProduct.getQuantityAdd());
@@ -103,9 +100,10 @@ public class MenuDayProductServiceImpl implements MenuDayProductService {
 	@Override
 	public void deleteMenuDayProduct(MenuDayProductEntity menuProduct) {
 		menuProduct.setMenuDay(new MenuDayEntity());
-		menuProduct.setMenuDayId(null);
+		menuProduct.getMenuDay().setId(menuProduct.getMenuDayId()); //
+		menuProduct.setStatus(Constants.STATUS_OFF_ENTITY);
 		repo.save(menuProduct);
-		repo.delete(menuProduct);
+		
 	}
 
 }

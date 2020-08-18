@@ -66,6 +66,10 @@ public class OrderEntity    extends MainEntity implements Serializable{
 	@Column(name="company_name")
 	private String companyName;
 	
+	@ManyToOne
+	@JoinColumn(name = "place_id", referencedColumnName = "id")
+	private PlaceEntity place;
+	
 	public List<OrderDetailEntity> getOrderDetail() {
 		return orderDetail;
 	}
@@ -152,7 +156,11 @@ public class OrderEntity    extends MainEntity implements Serializable{
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
-	
-	
+	public PlaceEntity getPlace() {
+		return place;
+	}
+	public void setPlace(PlaceEntity place) {
+		this.place = place;
+	}
 	
 }
