@@ -2,13 +2,9 @@
 
 package com.paLlevar.app.controller;
 
-<<<<<<< HEAD
 import java.util.List;
-=======
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
->>>>>>> origin/1.0.0
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
