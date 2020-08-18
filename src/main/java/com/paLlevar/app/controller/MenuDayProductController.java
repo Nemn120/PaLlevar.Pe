@@ -2,7 +2,9 @@
 
 package com.paLlevar.app.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,25 +42,50 @@ public class MenuDayProductController {
 	}
 	
 	@PostMapping(path="/smdp") 
-	public MenuDayProductEntity saveMenuDayProduct(@RequestBody MenuDayProductEntity mdp) {
+	public ResponseEntity<?> saveMenuDayProduct(@RequestBody MenuDayProductEntity mdp) {
 		logger.info("MenuDayProductController.saveMenuDayProduct()");
-		MenuDayProductEntity menudayproductSave = new MenuDayProductEntity();
+		Map<String,Object> response = new HashMap<>();
 		mdp.setMenuDay(new MenuDayEntity());
-		mdp.getMenuDay().setId(mdp.getMenuDayId()); // 
-		if(mdp.getId()!=null) {
-			logger.info("Actualizar MenuDayProduct"+", Funcion: "+"saveEditMenuDayProduct");
-			menudayproductSave=menudayproductService.saveEditMenuDayProduct(mdp);
-		}else {
-			logger.info("Nuevo MenuDayProduct"+", Funcion: "+"save");
-			menudayproductSave=menudayproductService.save(mdp);
-		}
-		return menudayproductSave;
+		mdp.getMenuDay().setId(mdp.getMenuDayId()); //
+		try {
+			if(mdp.getId()!=null) {
+				logger.info("Actualizar MenuDayProduct"+", Funcion: "+"saveEditMenuDayProduct");
+				menudayproductService.saveEditMenuDayProduct(mdp);
+				response.put(Constants.MESSAGE_BODY_RESPONSE,"Platillo modificado con éxito" );
+				return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
+			}else {
+				if(mdp.getQuantity()!=0)
+					mdp.setStatus(Constants.MENUD_PROD_STATUS_AVAILABLE);
+				else
+					mdp.setStatus(Constants.MENUD_PROD_STATUS_NOT_AVAILABLE);
+				logger.info("Nuevo MenuDayProduct"+", Funcion: "+"save");
+				menudayproductService.save(mdp);
+				response.put(Constants.MESSAGE_BODY_RESPONSE,"Platillo agregado con éxito" );
+				return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
+			}			
+		}catch(Exception e) {
+			response.put(Constants.MESSAGE_BODY_RESPONSE,"Error al modificar/agregar producto" );
+			logger.info("ERROR ===> ",e.getMessage());
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+		}			
 	}
 	
-	@DeleteMapping(value="/dmdp/{id}")  
-	public void deletedMenuDayProduct(@PathVariable("id")Integer id) {
+	@PostMapping(path="/dmdp")  
+	public  ResponseEntity<?>  deletedMenuDayProduct(@RequestBody MenuDayProductEntity mdp) {
 		logger.info("MenuDayProductController.deletedMenuDayProduct()");
-		menudayproductService.deleteById(id);
+		Map<String,Object> response = new HashMap<>();
+		try {
+			menudayproductService.deleteMenuDayProduct(mdp);
+			response.put(Constants.MESSAGE_BODY_RESPONSE,"Platillo eliminado con exito" );
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
+
+		}catch(Exception e) {
+			response.put(Constants.MESSAGE_BODY_RESPONSE,"Error al eliminar un platillo" );
+			logger.info("ERROR ===> ",e.getMessage());
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		
 	}
 	
 	@PostMapping(path="/gmdpbmos")   

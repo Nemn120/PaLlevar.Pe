@@ -13,10 +13,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Where;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="menu_product_day")
+@Where(clause="status != 'Desactivo'")
 public class MenuDayProductEntity   extends MainEntity implements Serializable{
 	
 	/**
