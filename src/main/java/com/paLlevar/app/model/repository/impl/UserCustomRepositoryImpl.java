@@ -23,7 +23,7 @@ public class UserCustomRepositoryImpl implements UserCustomRepository{
 		if(user.getStatus() != null) {
 			queryString.append(" AND ue.status=:status");
 		}
-		if(user.getProfile().getIdProfile()!=null) {
+		if(user.getProfile() != null && user.getProfile().getIdProfile()!=null) {
 			queryString.append(" AND ue.profile.idProfile=:idProfile");
 		}
 		if(user.getEmployeeCode()!=null) {
@@ -40,7 +40,7 @@ public class UserCustomRepositoryImpl implements UserCustomRepository{
 		if(user.getStatus() != null) {
 			query.setParameter("status",user.getStatus());
 		}
-		if(user.getProfile().getIdProfile()!=null) {
+		if(user.getProfile() != null && user.getProfile().getIdProfile()!=null) {
 			query.setParameter("idProfile",user.getProfile().getIdProfile());
 		}
 		if(user.getEmployeeCode()!=null) {

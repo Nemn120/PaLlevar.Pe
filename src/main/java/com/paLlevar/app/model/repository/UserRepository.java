@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import com.paLlevar.app.model.entities.UserEntity;
 
-public interface UserRepository extends JpaRepository<UserEntity, Integer>{
+public interface UserRepository extends UserCustomRepository ,JpaRepository<UserEntity, Integer>{
 	
 	UserEntity findOneByUsername(String username);
 	
