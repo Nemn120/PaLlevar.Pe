@@ -14,12 +14,14 @@ import com.paLlevar.app.controller.CategoryProductController;
 import com.paLlevar.app.model.entities.MenuDayProductEntity;
 import com.paLlevar.app.model.entities.OrderDetailEntity;
 import com.paLlevar.app.model.entities.OrderEntity;
+import com.paLlevar.app.model.entities.PlaceEntity;
 import com.paLlevar.app.model.entities.UserEntity;
 import com.paLlevar.app.model.repository.OrderRepository;
 import com.paLlevar.app.model.services.CompanyService;
 import com.paLlevar.app.model.services.MenuDayProductService;
 import com.paLlevar.app.model.services.OrderDetailService;
 import com.paLlevar.app.model.services.OrderService;
+import com.paLlevar.app.model.services.PlaceService;
 import com.paLlevar.app.model.services.UserService;
 import com.paLlevar.app.model.services.dto.SearchOrderByDeliveryManDTO;
 import com.paLlevar.app.util.Constants;
@@ -44,6 +46,9 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Autowired
 	private CompanyService companyService;
+	
+	@Autowired
+	private PlaceService placeService;
 	
 	@Override
 	public List<OrderEntity> getAll() {
@@ -105,6 +110,10 @@ public class OrderServiceImpl implements OrderService {
 			
 		order.setCreateDate(LocalDateTime.now());
 		order.setStatus(Constants.ORDER_DETAIL_STATUS_PENDING);
+		//if(order.getPlace() != null) {
+	//		PlaceEntity place =placeService.save(order.getPlace());
+		//	order.setPlace(place);
+	//	}
 		logger.trace("Orden : "+order.getId()+ " estado : "+Constants.ORDER_DETAIL_STATUS_PENDING);
 		return repo.save(order);
 	}

@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.paLlevar.app.model.entities.OrderEntity;
+import com.paLlevar.app.model.entities.PlaceEntity;
 import com.paLlevar.app.model.services.OrderService;
+import com.paLlevar.app.model.services.PlaceService;
 import com.paLlevar.app.model.services.dto.SearchOrderByDeliveryManDTO;
 import com.paLlevar.app.util.Constants;
 
@@ -32,6 +34,9 @@ public class OrderController {
 
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	private PlaceService placeService;
 	
 	@PostMapping(path="/cor")
 	public ResponseEntity<?> cancelOrder(@RequestBody OrderEntity or){
@@ -92,6 +97,8 @@ public class OrderController {
 		logger.info("OrderController.saveNewOrderByOrganizationId()");
 		Map<String,Object> response = new HashMap<>();
 		try {
+			if(or.getPlace() != null)
+				placeService.save(or.getPlace());
 			response.put(Constants.DATA_RESPONSE, orderService.saveOrderByOrganizationIdAndSucursalId(or));
 			response.put("message", "Pedido registrado con éxito");
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
