@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +28,8 @@ import com.paLlevar.app.util.Constants;
 public class OrderController {
 
 	String path = "http://localhost:8080/order";
-
+	
+	private static final Logger LOGGER = LogManager.getLogger(OrderController.class);
 	
 	@Autowired
 	private OrderService orderService;
@@ -34,6 +37,9 @@ public class OrderController {
 	@GetMapping(path="/glo")
 	public ResponseEntity<List<OrderEntity>>  getListOrder(){
 		List<OrderEntity> lista = orderService.getAll();
+		LOGGER.info("Info level log message");
+        LOGGER.debug("Debug level log message");
+        LOGGER.error("Error level log message");
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
 		
 	}
