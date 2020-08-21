@@ -1,12 +1,10 @@
 package com.paLlevar.app.controller;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.paLlevar.app.model.entities.ProfileEntity;
 import com.paLlevar.app.model.entities.UserEntity;
 import com.paLlevar.app.model.services.UserService;
@@ -32,7 +29,7 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
-	private static final Logger log = LoggerFactory.getLogger(UserController.class);
+	private static final Logger log = LogManager.getLogger(UserController.class);
 
 	@GetMapping(path="/glur")
 	public ResponseEntity<List<UserEntity>>  getListUser(){
@@ -70,6 +67,7 @@ public class UserController {
 			response.put(Constants.MESSAGE_BODY_RESPONSE, "Perfil actualizado con éxito");
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
 		}catch(Exception e) {
+			log.error("Se produjo un error: "+e.getMessage().toString());
 			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al actualizar perfil");
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -93,6 +91,7 @@ public class UserController {
 			response.put(Constants.MESSAGE_BODY_RESPONSE, "Estado actualizado con éxito");
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
 		}catch(Exception e) {
+			log.error("Se produjo un error: "+e.getMessage().toString());
 			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al actualizar estado");
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -133,8 +132,5 @@ public class UserController {
 			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al realizar la peticion");
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);			
 		}
-	}
-	
-	
-	
+	}	
 }

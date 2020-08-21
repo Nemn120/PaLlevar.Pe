@@ -2,13 +2,12 @@ package com.paLlevar.app.model.services.impl;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.paLlevar.app.model.entities.UserEntity;
 import com.paLlevar.app.model.repository.UserRepository;
 import com.paLlevar.app.model.services.UserService;
@@ -18,7 +17,7 @@ import com.paLlevar.app.model.services.UserService;
 public class UserServiceImpl implements UserService {
 	
 	
-	private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+	private static final Logger log = LogManager.getLogger(UserServiceImpl.class);
 
 	
 	@Autowired
@@ -79,6 +78,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<UserEntity> getUserListByOrganizationIdANDbyStatus(UserEntity user) {
+		log.info("Funcion Info UserService: "+"getUserListByOrganizationIdANDbyStatus");
+		log.trace("Funcion: "+"getUserListByOrganizationIdANDbyStatus");
 		return repo.getListUserByOrganization(user);
 	}
 
