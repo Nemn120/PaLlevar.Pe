@@ -59,23 +59,30 @@ public class UserController {
 	
 	@PostMapping(path="/uu")
 	public ResponseEntity<?> updatedUser(@RequestPart("user") UserEntity pr, @RequestPart("file") MultipartFile file) throws IOException{
+		log.info("INICIO: updatedUser()");
 		Map<String,Object> response = new HashMap<>();
 		try {
 			if(file.getBytes().length >0)
 				pr.setPhoto(file.getBytes());
+			else
+				log.warn("Usuario no presenta foto  id: ",pr.getId());
 			userService.save(pr);
 			response.put(Constants.MESSAGE_BODY_RESPONSE, "Perfil actualizado con éxito");
+			log.trace("Perfil actualizado con éxito");
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
 		}catch(Exception e) {
 			log.error("Se produjo un error: "+e.getMessage().toString());
 			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al actualizar perfil");
+			log.info("FIN: updatedUser()");
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@PostMapping(path="/su")
 	public ResponseEntity<Object> saveUserCompany(@RequestBody UserEntity us) {
+		log.info("INICIO: saveUserCompany()");
 		UserEntity userSave = userService.registerUserByProfile(us);
+		log.info("FIN: saveUserCompany()");
 		return new ResponseEntity<Object>(userSave,HttpStatus.CREATED);
 	}
 	
@@ -83,8 +90,10 @@ public class UserController {
 	public void deletedUser(@PathVariable("id")Integer id) {
 		userService.deleteById(id);
 	}
+	
 	@PostMapping(path="/usu")
 	public ResponseEntity<?> updateStatusUser(@RequestBody UserEntity user) throws IOException{
+		log.info("updateStatusUser");
 		Map<String,Object> response = new HashMap<>();
 		try {
 			userService.updateStatusById(user.getId(), user.getStatus());
@@ -99,6 +108,7 @@ public class UserController {
 
 	@PostMapping(path="rcli",produces = "application/json", consumes = "application/json")
 	private ResponseEntity<Object> registerClient(@RequestBody UserEntity usuario){
+		log.info("registerClient");
 		usuario.setProfile(new ProfileEntity());
 		usuario.getProfile().setIdProfile(Constants.CLIENT_USER_ROL);
 		userService.registerUserByProfile(usuario);
@@ -113,6 +123,7 @@ public class UserController {
 	
 	@PostMapping(path="/guldm")
 	public ResponseEntity<List<UserEntity>> getListUserDeliveryMan(@RequestBody UserEntity user){
+		log.info("getListUserDeliveryMan");
 		user.setProfile(new ProfileEntity());
 		user.getProfile().setIdProfile(Constants.DELIVERY_MAN_USER_ROL);
 		user.setStatus(Constants.DELIVERY_MAN_STATUS_DISPONIBLE);

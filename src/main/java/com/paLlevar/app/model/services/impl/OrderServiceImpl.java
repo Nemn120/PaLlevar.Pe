@@ -3,9 +3,14 @@ package com.paLlevar.app.model.services.impl;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.paLlevar.app.controller.UserController;
 import com.paLlevar.app.model.entities.MenuDayProductEntity;
 import com.paLlevar.app.model.entities.OrderDetailEntity;
 import com.paLlevar.app.model.entities.OrderEntity;
@@ -22,6 +27,9 @@ import com.paLlevar.app.util.Constants;
 @Service
 @Transactional
 public class OrderServiceImpl implements OrderService {
+	
+	private static final Logger log = LogManager.getLogger(OrderServiceImpl.class);
+
 
 	@Autowired
 	private OrderRepository repo;
@@ -66,6 +74,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public OrderEntity saveOrderByOrganizationIdAndSucursalId(OrderEntity order) {
+		log.info("INICIO : saveOrderByOrganizationIdAndSucursalId");
 		order.setOrganizationId(order.getOrderDetail().get(0).getOrganizationId());
 		order.setCompanyName(companyService.getOneById(order.getOrderDetail().get(0).getOrganizationId()).getNombre());
 		repo.save(order);
@@ -78,11 +87,14 @@ public class OrderServiceImpl implements OrderService {
 				mp.setAvailable(mp.getAvailable()-1);
 				if(mp.getAvailable().equals(0)) {
 					mp.setStatus(Constants.MENUD_PROD_STATUS_NOT_AVAILABLE);
+					log.warn("MENU PRODUCT ESTADO: ",Constants.MENUD_PROD_STATUS_NOT_AVAILABLE);
+
 				}
+				log.trace("MENU ACTUALIZADO");
 				menuDayProdService.save(mp);
 				od.setCreateDate(LocalDateTime.now());
 				orderDetailService.save(od);
-				
+				log.trace("Detalle Pedido registrado platillo : ",od.getProduct().getName());
 				if(order.getTotal() !=null && order.getTotal() != 0.0)
 					order.setTotal(order.getTotal()+od.getPrice());
 				else
@@ -95,7 +107,9 @@ public class OrderServiceImpl implements OrderService {
 			
 		order.setCreateDate(LocalDateTime.now());
 		order.setStatus(Constants.ORDER_DETAIL_STATUS_PENDING);
-		
+		log.trace("Pedido registrado estado: ",Constants.ORDER_DETAIL_STATUS_PENDING);
+		log.info("FIN: saveOrderByOrganizationIdAndSucursalId");
+
 		return repo.save(order);
 	}
 
