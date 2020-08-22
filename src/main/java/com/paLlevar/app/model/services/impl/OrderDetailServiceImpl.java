@@ -117,6 +117,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	@Override
 	public List<Map<String, Object>> getSalesByFieldsGroupByMenuProduct(SearchSalesByFieldsDTO ssbf) {
 		List<Object[]> listResult = repo.getSalesByFieldsGroupByMenuProduct(ssbf);
+		//
 		if(listResult != null) {
 			List<Map<String,Object>> result = new ArrayList<Map<String,Object>>();
 			AtomicInteger index = new AtomicInteger();

@@ -14,6 +14,7 @@ public class Constants {
 	public static final String ORDER_DETAIL_STATUS_ATTENT="Atendido";
 	public static final String ORDER_DETAIL_STATUS_DELIVERY="En camino";
 	public static final String ORDER_DETAIL_STATUS_DELIVERED="Entregado";
+	public static final String ORDER_DETAIL_STATUS_PENDING_CONFIRM="Pendiente confirmacion";
 	public static final String ORDER_DETAIL_STATUS_CANCEL="Cancelado";
 	public static final String ORDER_STATUS_ERROR="Error";
 	

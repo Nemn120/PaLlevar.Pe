@@ -110,10 +110,7 @@ public class OrderServiceImpl implements OrderService {
 			
 		order.setCreateDate(LocalDateTime.now());
 		order.setStatus(Constants.ORDER_DETAIL_STATUS_PENDING);
-		//if(order.getPlace() != null) {
-	//		PlaceEntity place =placeService.save(order.getPlace());
-		//	order.setPlace(place);
-	//	}
+
 		logger.trace("Orden : "+order.getId()+ " estado : "+Constants.ORDER_DETAIL_STATUS_PENDING);
 		return repo.save(order);
 	}
