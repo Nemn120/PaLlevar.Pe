@@ -46,18 +46,18 @@ public class OrderController {
 		if(check){
 			Boolean checkDelete = orderService.cancelOrderAndListOrderDetail(or);
 			if(checkDelete) {
-				logger.warn("Pedido:"+or.getId() + "cancelado");
+				logger.warn("Pedido:"+or.getId() + " cancelado");
 				response.put(Constants.MESSAGE_BODY_RESPONSE, "Se canceló correctamente su orden");
 				return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 			}
 			else { 
-				logger.warn("Pedido:"+or.getId() + "no pudo ser cancelado");
+				logger.warn("Pedido:"+or.getId() + " no pudo ser cancelado");
 				response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al cancelar la orden");
 				return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
 		else {
-			logger.warn("Pedido:"+or.getId() + "excedio el limite de tiempo");
+			logger.warn("Pedido:"+or.getId() + " excedio el limite de tiempo");
 			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al cancelar la orden, el pedido excedió el limite de tiempo permitido");
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 		}

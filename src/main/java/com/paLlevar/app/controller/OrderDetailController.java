@@ -109,34 +109,27 @@ public class OrderDetailController {
 	}
 	@PostMapping(path="/gsbfmp")
 	public GenericResponse<Map<String,Object>> getSalesByFieldsGroupByMenuProduct(@RequestBody SearchSalesByFieldsDTO salesDTO) {
-		//Map<String,Object> response = new HashMap<>()
 		logger.info("OrderDetailController.getSalesByFieldsGroupByMenuProduct()");
 		logger.debug("Object: "+salesDTO);
 		GenericResponse<Map<String,Object>> response = new GenericResponse<>();
 
-		//try {
-			//response.put("data", orderdetailService.getSalesByFieldsGroupByMenuProduct(salesDTO));
+		
 		List<Map<String,Object>> result =orderdetailService.getSalesByFieldsGroupByMenuProduct(salesDTO);
 		if(result != null && result.size()>0) {
 			response.setDatalist(result);
 			response.setResponseMessage("Busqueda realizada con exito");
 			response.setFinalTimesTamp(LocalDateTime.now());
 			logger.info(HttpStatus.OK);
-			//return new ResponseEntity<GenericResponse<Map<String,Object>>>(response,HttpStatus.OK);
+			
 			return response;
 		}
 			
-			
-		//}catch(Exception e) {
-			//response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al realizar la peticion");
 			response.setResponseMessage("Error al realizar la peticion");
 			response.setResponseCode("1");
 			response.setFinalTimesTamp(LocalDateTime.now());
 			logger.error(HttpStatus.INTERNAL_SERVER_ERROR);
 			return response;
-			//return new ResponseEntity<GenericResponse<Map<String,Object>>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
-		//}
-
+	
 	}
 }
 	

@@ -34,7 +34,7 @@ public class OrderDetailCustomRepositoryImpl implements OrderDetailCustomReposit
 			queryString.append(" AND pro.id=:productId");
 		}
 		if(ssbf.getInitDate()!= null && ssbf.getFinalDate()!= null) {
-			queryString.append(" AND od.createDate BETWEEN :starDate AND :endDate ");
+			queryString.append(" AND pro.createDate BETWEEN :starDate AND :endDate ");
 		}
 		queryString.append(" group by od.menuProductId , pro.name,cat.name, od.price");
 		//queryString.append(" order by count(od.id) desc ");
