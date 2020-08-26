@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.paLlevar.app.model.entities.OrderEntity;
-import com.paLlevar.app.model.entities.PlaceEntity;
 import com.paLlevar.app.model.services.OrderService;
 import com.paLlevar.app.model.services.PlaceService;
 import com.paLlevar.app.model.services.dto.SearchOrderByDeliveryManDTO;
@@ -30,8 +29,9 @@ import com.paLlevar.app.util.Constants;
 public class OrderController {
 
 	String path = "http://localhost:8080/order";
-	private static final Logger logger = LogManager.getLogger(OrderController.class);	
-
+	
+	private static final Logger logger = LogManager.getLogger(OrderController.class);
+	
 	@Autowired
 	private OrderService orderService;
 	
@@ -67,6 +67,9 @@ public class OrderController {
 	public ResponseEntity<List<OrderEntity>>  getListOrder(){
 		logger.info("OrderController.getListOrder()");
 		List<OrderEntity> lista = orderService.getAll();
+		logger.info("Info level log message");
+		logger.debug("Debug level log message");
+		logger.error("Error level log message");
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
 		
 	}
@@ -193,7 +196,8 @@ public class OrderController {
 		Map<String,Object> response = new HashMap<>();
 		try {
 			List<OrderEntity> orderList =  orderService.getOrderListByDeliveryId(sobd);
-			response.put(Constants.DATA_RESPONSE, orderList);
+			
+			response.put("dataList", orderList);
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 		}catch(Exception e){
 			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error");

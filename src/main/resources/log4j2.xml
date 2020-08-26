@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+    <Properties>
+        <Property name="LOG_PATTERN">%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ} %p %m%n</Property>
+        <Property name="APP_LOG_ROOT">c:/temp</Property>
+    </Properties>
+    <Appenders>
+    
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}" />
+        </Console>
+             
+        <!-- LOGS DE LA APLICACION -->
+        <RollingFile name="debugpaLlevarLog" 
+        	fileName="${sys:APP_LOG_ROOT}/paLlevarAppLogs/paLlevar-debug.log"
+            filePattern="${sys:APP_LOG_ROOT}/paLlevarAppLogs/paLlevar-debug-%d{yyyy-MM-dd}-%i.log">
+            <LevelRangeFilter minLevel="DEBUG" maxLevel="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+         
+        <RollingFile name="infopaLlevarLog" 
+        	fileName="${sys:APP_LOG_ROOT}/paLlevarAppLogs/paLlevar-info.log"
+            filePattern="${sys:APP_LOG_ROOT}/paLlevarAppLogs/paLlevar-info-%d{yyyy-MM-dd}-%i.log" >
+            <LevelRangeFilter minLevel="INFO" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+         
+        <RollingFile name="errorpaLlevarLog" 
+        	fileName="${sys:APP_LOG_ROOT}/paLlevarAppLogs/paLlevar-error.log"
+            filePattern="${sys:APP_LOG_ROOT}/paLlevarAppLogs/paLlevar-error-%d{yyyy-MM-dd}-%i.log" >
+            <LevelRangeFilter minLevel="ERROR" maxLevel="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+        
+        <RollingFile name="tracepaLlevarLog" 
+        	fileName="${sys:APP_LOG_ROOT}/paLlevarAppLogs/paLlevar-trace.log"
+            filePattern="${sys:APP_LOG_ROOT}/paLlevarAppLogs/paLlevar-trace-%d{yyyy-MM-dd}-%i.log" >
+            <LevelRangeFilter minLevel="TRACE" maxLevel="TRACE" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+        
+        <RollingFile name="warnpaLlevarLog" 
+        	fileName="${sys:APP_LOG_ROOT}/paLlevarAppLogs/paLlevar-warn.log"
+            filePattern="${sys:APP_LOG_ROOT}/paLlevarAppLogs/paLlevar-warn-%d{yyyy-MM-dd}-%i.log" >
+            <LevelRangeFilter minLevel="WARN" maxLevel="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>    
+    </Appenders>
+    
+    <Loggers>
+    
+        <Logger name="com.paLlevar.app" level="INFO" additivity="false">
+            <AppenderRef ref="debugpaLlevarLog" />
+            <AppenderRef ref="errorpaLlevarLog" />
+            <AppenderRef ref="tracepaLlevarLog"  />
+            <AppenderRef ref="warnpaLlevarLog"  />
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="infopaLlevarLog"  /> 
+        </Logger>
+ 
+         <Root level="INFO">
+            <AppenderRef ref="Console" />
+        </Root>
+          
+    </Loggers>
+</Configuration>

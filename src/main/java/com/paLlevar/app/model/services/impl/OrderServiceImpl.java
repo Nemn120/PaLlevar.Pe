@@ -10,18 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.paLlevar.app.controller.CategoryProductController;
 import com.paLlevar.app.model.entities.MenuDayProductEntity;
 import com.paLlevar.app.model.entities.OrderDetailEntity;
 import com.paLlevar.app.model.entities.OrderEntity;
-import com.paLlevar.app.model.entities.PlaceEntity;
+
 import com.paLlevar.app.model.entities.UserEntity;
 import com.paLlevar.app.model.repository.OrderRepository;
 import com.paLlevar.app.model.services.CompanyService;
 import com.paLlevar.app.model.services.MenuDayProductService;
 import com.paLlevar.app.model.services.OrderDetailService;
 import com.paLlevar.app.model.services.OrderService;
-import com.paLlevar.app.model.services.PlaceService;
 import com.paLlevar.app.model.services.UserService;
 import com.paLlevar.app.model.services.dto.SearchOrderByDeliveryManDTO;
 import com.paLlevar.app.util.Constants;
@@ -46,9 +44,6 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Autowired
 	private CompanyService companyService;
-	
-	@Autowired
-	private PlaceService placeService;
 	
 	@Override
 	public List<OrderEntity> getAll() {
@@ -237,10 +232,14 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public void updateOrder(OrderEntity o) {
-		logger.info("OrderServiceImpl.updateOrder()");
-		repo.updateOrder(o.getId(), o.getPhone(), o.getAddress(), o.getReference());
+	public boolean updateOrder(OrderEntity o) {
+		if(o.getStatus().equals(Constants.ORDER_STATUS__PENDING) || o.getStatus().equals(Constants.ORDER_STATUS_PROCESS)) {
+			repo.updateOrder(o.getId(), o.getPhone(), o.getAddress(), o.getReference());
+			return true;
+		}else
+			return false;
 	}
 	
 
 }
+
