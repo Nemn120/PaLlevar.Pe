@@ -2,6 +2,7 @@ package com.paLlevar.app.model.services;
 
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.paLlevar.app.model.entities.MenuDayProductEntity;
@@ -17,4 +18,6 @@ public interface MenuDayProductService extends GenericCRUD<MenuDayProductEntity,
 	public List<MenuDayProductEntity> getListByOrganizationIdAndStatusAndType(Integer id, String status,String type);
 	
 	public void deleteMenuDayProduct(MenuDayProductEntity menuProduct);
+	
+	public List<MenuDayProductEntity> getListFavoriteMenuDayProductByUserAndOrganizationId(Integer organizationId, String status, Integer userId );
 }

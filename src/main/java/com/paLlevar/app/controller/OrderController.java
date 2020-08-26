@@ -22,6 +22,7 @@ import com.paLlevar.app.model.entities.OrderEntity;
 import com.paLlevar.app.model.services.OrderService;
 import com.paLlevar.app.model.services.PlaceService;
 import com.paLlevar.app.model.services.dto.SearchOrderByDeliveryManDTO;
+import com.paLlevar.app.model.services.dto.SearchOrderByFieldsDTO;
 import com.paLlevar.app.util.Constants;
 
 @RestController
@@ -222,6 +223,21 @@ public class OrderController {
 		}
 	}
 	
+	
+	@PostMapping(path="/golbf")
+	public ResponseEntity<?>  getOrderListByFields(@RequestBody SearchOrderByFieldsDTO sobf){
+		logger.info("OrderController.getOrderListByFields()");
+		Map<String,Object> response = new HashMap<>();
+		try {
+			List<OrderEntity> orderList =  orderService.getOrderListByFields(sobf);
+			
+			response.put("dataList", orderList);
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
+		}catch(Exception e){
+			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error");
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 	
 
 	

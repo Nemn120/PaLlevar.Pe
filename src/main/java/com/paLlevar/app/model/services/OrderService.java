@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.paLlevar.app.model.entities.OrderEntity;
 import com.paLlevar.app.model.services.dto.SearchOrderByDeliveryManDTO;
+import com.paLlevar.app.model.services.dto.SearchOrderByFieldsDTO;
 
 @Service
 public interface OrderService extends GenericCRUD<OrderEntity, Integer>{
@@ -24,4 +25,6 @@ public interface OrderService extends GenericCRUD<OrderEntity, Integer>{
 	public boolean isCancel(OrderEntity or);
 	public boolean cancelOrderAndListOrderDetail(OrderEntity order);
 	public boolean updateOrder(OrderEntity o); 
+	
+	public List<OrderEntity> getOrderListByFields(SearchOrderByFieldsDTO sobf);
 }

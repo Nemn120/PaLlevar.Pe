@@ -22,6 +22,7 @@ import com.paLlevar.app.model.services.OrderDetailService;
 import com.paLlevar.app.model.services.OrderService;
 import com.paLlevar.app.model.services.UserService;
 import com.paLlevar.app.model.services.dto.SearchOrderByDeliveryManDTO;
+import com.paLlevar.app.model.services.dto.SearchOrderByFieldsDTO;
 import com.paLlevar.app.util.Constants;
 
 @Service
@@ -238,6 +239,11 @@ public class OrderServiceImpl implements OrderService {
 			return true;
 		}else
 			return false;
+	}
+
+	@Override
+	public List<OrderEntity> getOrderListByFields(SearchOrderByFieldsDTO sobf) {
+		return  repo.getOrderListByFields(sobf);
 	}
 	
 
