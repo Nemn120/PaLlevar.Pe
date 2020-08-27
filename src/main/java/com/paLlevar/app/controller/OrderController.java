@@ -235,6 +235,7 @@ public class OrderController {
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 		}catch(Exception e){
 			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error");
+			logger.error("ERROR ==>", e);
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

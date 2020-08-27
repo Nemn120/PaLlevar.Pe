@@ -1,7 +1,10 @@
 package com.paLlevar.app.model.services.impl;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -109,8 +112,15 @@ public class MenuDayProductServiceImpl implements MenuDayProductService {
 	@Override
 	public List<MenuDayProductEntity> getListFavoriteMenuDayProductByUserAndOrganizationId(Integer organizationId, String status,
 			Integer userId) {
+		List<MenuDayProductEntity> lis= repo.getListFavoriteMenuDayProductByUserAndOrganizationId(organizationId, status, userId);
+		return deleteDuplicated(lis);
+	}
+	
+	private List<MenuDayProductEntity> deleteDuplicated(List<MenuDayProductEntity> lis){
 		
-		return repo.getListFavoriteMenuDayProductByUserAndOrganizationId(organizationId, status, userId);
+		Set<MenuDayProductEntity> noRepeat = new HashSet<MenuDayProductEntity>();
+		noRepeat.addAll(lis);
+		return new ArrayList<MenuDayProductEntity>(noRepeat);
 	}
 
 }

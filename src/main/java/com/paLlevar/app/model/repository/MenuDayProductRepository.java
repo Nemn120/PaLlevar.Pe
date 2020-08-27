@@ -35,7 +35,7 @@ public interface MenuDayProductRepository extends JpaRepository<MenuDayProductEn
 */
 	
 
-	@Query(value="select * FROM menu_product_day INNER JOIN order_detail  ON order_detail.menu_product_id = menu_product_day.id INNER JOIN order_header ON order_header.id=order_detail.order_id  "
+	@Query(value="SELECT DISTINCT * FROM menu_product_day INNER JOIN order_detail  ON order_detail.menu_product_id = menu_product_day.id INNER JOIN order_header ON order_header.id=order_detail.order_id  "
 			+ "WHERE menu_product_day.organization_id=:organizationId AND menu_product_day.status=:status AND order_header.user_order_id=:userId", nativeQuery = true)
 	List<MenuDayProductEntity> getListFavoriteMenuDayProductByUserAndOrganizationId(@Param("organizationId") Integer organizationId, @Param("status") String status, @Param("userId")Integer userId);
 }
