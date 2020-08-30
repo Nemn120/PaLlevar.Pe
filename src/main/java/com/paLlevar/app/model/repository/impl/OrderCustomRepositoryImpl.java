@@ -125,6 +125,19 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository{
 
 		return query.getResultList();
 	}
+	
+	@Override
+    public List<OrderEntity>  getListOrderRecentByStatusLimitedTo(Integer limit, String status, Integer id) {
+		
+		StringBuffer queryString = new StringBuffer(
+				"SELECT o FROM OrderEntity o WHERE o.organizationId=:organizationId AND o.status=:status ORDER BY o.createDate DESC ");
+		
+		Query query = em.createQuery(queryString.toString(), OrderEntity.class).setMaxResults(limit);
+		query.setParameter("organizationId",id);
+		query.setParameter("status",status);
+		
+        return query.getResultList();
+    }
 
 }
 

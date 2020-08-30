@@ -1,7 +1,8 @@
 package com.paLlevar.app.model.repository;
 
 import java.util.List;
-
+import java.time.LocalDateTime;
+import java.util.Date;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -28,4 +29,13 @@ public interface OrderRepository extends OrderCustomRepository, JpaRepository<Or
 	@Modifying
 	@Query("UPDATE OrderEntity set phone=:phone, address=:address, reference=:reference where id=:id")
 	void updateOrder(@Param("id") Integer id, @Param("phone") String phone, @Param("address") String address, @Param("reference") String reference);
+
+	@Query("SELECT SUM(o.total) FROM OrderEntity o WHERE  o.organizationId=:orgId AND o.createDate BETWEEN :initDate AND :finalDate ")
+	public Double getSales(@Param("orgId") Integer orgId, @Param("initDate") LocalDateTime initDate, @Param("finalDate") LocalDateTime finalDate);
+
+	@Query("SELECT SUM(o.quantity) FROM OrderEntity o WHERE  o.organizationId=:orgId AND o.createDate BETWEEN :initDate AND :finalDate ")
+	public Integer getQuantity(@Param("orgId") Integer orgId, @Param("initDate") LocalDateTime initDate, @Param("finalDate") LocalDateTime finalDate);
+
+	@Query("SELECT o FROM OrderEntity o WHERE o.organizationId=:organizationId AND o.status=:status ORDER BY o.createDate DESC ")
+	public List<OrderEntity> getListOrderRecentByStatus(@Param("status") String status, @Param("organizationId") Integer orgId );
 }

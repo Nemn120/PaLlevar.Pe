@@ -1,6 +1,8 @@
 package com.paLlevar.app.model.services.impl;
 
 import java.time.LocalDateTime;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +23,7 @@ import com.paLlevar.app.model.services.MenuDayProductService;
 import com.paLlevar.app.model.services.OrderDetailService;
 import com.paLlevar.app.model.services.OrderService;
 import com.paLlevar.app.model.services.UserService;
+import com.paLlevar.app.model.services.dto.DashBoardDTO;
 import com.paLlevar.app.model.services.dto.SearchOrderByDeliveryManDTO;
 import com.paLlevar.app.model.services.dto.SearchOrderByFieldsDTO;
 import com.paLlevar.app.util.Constants;
@@ -244,6 +247,70 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<OrderEntity> getOrderListByFields(SearchOrderByFieldsDTO sobf) {
 		return  repo.getOrderListByFields(sobf);
+	}
+
+	@Override
+	public DashBoardDTO getDashBoard(Integer id) {
+		logger.info("OrderServiceImpl.getDashBoard()");
+		DashBoardDTO dash = new DashBoardDTO();
+		LocalDateTime time = LocalDateTime.now();
+		LocalDateTime initDatet =time.withHour(0).withMinute(0).withSecond(0);
+		LocalDateTime finalDatet =time.withHour(23).withMinute(59).withSecond(59);
+		Double salesToday = repo.getSales(id, initDatet, finalDatet);
+		Integer quantityToday = repo.getQuantity(id, initDatet, finalDatet);
+		dash.setQuantityToday(quantityToday);
+		dash.setSalesToday(salesToday);
+		
+		LocalDateTime initDatey =initDatet.minusDays(1);
+		LocalDateTime finalDatey =finalDatet.minusDays(1);
+		Double salesYesterday = repo.getSales(id, initDatey, finalDatey);
+		Integer quantityYesterday = repo.getQuantity(id, initDatey, finalDatey);
+		dash.setQuantityYesterday(quantityYesterday);
+		dash.setSalesYesterday(salesYesterday);
+		
+		if(salesYesterday != null && salesToday!=null) {
+		Double variationSalesDays = ((salesToday-salesYesterday)/salesToday)*100;
+		dash.setSalesVariationDay(variationSalesDays);
+		}
+		if(quantityYesterday != null && quantityToday!=null) {
+			Double variationQuantityDays = (((quantityToday-quantityYesterday)/quantityToday)*100.0);
+			dash.setQuantityVariationDay(variationQuantityDays);
+		}
+		
+		LocalDateTime initDatelw =time.withHour(0).withMinute(0).withSecond(0).minusDays(7+time.getDayOfWeek().getValue()-1);
+		LocalDateTime finalDatelw =time.withHour(23).withMinute(59).withSecond(59).minusDays(time.getDayOfWeek().getValue());
+		Double salesLastWeek = repo.getSales(id, initDatelw, finalDatelw);
+		Integer quantityLastWeek = repo.getQuantity(id, initDatelw, finalDatelw);
+		dash.setQuantityLastWeek(quantityLastWeek);
+		dash.setSalesLastWeek(salesLastWeek);
+		
+		LocalDateTime initDatetw =initDatelw.plusWeeks(1);
+		LocalDateTime finalDatetw =finalDatelw.plusWeeks(1);
+		Double salesThisWeek = repo.getSales(id, initDatetw, finalDatetw);
+		Integer quantityThisWeek = repo.getQuantity(id, initDatetw, finalDatetw);
+		dash.setQuantityThisWeek(quantityThisWeek);
+		dash.setSalesThisWeek(salesThisWeek);
+		
+
+		
+		if(salesLastWeek !=null && salesThisWeek !=null) {
+			Double variationSalesWeek = ((salesThisWeek-salesLastWeek)/salesThisWeek)*100;
+			variationSalesWeek = (double) Math.round(variationSalesWeek * 100);
+			dash.setSalesVariationWeek(variationSalesWeek/100);
+		}
+		if(quantityLastWeek != null && quantityThisWeek != null) {
+			Double variationQuantityWeeks =  (((quantityThisWeek-quantityLastWeek)/quantityThisWeek)*100.0);
+			logger.trace("Last: "+quantityLastWeek+"\nThis: "+quantityThisWeek+"\nTotal: "+variationQuantityWeeks);
+			variationQuantityWeeks = (double) Math.round(variationQuantityWeeks * 100);
+			dash.setQuantityVariationWeek(variationQuantityWeeks/100);
+		}
+		
+		
+		dash.setOrderPending(repo.getListOrderRecentByStatusLimitedTo(5,Constants.ORDER_STATUS__PENDING, id));
+		dash.setOrderDelivery(repo.getListOrderRecentByStatusLimitedTo(5,Constants.ORDER_STATUS_DELIVERY, id));
+		dash.setOrderDelivered(repo.getListOrderRecentByStatusLimitedTo(5,Constants.ORDER_STATUS_DELIVERED, id));
+		
+		return dash;
 	}
 	
 

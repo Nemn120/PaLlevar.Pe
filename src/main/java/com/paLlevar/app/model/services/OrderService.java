@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.paLlevar.app.model.entities.OrderEntity;
+import com.paLlevar.app.model.services.dto.DashBoardDTO;
 import com.paLlevar.app.model.services.dto.SearchOrderByDeliveryManDTO;
 import com.paLlevar.app.model.services.dto.SearchOrderByFieldsDTO;
 
@@ -27,4 +28,6 @@ public interface OrderService extends GenericCRUD<OrderEntity, Integer>{
 	public boolean updateOrder(OrderEntity o); 
 	
 	public List<OrderEntity> getOrderListByFields(SearchOrderByFieldsDTO sobf);
+	
+	public DashBoardDTO getDashBoard(Integer id);
 }

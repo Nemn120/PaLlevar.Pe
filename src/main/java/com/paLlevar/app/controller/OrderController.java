@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.paLlevar.app.model.entities.OrderEntity;
 import com.paLlevar.app.model.services.OrderService;
 import com.paLlevar.app.model.services.PlaceService;
+import com.paLlevar.app.model.services.dto.DashBoardDTO;
 import com.paLlevar.app.model.services.dto.SearchOrderByDeliveryManDTO;
 import com.paLlevar.app.model.services.dto.SearchOrderByFieldsDTO;
 import com.paLlevar.app.util.Constants;
@@ -38,6 +39,7 @@ public class OrderController {
 	
 	@Autowired
 	private PlaceService placeService;
+	
 	
 	@PostMapping(path="/cor")
 	public ResponseEntity<?> cancelOrder(@RequestBody OrderEntity or){
@@ -241,6 +243,20 @@ public class OrderController {
 	}
 	
 
-	
+	@GetMapping(value="/gdb/{id}")
+	public ResponseEntity<?>  getDashBoard(@PathVariable("id")Integer id){
+		logger.info("OrderController.getDashBoard()");
+		Map<String,Object> response = new HashMap<>();
+		try {
+			DashBoardDTO dash =  orderService.getDashBoard(id);
+			
+			response.put("data", dash);
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
+		}catch(Exception e){
+			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error");
+			logger.error("ERROR ==>", e);
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 	
 }

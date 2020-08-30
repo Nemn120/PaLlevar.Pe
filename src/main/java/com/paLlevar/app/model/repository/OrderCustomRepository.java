@@ -11,4 +11,6 @@ public interface OrderCustomRepository {
 	public List<OrderEntity> getOrderListByDeliveryId(SearchOrderByDeliveryManDTO sobd);
 	
 	public List<OrderEntity> getOrderListByFields(SearchOrderByFieldsDTO sobf);
+	
+	public List<OrderEntity> getListOrderRecentByStatusLimitedTo(Integer limit, String status, Integer id);
 }
