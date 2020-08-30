@@ -260,20 +260,21 @@ public class OrderServiceImpl implements OrderService {
 		Integer quantityToday = repo.getQuantity(id, initDatet, finalDatet);
 		dash.setQuantityToday(quantityToday);
 		dash.setSalesToday(salesToday);
-		
+		logger.trace("Today started: "+initDatet+" Today finished: "+finalDatet);
 		LocalDateTime initDatey =initDatet.minusDays(1);
 		LocalDateTime finalDatey =finalDatet.minusDays(1);
 		Double salesYesterday = repo.getSales(id, initDatey, finalDatey);
 		Integer quantityYesterday = repo.getQuantity(id, initDatey, finalDatey);
 		dash.setQuantityYesterday(quantityYesterday);
 		dash.setSalesYesterday(salesYesterday);
+		logger.trace("Yesterday started: "+initDatey+" Yesterday finished: "+finalDatey);
 		
 		if(salesYesterday != null && salesToday!=null) {
-		Double variationSalesDays = ((salesToday-salesYesterday)/salesToday)*100;
+		Double variationSalesDays = (((double)salesToday-(double)salesYesterday)/(double)salesYesterday)*100;
 		dash.setSalesVariationDay(variationSalesDays);
 		}
 		if(quantityYesterday != null && quantityToday!=null) {
-			Double variationQuantityDays = (((quantityToday-quantityYesterday)/quantityToday)*100.0);
+			Double variationQuantityDays = ((((double)quantityToday-(double)quantityYesterday)/(double)quantityYesterday)*100);
 			dash.setQuantityVariationDay(variationQuantityDays);
 		}
 		
@@ -283,23 +284,23 @@ public class OrderServiceImpl implements OrderService {
 		Integer quantityLastWeek = repo.getQuantity(id, initDatelw, finalDatelw);
 		dash.setQuantityLastWeek(quantityLastWeek);
 		dash.setSalesLastWeek(salesLastWeek);
-		
+		logger.trace("Last week started: "+initDatelw+" Last week finished: "+finalDatelw);
 		LocalDateTime initDatetw =initDatelw.plusWeeks(1);
 		LocalDateTime finalDatetw =finalDatelw.plusWeeks(1);
 		Double salesThisWeek = repo.getSales(id, initDatetw, finalDatetw);
 		Integer quantityThisWeek = repo.getQuantity(id, initDatetw, finalDatetw);
 		dash.setQuantityThisWeek(quantityThisWeek);
 		dash.setSalesThisWeek(salesThisWeek);
-		
+		logger.trace("week started: "+initDatetw+" week finished: "+finalDatetw);
 
 		
 		if(salesLastWeek !=null && salesThisWeek !=null) {
-			Double variationSalesWeek = ((salesThisWeek-salesLastWeek)/salesThisWeek)*100;
+			Double variationSalesWeek = (((double)salesThisWeek-(double)salesLastWeek)/(double)salesLastWeek)*100;
 			variationSalesWeek = (double) Math.round(variationSalesWeek * 100);
 			dash.setSalesVariationWeek(variationSalesWeek/100);
 		}
 		if(quantityLastWeek != null && quantityThisWeek != null) {
-			Double variationQuantityWeeks =  (((quantityThisWeek-quantityLastWeek)/quantityThisWeek)*100.0);
+			Double variationQuantityWeeks =  ((((double)quantityThisWeek-(double)quantityLastWeek)/(double)quantityLastWeek)*100);
 			logger.trace("Last: "+quantityLastWeek+"\nThis: "+quantityThisWeek+"\nTotal: "+variationQuantityWeeks);
 			variationQuantityWeeks = (double) Math.round(variationQuantityWeeks * 100);
 			dash.setQuantityVariationWeek(variationQuantityWeeks/100);
