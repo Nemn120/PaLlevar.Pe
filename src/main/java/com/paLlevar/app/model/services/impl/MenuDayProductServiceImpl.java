@@ -106,20 +106,13 @@ public class MenuDayProductServiceImpl implements MenuDayProductService {
 		menuProduct.getMenuDay().setId(menuProduct.getMenuDayId()); //
 		menuProduct.setStatus(Constants.STATUS_OFF_ENTITY);
 		repo.save(menuProduct);
-		
-	}
-
-	@Override
-<<<<<<< HEAD
-	public List<MenuDayProductEntity> getFavoriteMenuDayProductByUserAndOrganizationId(Integer userId, Integer orgId,
-			String status) {
-		return repo.getFavoriteMenuDayProductByUserAndOrganizationId(userId, orgId, status);
 	}
 
 	@Override
 	public List<MenuDayProductEntity> getListSearchMenuProduct(String searchProduct, String status) {
 		return repo.getListSearchMenuProduct(searchProduct, status);
-=======
+	}
+	
 	public List<MenuDayProductEntity> getListFavoriteMenuDayProductByUserAndOrganizationId(Integer organizationId, String status,
 			Integer userId) {
 		List<MenuDayProductEntity> lis= repo.getListFavoriteMenuDayProductByUserAndOrganizationId(organizationId, status, userId);
@@ -127,11 +120,9 @@ public class MenuDayProductServiceImpl implements MenuDayProductService {
 	}
 	
 	private List<MenuDayProductEntity> deleteDuplicated(List<MenuDayProductEntity> lis){
-		
 		Set<MenuDayProductEntity> noRepeat = new HashSet<MenuDayProductEntity>();
 		noRepeat.addAll(lis);
 		return new ArrayList<MenuDayProductEntity>(noRepeat);
->>>>>>> origin/2.0.2
 	}
 
 }
