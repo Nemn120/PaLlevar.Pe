@@ -14,4 +14,8 @@ public interface CompanyRepository extends JpaRepository<CompanyEntity, Integer>
 	@Modifying
 	@Query("UPDATE CompanyEntity set photo=:photo where id=:id")
 	void updatePhoto(@Param("id") Integer id, @Param("photo") byte[] photo);
+	
+	@Modifying
+	@Query("UPDATE CompanyEntity set imagePanel=:imagePanel where id=:id")
+	void updateImagePanel(@Param("id") Integer id, @Param("imagePanel") byte[] photo);
 }

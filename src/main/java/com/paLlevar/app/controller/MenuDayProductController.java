@@ -119,5 +119,17 @@ public class MenuDayProductController {
 		return new ResponseEntity<List<MenuDayProductEntity>>(lista,HttpStatus.OK);
 	}
 	
+	@PostMapping(value="/gfmbuao") 
+	public ResponseEntity<List<MenuDayProductEntity>>  getFavoriteMenuDayProductByUserAndOrganizationId(@RequestBody MenuDayProductEntity mdp){
+		logger.info("MenuDayProductController.getListByOrgAndStatusAndType()");
+		List<MenuDayProductEntity> lista = menudayproductService.getFavoriteMenuDayProductByUserAndOrganizationId(mdp.getUserCreateId(),mdp.getOrganizationId(),Constants.MENUD_PROD_STATUS_AVAILABLE);
+		return new ResponseEntity<List<MenuDayProductEntity>>(lista,HttpStatus.OK);
+	}
 	
+	@PostMapping(value="/glsmp") 
+	public ResponseEntity<List<MenuDayProductEntity>>  getListSearchMenuProduct(@RequestBody MenuDayProductEntity mdp){
+		logger.info("MenuDayProductController.getListSearchMenuProduct()");
+		List<MenuDayProductEntity> lista = menudayproductService.getListSearchMenuProduct(mdp.getProduct().getName(),Constants.MENUD_PROD_STATUS_AVAILABLE);
+		return new ResponseEntity<List<MenuDayProductEntity>>(lista,HttpStatus.OK);
+	}
 }

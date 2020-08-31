@@ -106,4 +106,15 @@ public class MenuDayProductServiceImpl implements MenuDayProductService {
 		
 	}
 
+	@Override
+	public List<MenuDayProductEntity> getFavoriteMenuDayProductByUserAndOrganizationId(Integer userId, Integer orgId,
+			String status) {
+		return repo.getFavoriteMenuDayProductByUserAndOrganizationId(userId, orgId, status);
+	}
+
+	@Override
+	public List<MenuDayProductEntity> getListSearchMenuProduct(String searchProduct, String status) {
+		return repo.getListSearchMenuProduct(searchProduct, status);
+	}
+
 }

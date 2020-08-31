@@ -63,6 +63,10 @@ public class CompanyEntity implements Serializable {
 	@Column(name = "photo", updatable = false)
 	private byte[] photo;
 	
+	@JsonIgnore
+	@Column(name = "image_panel", updatable = false)
+	private byte[] imagePanel;
+	
 	@Column(name = "business_line_code")
 	private String businessLineCode;
 
@@ -80,6 +84,19 @@ public class CompanyEntity implements Serializable {
 	
 	@Column(name="attention_schedule")
 	private String attentionSchedule;
+	
+	
+	@Column(name="send_protocol")
+	private String sendProtocol;
+	
+	@Column(name="hour_attention_protocol")
+	private String hourAttentionProtocol;
+	
+	@Column(name="time_estimated_protocol")
+	private String timeEstimatedProtocol;
+	
+	@Column(name="additional_information_protocol")
+	private String additionalInformationProtocol;
 	
 	public String getBusinessLineCode() {
 		return businessLineCode;
@@ -204,6 +221,34 @@ public class CompanyEntity implements Serializable {
 	public void setQualification(Double qualification) {
 		this.qualification = qualification;
 	}
-
-
+	public byte[] getImagePanel() {
+		return imagePanel;
+	}
+	public void setImagePanel(byte[] imagePanel) {
+		this.imagePanel = imagePanel;
+	}
+	public String getSendProtocol() {
+		return sendProtocol;
+	}
+	public void setSendProtocol(String sendProtocol) {
+		this.sendProtocol = sendProtocol;
+	}
+	public String getHourAttentionProtocol() {
+		return hourAttentionProtocol;
+	}
+	public void setHourAttentionProtocol(String hourAttentionProtocol) {
+		this.hourAttentionProtocol = hourAttentionProtocol;
+	}
+	public String getTimeEstimatedProtocol() {
+		return timeEstimatedProtocol;
+	}
+	public void setTimeEstimatedProtocol(String timeEstimatedProtocol) {
+		this.timeEstimatedProtocol = timeEstimatedProtocol;
+	}
+	public String getAdditionalInformationProtocol() {
+		return additionalInformationProtocol;
+	}
+	public void setAdditionalInformationProtocol(String additionalInformationProtocol) {
+		this.additionalInformationProtocol = additionalInformationProtocol;
+	}
 }
