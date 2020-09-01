@@ -138,6 +138,16 @@ public class UserController {
 		return new ResponseEntity<List<UserEntity>>(lista,HttpStatus.OK);
 	}
 	
+	@PostMapping(path="/gulcm")
+	public ResponseEntity<List<UserEntity>> getListUserChefMan(@RequestBody UserEntity user){
+		logger.info("UserController.getListUserCheftMan()");
+		user.setProfile(new ProfileEntity());
+		user.getProfile().setIdProfile(Constants.MAIN_CHEF_USER_ROL);
+		user.setStatus(Constants.DELIVERY_MAN_STATUS_DISPONIBLE);
+		List<UserEntity> lista=userService.getUserListByProfileANDStatus(user);
+		return new ResponseEntity<List<UserEntity>>(lista,HttpStatus.OK);
+	}
+	
 	@PostMapping(path="/gludmos")
 	public ResponseEntity<?> getListUserDeliveryManByOrganizationANDStatus(@RequestBody UserEntity user){
 		Map<String,Object> response= new HashMap<>();
