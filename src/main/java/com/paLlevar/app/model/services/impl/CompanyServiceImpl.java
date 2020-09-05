@@ -10,9 +10,16 @@ import com.paLlevar.app.model.entities.CompanyEntity;
 import com.paLlevar.app.model.repository.CompanyRepository;
 import com.paLlevar.app.model.services.CompanyService;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.BeanUtils;
+
 @Service
 @Transactional
 public class CompanyServiceImpl implements CompanyService {
+	
+	private static final Logger logger = LogManager.getLogger(CompanyServiceImpl.class);	
+
 	
 	@Autowired
 	private CompanyRepository repo;
@@ -29,8 +36,21 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public CompanyEntity save(CompanyEntity t) {
+		logger.info("CompanyServiceImpl.save()");
+		
 		if(t.getPhoto() != null &&  t.getPhoto().length>0) {
 			repo.updatePhoto(t.getId(),t.getPhoto());
+		}
+		if(t.getImagePanel() != null &&  t.getImagePanel().length>0) {
+			repo.updateImagePanel(t.getId(),t.getImagePanel());
+		}
+		if(t.getId() != null) {
+			CompanyEntity companyEntity= repo.findById(t.getId()).orElse(new CompanyEntity());
+			BeanUtils.copyProperties(t, companyEntity);
+			if(t.getAnniversaryDate() != null) {
+				companyEntity.setAnniversaryDate(t.getAnniversaryDate());
+			}
+			return repo.save(companyEntity);
 		}
 		return repo.save(t);
 	}
@@ -43,6 +63,13 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public List<CompanyEntity> getCompanyListByStatus(String status) {
 		return repo.findByStatus(status);
+	}
+
+	@Override
+	public CompanyEntity updateDataCompany(CompanyEntity company) {
+		CompanyEntity companyEntity= repo.getOne(company.getId());
+		BeanUtils.copyProperties(company, companyEntity);
+	    return repo.save(companyEntity);
 	}
 
 }

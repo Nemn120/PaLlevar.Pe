@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.paLlevar.app.model.entities.MenuDayEntity;
 import com.paLlevar.app.model.entities.MenuDayProductEntity;
+import com.paLlevar.app.model.entities.OrderEntity;
 import com.paLlevar.app.model.services.MenuDayProductService;
+import com.paLlevar.app.model.services.dto.SearchMenuDayProductFavoritesDTO;
 import com.paLlevar.app.util.Constants;
 
 @RestController
@@ -119,5 +121,26 @@ public class MenuDayProductController {
 		return new ResponseEntity<List<MenuDayProductEntity>>(lista,HttpStatus.OK);
 	}
 	
+
+	@PostMapping(value="/glfmpbuao") 
+	public ResponseEntity<?> getListFavoriteMenuDayProductByUserAndOrganizationId(@RequestBody SearchMenuDayProductFavoritesDTO f){
+		logger.info("MenuDayProductController.getListFavoriteMenuDayProductByUserAndOrganizationId()");
+		Map<String,Object> response = new HashMap<>();
+		try {
+			List<MenuDayProductEntity> lista = menudayproductService.getListFavoriteMenuDayProductByUserAndOrganizationId(f.getOrganizationId(), Constants.MENUD_PROD_STATUS_AVAILABLE, f.getUserId());
+			response.put("dataList", lista);
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
+		}catch(Exception e){
+			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error");
+			logger.error("ERROR ==>", e);
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 	
+	@PostMapping(value="/glsmp") 
+	public ResponseEntity<List<MenuDayProductEntity>>  getListSearchMenuProduct(@RequestBody MenuDayProductEntity mdp){
+		logger.info("MenuDayProductController.getListSearchMenuProduct()");
+		List<MenuDayProductEntity> lista = menudayproductService.getListSearchMenuProduct(mdp.getProduct().getName(),Constants.MENUD_PROD_STATUS_AVAILABLE);
+		return new ResponseEntity<List<MenuDayProductEntity>>(lista,HttpStatus.OK);
+	}
 }
