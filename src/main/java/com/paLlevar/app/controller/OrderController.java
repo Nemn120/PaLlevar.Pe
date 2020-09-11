@@ -21,9 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.paLlevar.app.model.entities.OrderEntity;
 import com.paLlevar.app.model.services.OrderService;
 import com.paLlevar.app.model.services.PlaceService;
+<<<<<<< HEAD
+import com.paLlevar.app.model.services.dto.SearchOrderByDeliveryManDTO;
+=======
 import com.paLlevar.app.model.services.dto.DashBoardDTO;
 import com.paLlevar.app.model.services.dto.SearchOrderByDeliveryManDTO;
 import com.paLlevar.app.model.services.dto.SearchOrderByFieldsDTO;
+>>>>>>> branch 'master' of https://github.com/Nemn120/PaLlevar.Pe.git
 import com.paLlevar.app.util.Constants;
 
 @RestController
@@ -226,6 +230,10 @@ public class OrderController {
 	}
 	
 	
+<<<<<<< HEAD
+
+	
+=======
 	@PostMapping(path="/golbf")
 	public ResponseEntity<?>  getOrderListByFields(@RequestBody SearchOrderByFieldsDTO sobf){
 		logger.info("OrderController.getOrderListByFields()");
@@ -258,5 +266,6 @@ public class OrderController {
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+>>>>>>> branch 'master' of https://github.com/Nemn120/PaLlevar.Pe.git
 	
 }

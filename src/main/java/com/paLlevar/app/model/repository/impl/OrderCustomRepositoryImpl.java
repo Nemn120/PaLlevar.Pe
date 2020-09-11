@@ -9,6 +9,45 @@ import javax.persistence.Query;
 import com.paLlevar.app.model.entities.OrderEntity;
 import com.paLlevar.app.model.repository.OrderCustomRepository;
 import com.paLlevar.app.model.services.dto.SearchOrderByDeliveryManDTO;
+<<<<<<< HEAD
+
+public class OrderCustomRepositoryImpl implements OrderCustomRepository{
+
+
+	 @PersistenceContext
+	 private EntityManager em;
+	 
+	@Override
+	public List<OrderEntity> getOrderListByDeliveryId(SearchOrderByDeliveryManDTO sobd) {
+		StringBuffer queryString = new StringBuffer(
+				"SELECT o From OrderEntity o where o.userDeliveryId=:userDeliveryId");
+		
+		if(sobd.getStatus() != null) {
+			queryString.append(" AND o.status=:status");
+		}
+		
+		if(sobd.getInitDate()!= null && sobd.getFinalDate()!=null) {
+			queryString.append(" AND o.createDate BETWEEN :initDate AND :finalDate"); //getCreateDate
+		}
+		
+		Query query = em.createQuery(queryString.toString(), OrderEntity.class);
+		
+		query.setParameter("userDeliveryId",sobd.getDeliveryId());
+		
+		if(sobd.getStatus() != null) {
+			query.setParameter("status",sobd.getStatus());
+		}
+		
+		if(sobd.getInitDate()!= null && sobd.getFinalDate()!=null) {
+			query.setParameter("initDate",sobd.getInitDate());
+			query.setParameter("finalDate",sobd.getFinalDate());
+			
+		}
+		
+		return query.getResultList();
+		//return null;
+	}
+=======
 import com.paLlevar.app.model.services.dto.SearchOrderByFieldsDTO;
 
 public class OrderCustomRepositoryImpl implements OrderCustomRepository{
@@ -138,6 +177,7 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository{
 		
         return query.getResultList();
     }
+>>>>>>> branch 'master' of https://github.com/Nemn120/PaLlevar.Pe.git
 
 }
 
