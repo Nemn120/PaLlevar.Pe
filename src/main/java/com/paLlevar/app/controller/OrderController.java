@@ -212,7 +212,6 @@ public class OrderController {
 		}
 	}
 	
-
 	
 	@PostMapping(path="/upor")
 	public ResponseEntity<?> updateOrder(@RequestBody OrderEntity o){
@@ -229,11 +228,6 @@ public class OrderController {
 		}
 	}
 	
-	
-<<<<<<< HEAD
-
-	
-=======
 	@PostMapping(path="/golbf")
 	public ResponseEntity<?>  getOrderListByFields(@RequestBody SearchOrderByFieldsDTO sobf){
 		logger.info("OrderController.getOrderListByFields()");
@@ -266,6 +260,5 @@ public class OrderController {
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
->>>>>>> branch 'master' of https://github.com/Nemn120/PaLlevar.Pe.git
 	
 }
