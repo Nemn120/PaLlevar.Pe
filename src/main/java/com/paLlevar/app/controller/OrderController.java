@@ -216,9 +216,13 @@ public class OrderController {
 		logger.info("OrderController.updateOrder()");
 		Map<String,Object> response = new HashMap<>();
 		try {
-			orderService.updateOrder(o);
+			if(orderService.updateOrder(o)) {
 			response.put(Constants.MESSAGE_BODY_RESPONSE, "Los datos del pedido fueron actualizados con éxito");
-			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);}
+			else {
+				response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al actualizar el pedido");
+				return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
+			}
 		}catch(Exception e) {
 			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al actualizar pedido");
 			logger.error("ERROR ==>", e);
