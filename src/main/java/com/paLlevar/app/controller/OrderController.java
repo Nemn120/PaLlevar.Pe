@@ -217,7 +217,7 @@ public class OrderController {
 		Map<String,Object> response = new HashMap<>();
 		try {
 			orderService.updateOrder(o);
-			response.put(Constants.MESSAGE_BODY_RESPONSE, "Datos del pedido actualizado con éxito");
+			response.put(Constants.MESSAGE_BODY_RESPONSE, "Los datos del pedido fueron actualizados con éxito");
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
 		}catch(Exception e) {
 			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al actualizar pedido");
