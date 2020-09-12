@@ -67,12 +67,12 @@ public class CompanyController {
 	}
 
 	@PostMapping(path="/sco")
-	public CompanyEntity saveCompany(@RequestPart("company") CompanyEntity pr, @RequestPart("logoImage") MultipartFile logoImage,@RequestPart("panelImage") MultipartFile panelImage) throws IOException{
+	public CompanyEntity saveCompany(@RequestPart("company") CompanyEntity pr, @RequestPart("logoImage") MultipartFile logoImage) throws IOException{
 		logger.info("CompanyController.saveCompany()");
 		if(logoImage != null && logoImage.getBytes().length >0)
 			pr.setPhoto(logoImage.getBytes());
-		if(panelImage != null && panelImage.getBytes().length>0)
-			pr.setImagePanel(panelImage.getBytes());
+	//	if(panelImage != null && panelImage.getBytes().length>0)
+	//		pr.setImagePanel(panelImage.getBytes());
 
 		CompanyEntity companySave = companyService.save(pr);
 		return companySave;
