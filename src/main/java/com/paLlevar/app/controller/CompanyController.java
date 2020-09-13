@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.paLlevar.app.model.entities.CompanyEntity;
 import com.paLlevar.app.model.services.CompanyService;
+import com.paLlevar.app.model.services.PlaceService;
 import com.paLlevar.app.model.services.dto.RequesDTO;
 import com.paLlevar.app.util.Constants;
 
@@ -36,6 +37,8 @@ public class CompanyController {
 	@Autowired
 	private CompanyService companyService;
 	
+	@Autowired
+	private PlaceService placeService;
 	
 	@GetMapping(path="/glco")
 	public ResponseEntity<List<CompanyEntity>>  getListCompany(){
@@ -137,6 +140,8 @@ public class CompanyController {
 		logger.info("CompanyController.updateDataCompany()");
 		Map<String,Object> response = new HashMap<>();
 		try {
+			if(company.getPlace() != null)
+			placeService.save(company.getPlace());
 			response.put(Constants.DATA_RESPONSE,companyService.updateDataCompany(company));
 			response.put(Constants.MESSAGE_BODY_RESPONSE, "Información actualizado con éxito");
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);

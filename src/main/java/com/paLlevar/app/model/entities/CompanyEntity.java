@@ -98,6 +98,10 @@ public class CompanyEntity implements Serializable {
 	@Column(name="additional_information_protocol")
 	private String additionalInformationProtocol;
 	
+	@ManyToOne
+	@JoinColumn(name = "place_id", referencedColumnName = "id")
+	private PlaceEntity place;
+	
 	public String getBusinessLineCode() {
 		return businessLineCode;
 	}
@@ -251,4 +255,12 @@ public class CompanyEntity implements Serializable {
 	public void setAdditionalInformationProtocol(String additionalInformationProtocol) {
 		this.additionalInformationProtocol = additionalInformationProtocol;
 	}
+	public PlaceEntity getPlace() {
+		return place;
+	}
+	public void setPlace(PlaceEntity place) {
+		this.place = place;
+	}
+	
+	
 }
