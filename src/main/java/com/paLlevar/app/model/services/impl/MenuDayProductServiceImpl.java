@@ -2,6 +2,9 @@ package com.paLlevar.app.model.services.impl;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.paLlevar.app.model.entities.MenuDayEntity;
 import com.paLlevar.app.model.entities.MenuDayProductEntity;
 import com.paLlevar.app.model.entities.ProductEntity;
@@ -116,7 +120,18 @@ public class MenuDayProductServiceImpl implements MenuDayProductService {
 	public List<MenuDayProductEntity> getListFavoriteMenuDayProductByUserAndOrganizationId(Integer organizationId, String status,
 			Integer userId) {
 		List<MenuDayProductEntity> lis= repo.getListFavoriteMenuDayProductByUserAndOrganizationId(organizationId, status, userId);
-		return deleteDuplicated(lis);
+		List<MenuDayProductEntity> lis2 = deleteDuplicated(lis);
+		lis2.sort(Comparator.comparing(MenuDayProductEntity::getCreateDate).reversed());
+		List<MenuDayProductEntity> lis3 =new ArrayList<>();
+		int i=0;
+		for(MenuDayProductEntity me : lis2) {
+			if(me !=null && i<5)
+				lis3.add(me);
+			i++;
+		}
+		
+		return lis3;
+		
 	}
 	
 	private List<MenuDayProductEntity> deleteDuplicated(List<MenuDayProductEntity> lis){
