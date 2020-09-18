@@ -72,4 +72,11 @@ public class CompanyServiceImpl implements CompanyService {
 	    return repo.save(companyEntity);
 	}
 
+	@Override
+	public CompanyEntity updateDirectionCompany(CompanyEntity company) {
+		CompanyEntity companyEntity= repo.getOne(company.getId());
+		companyEntity.setPlace(company.getPlace());
+		return repo.save(companyEntity);
+	}
+
 }

@@ -13,5 +13,6 @@ public interface CompanyService extends GenericCRUD<CompanyEntity, Integer>{
 	
 	CompanyEntity updateDataCompany(CompanyEntity company);
 	
+	CompanyEntity updateDirectionCompany(CompanyEntity company);
 	
 }

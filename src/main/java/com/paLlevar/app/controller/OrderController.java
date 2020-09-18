@@ -282,7 +282,7 @@ public class OrderController {
 				response.put(Constants.MESSAGE_TITLE_RESPONSE,"Confirmacion de entrega");
 				response.put(Constants.MESSAGE_BODY_RESPONSE, ""
 						+ "La confirmacion de entrega se ha realizado con éxito ademas"
-						+ "se ha actualizado el estado a disponible del delivery asociado");
+						+ " se ha actualizado el estado a disponible del delivery asociado");
 				
 			}else {
 				response.put(Constants.MESSAGE_TITLE_RESPONSE,"Error");
@@ -296,6 +296,7 @@ public class OrderController {
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
 	
 	
 	

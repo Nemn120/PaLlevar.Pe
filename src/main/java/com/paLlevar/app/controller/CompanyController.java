@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.paLlevar.app.model.entities.CompanyEntity;
+import com.paLlevar.app.model.entities.PlaceEntity;
 import com.paLlevar.app.model.services.CompanyService;
 import com.paLlevar.app.model.services.PlaceService;
 import com.paLlevar.app.model.services.dto.RequesDTO;
@@ -151,5 +152,31 @@ public class CompanyController {
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@PostMapping(path="/udirc")
+	public ResponseEntity<Map<String,Object>> updateDirectionCompany(@RequestBody CompanyEntity company) {
+
+		Map<String,Object> response = new HashMap<>();
+		try {
+			if(company.getPlace().getId() == null) {
+				PlaceEntity place =placeService.save(company.getPlace());
+				CompanyEntity companyE =companyService.getOneById(company.getId());
+				companyE.setPlace(new PlaceEntity());
+				companyE.setPlace(place);
+				companyService.save(companyE);
+				response.put(Constants.MESSAGE_BODY_RESPONSE, "Direccion registrada con éxito");
+				return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
+			}else {
+				placeService.save(company.getPlace());
+				response.put(Constants.MESSAGE_BODY_RESPONSE, "Direccion actualizada con éxito");
+				return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
+			}
+		}catch(Exception e) {
+			response.put("error", "Error al actualizar información");
+			logger.error("ERORR ==> ",e);
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 	
 }
