@@ -45,5 +45,10 @@ public class ComplaintServiceImpl implements ComplaintService{
 		return repo.findByOrganizationId(idOrg);
 	}
 
+	@Override
+	public ComplaintEntity findComplaintByOrderId(Integer orderId) {
+		return repo.findByOrderId(orderId);
+	}
+
 
 }

@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserEntity getOneById(Integer id) {
-		return repo.getOne(id);
+		return repo.findById(id).orElse(new UserEntity());
 	}
 
 	@Override

@@ -98,6 +98,22 @@ public class ComplaintController {
 		}
 	}
 	
+	@GetMapping(value="/gcboi/{id}")
+	public ResponseEntity<?>  getComplaintByOrderId(@PathVariable("id")Integer id)throws IOException{
+		Map<String,Object> response= new HashMap<>();
+		logger.info("Funcion: "+"ComplaintController.getComplaintById()");
+		try {
+			response.put(Constants.DATA_RESPONSE,complaintService.findComplaintByOrderId(id));
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
+		} catch (Exception e) {
+			logger.error("Se produjo un error: "+e.getMessage().toString());
+			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al obtener el reclamo de la orden");
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);			
+		}	
+	}
+	
+	
+	
 	
 
 }

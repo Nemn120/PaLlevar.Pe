@@ -38,4 +38,9 @@ public interface OrderRepository extends OrderCustomRepository, JpaRepository<Or
 
 	@Query("SELECT o FROM OrderEntity o WHERE o.organizationId=:organizationId AND o.status=:status ORDER BY o.createDate DESC ")
 	public List<OrderEntity> getListOrderRecentByStatus(@Param("status") String status, @Param("organizationId") Integer orgId );
+	
+	@Modifying
+	@Query("UPDATE OrderEntity set status=:status, delivered_date=now() where id =:id")
+	void updateConfirmOrderById(@Param("id") Integer id, @Param("status") String status);
+	
 }

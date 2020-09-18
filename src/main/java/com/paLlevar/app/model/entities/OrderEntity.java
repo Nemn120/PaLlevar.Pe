@@ -63,12 +63,18 @@ public class OrderEntity    extends MainEntity implements Serializable{
 	@Transient
 	private Integer userAttendId;
 	
+	@Transient
+	private UserEntity userDelivery;
+	
 	@Column(name="company_name")
 	private String companyName;
 	
 	@ManyToOne
 	@JoinColumn(name = "place_id", referencedColumnName = "id")
 	private PlaceEntity place;
+	
+	@Column(name="delivered_date")
+	private Date deliveredDate;
 	
 	public List<OrderDetailEntity> getOrderDetail() {
 		return orderDetail;
@@ -162,5 +168,19 @@ public class OrderEntity    extends MainEntity implements Serializable{
 	public void setPlace(PlaceEntity place) {
 		this.place = place;
 	}
-	
+	public UserEntity getUserDelivery() {
+		return userDelivery;
+	}
+	public void setUserDelivery(UserEntity userDelivery) {
+		this.userDelivery = userDelivery;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	public Date getDeliveredDate() {
+		return deliveredDate;
+	}
+	public void setDeliveredDate(Date deliveredDate) {
+		this.deliveredDate = deliveredDate;
+	}
 }

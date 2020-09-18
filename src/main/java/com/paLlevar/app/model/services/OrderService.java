@@ -30,4 +30,7 @@ public interface OrderService extends GenericCRUD<OrderEntity, Integer>{
 	public List<OrderEntity> getOrderListByFields(SearchOrderByFieldsDTO sobf);
 	
 	public DashBoardDTO getDashBoard(Integer id);
+	public List<OrderEntity> getListOrderDeliveryAndUserDelivery(String status,Integer orgId);
+	
+	public Boolean saveConfirmDeliveryOrder(OrderEntity order); 
 }

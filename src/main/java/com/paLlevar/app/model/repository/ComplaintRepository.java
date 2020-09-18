@@ -15,4 +15,5 @@ public interface ComplaintRepository extends JpaRepository<ComplaintEntity,Integ
 	void updatePhoto(@Param("id") Integer id, @Param("photo") byte[] photo);
 	
 	List<ComplaintEntity> findByOrganizationId(Integer id);
+	ComplaintEntity findByOrderId(Integer id);
 }

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.paLlevar.app.model.entities.OrderEntity;
 import com.paLlevar.app.model.services.OrderService;
 import com.paLlevar.app.model.services.PlaceService;
+import com.paLlevar.app.model.services.UserService;
 import com.paLlevar.app.model.services.dto.SearchOrderByDeliveryManDTO;
 
 import com.paLlevar.app.model.services.dto.DashBoardDTO;
@@ -42,6 +43,8 @@ public class OrderController {
 	@Autowired
 	private PlaceService placeService;
 	
+	@Autowired
+	private UserService userService;
 	
 	@PostMapping(path="/cor")
 	public ResponseEntity<?> cancelOrder(@RequestBody OrderEntity or){
@@ -159,11 +162,17 @@ public class OrderController {
 	}
 	
 	@PostMapping(path="/glody")
-	public ResponseEntity<List<OrderEntity>>  getListOrderDelivery(@RequestBody OrderEntity or){
+	public ResponseEntity<Map<String,Object>>  getListOrderDelivery(@RequestBody OrderEntity or){
 		logger.info("OrderController.getListOrderDelivery()");
-		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS_DELIVERY,or);
-		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
-		
+		Map<String,Object> response = new HashMap<>();
+		try {
+			response.put("dataList", orderService.getListOrderDeliveryAndUserDelivery(Constants.ORDER_STATUS_DELIVERY,or.getOrganizationId()));
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
+		}catch(Exception e) {
+			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al mostrar pedidos en camino");
+			logger.error("ERROR ==>", e);
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	@PostMapping(path="/gloc")
@@ -262,5 +271,32 @@ public class OrderController {
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@PostMapping(path="/scdo")
+	public ResponseEntity<?>  saveConfirmDeliveryOrder(@RequestBody OrderEntity order){
+		logger.info("OrderController.saveConfirmDeliveryOrder()");
+		Map<String,Object> response = new HashMap<>();
+		try {
+			
+			if(orderService.saveConfirmDeliveryOrder(order)) {
+				response.put(Constants.MESSAGE_TITLE_RESPONSE,"Confirmacion de entrega");
+				response.put(Constants.MESSAGE_BODY_RESPONSE, ""
+						+ "La confirmacion de entrega se ha realizado con éxito ademas"
+						+ "se ha actualizado el estado a disponible del delivery asociado");
+				
+			}else {
+				response.put(Constants.MESSAGE_TITLE_RESPONSE,"Error");
+				response.put(Constants.MESSAGE_BODY_RESPONSE, ""
+						+ "Ha ocurrido un error al intentar confirmar la entrega del pedido.");
+			}
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
+		}catch(Exception e){
+			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error");
+			logger.error("ERROR ==>", e);
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	
 	
 }

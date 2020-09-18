@@ -3,8 +3,11 @@ package com.paLlevar.app.model.services.impl;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -171,8 +174,6 @@ public class OrderServiceImpl implements OrderService {
 		logger.trace("Orden: "+order.getId()+ " cambio a  estado : "+Constants.ORDER_STATUS_DELIVERY);
 		repo.save(order);
 		return true;
-		
-		
 	}
 
 	@Override
@@ -314,7 +315,41 @@ public class OrderServiceImpl implements OrderService {
 		
 		return dash;
 	}
-	
 
+	@Override
+	public List<OrderEntity> getListOrderDeliveryAndUserDelivery(String status, Integer orgId) {
+		List<OrderEntity> orderList = new ArrayList<OrderEntity>();  
+		orderList=repo.findByOrganizationIdAndStatus(orgId,status);
+		Map<Integer,UserEntity> userDeliveryList = new HashMap<Integer,UserEntity>() ;
+		if(orderList.isEmpty())
+			return null;
+		orderList.forEach(order ->{
+			if(order.getUserDeliveryId() != null) {
+				order.setUserDelivery(new UserEntity());
+				if(userDeliveryList.containsKey(order.getUserDeliveryId())) {
+					order.setUserDelivery(userDeliveryList.get(order.getUserDeliveryId()));
+				}else {
+					UserEntity userDelivery =userService.getOneById(order.getUserDeliveryId());
+					userDeliveryList.put(userDelivery.getId(),userDelivery);
+					order.setUserDelivery(userDelivery);
+				}
+			}
+		});
+		return orderList;
+	}
+
+	@Override
+	public Boolean saveConfirmDeliveryOrder(OrderEntity order) {
+		try {
+		order.getOrderDetail().forEach(orderDetail ->{
+			orderDetailService.updateOrderDetailStatus(orderDetail.getId(),Constants.ORDER_DETAIL_STATUS_DELIVERED);
+		});
+		repo.updateConfirmOrderById(order.getId(),Constants.ORDER_STATUS_DELIVERED);
+		userService.updateStatusById(order.getUserDeliveryId(), Constants.DELIVERY_MAN_STATUS_DISPONIBLE);
+		return true;
+		}catch(Exception e) {
+			return false;
+		}
+	}
 }
 
