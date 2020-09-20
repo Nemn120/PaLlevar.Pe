@@ -49,6 +49,7 @@ public class MenuDayEntity  extends MainEntity implements Serializable {
 	@Column(name="count_used_menu")
 	private Integer countUsedMenu;
 	
+	@Column(name="status")
 	private String status;
 	
 	@Column(name="count_total")

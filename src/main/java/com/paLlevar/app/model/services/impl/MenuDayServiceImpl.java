@@ -1,12 +1,18 @@
 package com.paLlevar.app.model.services.impl;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.paLlevar.app.model.entities.MenuDayEntity;
 import com.paLlevar.app.model.entities.MenuDayProductEntity;
@@ -18,6 +24,8 @@ import com.paLlevar.app.util.Constants;
 @Service
 @Transactional
 public class MenuDayServiceImpl implements MenuDayService {
+	
+	String DIAS[] = {"Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
 	
 	@Autowired
 	private MenuDayRepository repo;
@@ -35,7 +43,7 @@ public class MenuDayServiceImpl implements MenuDayService {
 		return repo.findById(id).orElse(null);
 	}
 
-
+	private static final Logger logger = LogManager.getLogger(MenuDayServiceImpl.class);
 	@Override
 	public MenuDayEntity saveMenuDay(MenuDayEntity t) {
 		repo.save(t);
@@ -126,6 +134,48 @@ public class MenuDayServiceImpl implements MenuDayService {
 	public List<MenuDayEntity> getMenuDayListByOrg(Integer orgId) {
 		List<MenuDayEntity> aux = repo.findByOrganizationId(orgId);
 		return this.copyMenuDay(aux);
+	}
+	
+	@Override
+	public boolean updateStatusMenuDay(MenuDayEntity menuDay) {
+		try{
+			repo.updateStatus(menuDay.getId(), menuDay.getStatus(), menuDay.getOrganizationId());
+			return true;
+		}catch(Exception e) {
+			return false;
+		}
+	}
+
+	@Override
+	public Map<String,List<MenuDayProductEntity>> getListMenuDayByDay(Integer organizationId) {
+		 	 
+		 LocalDate date = LocalDate.now();
+		 String fecha = (DIAS[date.getDayOfWeek().getValue()]);
+		 logger.info("Day: "+fecha);
+		 
+		 Map<String,List<MenuDayProductEntity>> result = new HashMap<String,List<MenuDayProductEntity>>();
+		 List<MenuDayEntity> listresult = repo.getListMenuDayByDay(organizationId, Constants.STATUS_ON_ENTITY, fecha);
+		 
+		 if(listresult != null) {
+			 for(int i=0;i<listresult.size();i++) {
+				 
+				 List<MenuDayProductEntity> list = listresult.get(i).getMenuDayProductList();
+				 list.forEach( res ->{
+					 
+					 if(result.containsKey(res.getProduct().getCategoryProduct().getName())) {
+						 result.get(res.getProduct().getCategoryProduct().getName()).add(res);
+					 }
+					 else {
+						 List<MenuDayProductEntity> l = new ArrayList<>();
+						 l.add(res);
+						 result.put(res.getProduct().getCategoryProduct().getName(), l);
+					 }
+				 });
+			 }
+			 
+			 
+		 }
+		return result;
 	}
 
 

@@ -1,7 +1,9 @@
 package com.paLlevar.app.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.paLlevar.app.model.entities.MenuDayEntity;
+import com.paLlevar.app.model.entities.MenuDayProductEntity;
 import com.paLlevar.app.model.services.MenuDayService;
 import com.paLlevar.app.util.Constants;
 
@@ -95,6 +98,40 @@ public class MenuDayController {
 		logger.info("MenuDayController.editMenuDay()");
 		MenuDayEntity menuEdit= menudayService.editMenuDay(md);
 		return new ResponseEntity<MenuDayEntity>(menuEdit,HttpStatus.OK);
+	}
+	
+	@PostMapping(path="/usmd")
+	public ResponseEntity<?> updateStatusMenuDay(@RequestBody MenuDayEntity md){
+		logger.info("MenuDayController.updateStatusMenuDay()");
+		Map<String,Object> response = new HashMap<>();
+		try {
+			logger.info(md.getStatus());
+			menudayService.updateStatusMenuDay(md);
+			response.put(Constants.MESSAGE_BODY_RESPONSE, "estado actualizado con exito");
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
+		}catch(Exception e) {
+			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al actualizar estado");
+			logger.error("ERROR ==>", e);
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping(value="/glmdbd/{id}")
+	public ResponseEntity<?> getListMenuDayByDay(@PathVariable("id")Integer id){
+		logger.info("MenuDayController.getMenuByDay()");
+		Map<String,Object> response = new HashMap<String,Object>();
+		
+		try {
+			
+			Map<String,List<MenuDayProductEntity>> list = menudayService.getListMenuDayByDay(id);
+			response.put("dataList", list);
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
+		}catch(Exception e) {
+			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error");
+			logger.error("ERROR ==>", e);
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
 	}
 	
 }
