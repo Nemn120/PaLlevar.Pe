@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.paLlevar.app.model.entities.MenuDayProductEntity;
 import com.paLlevar.app.model.entities.OrderDetailEntity;
 import com.paLlevar.app.model.entities.OrderEntity;
-
+import com.paLlevar.app.model.entities.PlaceEntity;
 import com.paLlevar.app.model.entities.UserEntity;
 import com.paLlevar.app.model.repository.OrderRepository;
 import com.paLlevar.app.model.services.CompanyService;
@@ -77,14 +79,39 @@ public class OrderServiceImpl implements OrderService {
 		
 		
 	}
+	
+	@Override
+	public List<OrderEntity> saveOrderByManyOrganization(OrderEntity order) {
+		Map<Integer,List<OrderDetailEntity>> mapOrderDetail = new HashMap<Integer,List<OrderDetailEntity>>();
+		List<OrderEntity> orderResult = new ArrayList<OrderEntity>();
+		order.getOrderDetail().forEach(orderDetail ->{
+			if(orderDetail != null) {
+				if(mapOrderDetail.containsKey(orderDetail.getOrganizationId())) {
+					mapOrderDetail.get(orderDetail.getOrganizationId()).add(orderDetail);
+				}else {
+					List<OrderDetailEntity> odList = new ArrayList<OrderDetailEntity>();
+					odList.add(orderDetail);
+					mapOrderDetail.put(orderDetail.getOrganizationId(),odList);
+				}
+			}
+		});
+		
+		for (Map.Entry<Integer, List<OrderDetailEntity>> entry : mapOrderDetail.entrySet()) {
+		    OrderEntity orderCompany = new OrderEntity();
+		    BeanUtils.copyProperties(order, orderCompany);
+		    orderCompany.setOrderDetail(new ArrayList<OrderDetailEntity>());
+		    orderCompany.setOrderDetail(entry.getValue());
+		    orderCompany.setCompanyName(companyService.getOneById(entry.getKey()).getNombre());
+		    repo.save(orderCompany);
+		    orderResult.add(this.saveOrderByOrganizationIdAndSucursalId(orderCompany));
+		}
+		
+		return orderResult;
+	}
 
 	@Override
 	public OrderEntity saveOrderByOrganizationIdAndSucursalId(OrderEntity order) {
 		logger.info("OrderServiceImpl.saveOrderByOrganizationIdAndSucursalId()");
-		order.setOrganizationId(order.getOrderDetail().get(0).getOrganizationId());
-		order.setCompanyName(companyService.getOneById(order.getOrderDetail().get(0).getOrganizationId()).getNombre());
-		repo.save(order);
-		logger.trace("Se guardo la orden");
 			order.getOrderDetail().forEach(od ->{
 				od.setStatus(Constants.ORDER_DETAIL_STATUS_PENDING);
 				od.setOrganizationId(order.getOrganizationId());
@@ -351,5 +378,7 @@ public class OrderServiceImpl implements OrderService {
 			return false;
 		}
 	}
+
+	
 }
 

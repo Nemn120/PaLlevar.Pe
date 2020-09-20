@@ -110,7 +110,7 @@ public class OrderController {
 		try {
 			if(or.getPlace() != null)
 				placeService.save(or.getPlace());
-			response.put(Constants.DATA_RESPONSE, orderService.saveOrderByOrganizationIdAndSucursalId(or));
+			response.put(Constants.DATA_RESPONSE, orderService.saveOrderByManyOrganization(or));
 			response.put("message", "Pedido registrado con éxito");
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
 		}catch(Exception e){
