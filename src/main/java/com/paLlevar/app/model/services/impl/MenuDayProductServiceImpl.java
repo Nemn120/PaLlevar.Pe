@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,8 +115,20 @@ public class MenuDayProductServiceImpl implements MenuDayProductService {
 	}
 
 	@Override
-	public List<MenuDayProductEntity> getListSearchMenuProduct(String searchProduct, String status) {
-		return repo.getListSearchMenuProduct(searchProduct, status);
+	public Map<Integer,List<MenuDayProductEntity>> getListSearchMenuProduct(String searchProduct, String status) {
+		 List<MenuDayProductEntity> menuSearch = repo.getListSearchMenuProduct(searchProduct, status);
+		 Map<Integer,List<MenuDayProductEntity>> mapSearch= new HashMap<Integer,List<MenuDayProductEntity>>();
+		 
+		 menuSearch.forEach(menuProduct ->{
+			 if(mapSearch.containsKey(menuProduct.getOrganizationId())){
+				 mapSearch.get(menuProduct.getOrganizationId()).add(menuProduct);
+			 }else {
+				 List<MenuDayProductEntity> menuProductList = new ArrayList<>();
+				 menuProductList .add(menuProduct);
+				 mapSearch.put(menuProduct.getOrganizationId(), menuProductList);
+			 }
+		 });
+		 return mapSearch;
 	}
 	
 	public List<MenuDayProductEntity> getListFavoriteMenuDayProductByUserAndOrganizationId(Integer organizationId, String status,

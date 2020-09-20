@@ -35,8 +35,10 @@ public interface MenuDayProductRepository extends JpaRepository<MenuDayProductEn
 */
 	
 	
+	//@Query("SELECT m FROM MenuDayProductEntity m INNER JOIN m.menuDay  mday INNER JOIN m.product pro where m.status=:status and mday.status=:statusMenu and UPPER(pro.name) LIKE CONCAT('%',UPPER(:searchProduct),'%') order by m.organizationId asc")
 	@Query("SELECT m FROM MenuDayProductEntity m INNER JOIN m.product pro where m.status=:status and UPPER(pro.name) LIKE CONCAT('%',UPPER(:searchProduct),'%') order by m.organizationId asc")
 	List<MenuDayProductEntity> getListSearchMenuProduct(@Param("searchProduct")String searchProduct, @Param("status") String status);
+	//List<MenuDayProductEntity> getListSearchMenuProduct(@Param("searchProduct")String searchProduct, @Param("status") String status,  @Param("statusMenu") String statusMenu);
 
 
 	@Query(value="SELECT DISTINCT * FROM menu_product_day INNER JOIN order_detail  ON order_detail.menu_product_id = menu_product_day.id INNER JOIN order_header ON order_header.id=order_detail.order_id  "

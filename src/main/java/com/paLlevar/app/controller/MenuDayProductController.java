@@ -138,9 +138,18 @@ public class MenuDayProductController {
 	}
 	
 	@PostMapping(value="/glsmp") 
-	public ResponseEntity<List<MenuDayProductEntity>>  getListSearchMenuProduct(@RequestBody MenuDayProductEntity mdp){
+	public ResponseEntity<Map<String,Object>>  getListSearchMenuProduct(@RequestBody MenuDayProductEntity mdp){
 		logger.info("MenuDayProductController.getListSearchMenuProduct()");
-		List<MenuDayProductEntity> lista = menudayproductService.getListSearchMenuProduct(mdp.getProduct().getName(),Constants.MENUD_PROD_STATUS_AVAILABLE);
-		return new ResponseEntity<List<MenuDayProductEntity>>(lista,HttpStatus.OK);
+		
+		Map<String,Object> response = new HashMap<>();
+		try {
+			response.put("dataList", menudayproductService.getListSearchMenuProduct(mdp.getProduct().getName(),Constants.MENUD_PROD_STATUS_AVAILABLE));
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
+		}catch(Exception e) {
+			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error");
+			logger.error("ERROR ==>", e);
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
 	}
 }
