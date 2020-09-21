@@ -102,8 +102,8 @@ public class OrderServiceImpl implements OrderService {
 		    orderCompany.setOrderDetail(new ArrayList<OrderDetailEntity>());
 		    orderCompany.setOrderDetail(entry.getValue());
 		    orderCompany.setCompanyName(companyService.getOneById(entry.getKey()).getNombre());
-		    repo.save(orderCompany);
-		    orderResult.add(this.saveOrderByOrganizationIdAndSucursalId(orderCompany));
+		    orderCompany.setOrganizationId(entry.getKey());
+		    orderResult.add(this.saveOrderByOrganizationIdAndSucursalId(repo.save(orderCompany)));
 		}
 		
 		return orderResult;
