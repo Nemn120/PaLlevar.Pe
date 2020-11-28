@@ -95,9 +95,6 @@ public class OrderDetailController {
 			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al realizar la peticion");
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
-		//List<OrderDetailEntity> lista =);
-		
 	}
 	
 	@PostMapping(path="/admo")
@@ -113,7 +110,6 @@ public class OrderDetailController {
 		logger.debug("Object: "+salesDTO);
 		GenericResponse<Map<String,Object>> response = new GenericResponse<>();
 
-		
 		List<Map<String,Object>> result =orderdetailService.getSalesByFieldsGroupByMenuProduct(salesDTO);
 		if(result != null && result.size()>0) {
 			response.setDatalist(result);
@@ -123,13 +119,11 @@ public class OrderDetailController {
 			
 			return response;
 		}
-			
 			response.setResponseMessage("Error al realizar la peticion");
 			response.setResponseCode("1");
 			response.setFinalTimesTamp(LocalDateTime.now());
 			logger.error(HttpStatus.INTERNAL_SERVER_ERROR);
 			return response;
-	
 	}
 }
 	

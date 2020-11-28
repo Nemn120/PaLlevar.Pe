@@ -75,9 +75,6 @@ public class CompanyController {
 		logger.info("CompanyController.saveCompany()");
 		if(logoImage != null && logoImage.getBytes().length >0)
 			pr.setPhoto(logoImage.getBytes());
-	//	if(panelImage != null && panelImage.getBytes().length>0)
-	//		pr.setImagePanel(panelImage.getBytes());
-
 		CompanyEntity companySave = companyService.save(pr);
 		return companySave;
 	}

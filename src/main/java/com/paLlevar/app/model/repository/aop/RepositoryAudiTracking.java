@@ -33,7 +33,6 @@ public class RepositoryAudiTracking {
 			if(PropertyUtils.getProperty(entity, "createDate") == null) {
 				PropertyUtils.setProperty(entity, "createDate",DateUtil.getTime());
 				PropertyUtils.setProperty(entity, "deleted",false);
-				// .. active status
 			}
 			if(PropertyUtils.getProperty(entity, "organizationId") == null) {
 				PropertyUtils.setProperty(entity, "organizationId",((UserPrincipal)principal).getOrganizationId());

@@ -17,6 +17,7 @@ public class MainEntity implements Serializable{
 	private Integer userCreateId;
 	private Integer organizationId;
 	private Integer sucursalId;
+	private String status;
 	
 	public LocalDateTime getCreateDate() {
 		return createDate;

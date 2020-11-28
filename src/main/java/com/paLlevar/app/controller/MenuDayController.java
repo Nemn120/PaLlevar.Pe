@@ -38,7 +38,6 @@ public class MenuDayController {
 		logger.info("MenuDayController.getListMenuDay()");
 		List<MenuDayEntity> lista = menudayService.getAll();
 		return new ResponseEntity<List<MenuDayEntity>>(lista,HttpStatus.OK);
-		
 	}
 	
 	@GetMapping(value="/gmbi/{id}")
