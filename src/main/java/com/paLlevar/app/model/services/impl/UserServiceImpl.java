@@ -2,6 +2,8 @@ package com.paLlevar.app.model.services.impl;
 
 import java.util.List;
 
+import com.paLlevar.app.model.dto.UserDTO;
+import com.paLlevar.app.model.services.mapper.UserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,29 +22,31 @@ public class UserServiceImpl implements UserService {
 	
 	private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
-	
 	@Autowired
 	private UserRepository repo;
 	
 	@Autowired
 	private PasswordEncoder  bcrypt;
 
+	@Autowired
+	private UserMapper userMapper;
+
 	@Override
-	public List<UserEntity> getAll() {
-		return repo.findAll();
+	public List<UserDTO> getAll() {
+		return userMapper.mapOut(repo.findAll());
 	}
 
 	@Override
-	public UserEntity getOneById(Integer id) {
-		return repo.findById(id).orElse(new UserEntity());
+	public UserDTO getOneById(Integer id) {
+		return userMapper.mapOut(repo.findById(id).orElse(new UserEntity()));
 	}
 
 	@Override
-	public UserEntity save(UserEntity t) {
+	public UserDTO save(UserDTO t) {
 		if(t.getPhoto() != null &&  t.getPhoto().length>0) {
 			repo.updatePhoto(t.getId(),t.getPhoto());
 		}
-		return repo.save(t);
+		return userMapper.mapOut(repo.save(userMapper.mapIn(t)));
 	}
 
 	@Override
@@ -51,24 +55,24 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserEntity registerUserByProfile(UserEntity user) {
+	public UserDTO registerUserByProfile(UserEntity user) {
 		user.setPassword(bcrypt.encode(user.getPassword()));
-		return repo.save(user);
+		return userMapper.mapOut(repo.save(user));
 	}
 
 	@Override
-	public UserEntity getUserByUsername(String username) {
-		return repo.findOneByUsername(username);
+	public UserDTO getUserByUsername(String username) {
+		return userMapper.mapOut(repo.findOneByUsername(username));
 	}
 
 	@Override
-	public List<UserEntity> getUserListByProfileANDStatus(UserEntity user) {
-		return repo.getUserListByStatusAndProfileID(user.getStatus(),user.getOrganizationId(),user.getProfile().getIdProfile());
+	public List<UserDTO> getUserListByProfileANDStatus(UserEntity user) {
+		return userMapper.mapOut(repo.getUserListByStatusAndProfileID(user.getStatus(),user.getOrganizationId(),user.getProfile().getIdProfile()));
 	}
 
 	@Override
-	public List<UserEntity> getUserListByOrganizationId(Integer idOrg) {
-		return repo.findByOrganizationId(idOrg);
+	public List<UserDTO> getUserListByOrganizationId(Integer idOrg) {
+		return userMapper.mapOut(repo.findByOrganizationId(idOrg));
 	}
 
 	@Override
@@ -78,12 +82,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserEntity> getUserListByOrganizationIdANDbyStatus(UserEntity user) {
-		return repo.getListUserByOrganization(user);
+	public List<UserDTO> getUserListByOrganizationIdANDbyStatus(UserEntity user) {
+		return userMapper.mapOut(repo.getListUserByOrganization(user));
 	}
 
-	
-	
-	
 
 }

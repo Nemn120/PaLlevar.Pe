@@ -11,5 +11,6 @@ public interface ProductService extends GenericCRUD<ProductEntity,Integer>{
 	
 	List<ProductEntity> getAllProductByCompanyIdAndSucursalId(ProductEntity pro);
 	List<ProductEntity> getAllProductByCompanyId(Integer companyId );
+	List<ProductEntity> findByCategoryProductId(Integer categoryId);
 
 }
