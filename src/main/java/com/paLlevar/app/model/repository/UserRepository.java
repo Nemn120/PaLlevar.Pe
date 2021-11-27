@@ -12,20 +12,20 @@ public interface UserRepository extends UserCustomRepository ,JpaRepository<User
 	
 	UserEntity findOneByUsername(String username);
 	
-	@Query("SELECT u FROM UserDTO u WHERE u.id=:id AND u.organizationId=:organizationId AND u.sucursalId=:sucursalId")
+	@Query("SELECT u FROM UserEntity u WHERE u.id=:id AND u.organizationId=:organizationId AND u.sucursalId=:sucursalId")
 	public UserEntity getUserbyOrganitationDyIDBySucursal(@Param("id") Integer id,@Param("sucursalId") Integer idSucursal, @Param("organizationId") Integer orgId);
 	
 	
-	@Query("SELECT u FROM UserDTO u WHERE u.status=:status AND u.organizationId=:organizationId  AND u.profile.idProfile=:idProfile")
+	@Query("SELECT u FROM UserEntity u WHERE u.status=:status AND u.organizationId=:organizationId  AND u.profile.idProfile=:idProfile")
 	public List<UserEntity> getUserListByStatusAndProfileID(@Param("status") String status,
 			@Param("organizationId") Integer orgId, @Param("idProfile") Integer idperfil);
 	
 	@Modifying
-	@Query("UPDATE UserDTO set photo =:photo where id =:id")
+	@Query("UPDATE UserEntity set photo =:photo where id =:id")
 	void updatePhoto(@Param("id") Integer id, @Param("photo") byte[] photo);
 	
 	@Modifying
-	@Query("UPDATE UserDTO set status=:status where id =:id")
+	@Query("UPDATE UserEntity set status=:status where id =:id")
 	void updateStatusById(@Param("id") Integer id, @Param("status") String status);
 	
 	List<UserEntity> findByOrganizationId(Integer id);

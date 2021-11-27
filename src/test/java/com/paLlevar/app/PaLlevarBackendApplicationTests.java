@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.paLlevar.app.model.dto.UserDTO;
 import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +39,7 @@ class PaLlevarBackendApplicationTests {
 	@Test
 	void contextLoads() {
 		
-		UserDTO us1 = userService.getUserByUsername("mitocode");
+		UserEntity us1 = userService.getUserByUsername("mitocode");
 		us1.setAddress("asdasd");
 		
 		/*CategoryProduct ct = new CategoryP/roduct();

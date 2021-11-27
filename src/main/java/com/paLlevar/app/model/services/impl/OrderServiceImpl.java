@@ -176,7 +176,6 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public boolean deliveryOrder(OrderEntity order) {
 		logger.info("OrderServiceImpl.deliveryOrder()");
-		// CORREGIR °
 		UserEntity userDelivery = userService.getOneById(order.getUserDeliveryId());
 		if(userDelivery == null) {
 			logger.error("El delivery:"+order.getId()+ " no existe en la BD");

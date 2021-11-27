@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.paLlevar.app.model.dto.UserDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,20 +36,20 @@ public class UserController {
 	private UserService userService;
 
 	@GetMapping(path="/glur")
-	public ResponseEntity<List<UserDTO>>  getListUser(){
+	public ResponseEntity<List<UserEntity>>  getListUser(){
 		logger.info("UserController.getListUser()");
-		List<UserDTO> lista = userService.getAll();
-		return new ResponseEntity<List<UserDTO>>(lista,HttpStatus.OK);
+		List<UserEntity> lista = userService.getAll();
+		return new ResponseEntity<List<UserEntity>>(lista,HttpStatus.OK);
 		
 	}
 	
 	@PostMapping(path="/gubu",produces = "application/json")
 	public ResponseEntity<?>  getUserByUsername(@RequestBody String username){
 		logger.info("UserController.getUserByUsername()");
-		UserDTO user;
+		UserEntity user; 
 		try {
 			user= userService.getUserByUsername(username);
-			return new ResponseEntity<UserDTO>(user,HttpStatus.OK);
+			return new ResponseEntity<UserEntity>(user,HttpStatus.OK);
 			
 		}catch(Exception e) {
 			logger.error("No se encuentra el usuario");
@@ -61,13 +60,13 @@ public class UserController {
 	@GetMapping(value = "/gp/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<byte[]> getPhotoById(@PathVariable("id") Integer id) {
 		logger.info("UserController.getPhotoById()");
-		UserDTO c = userService.getOneById(id);
+		UserEntity c = userService.getOneById(id);
 		 byte[]	data = c.getPhoto();
 		return new ResponseEntity<byte[]>(data, HttpStatus.OK);
 	}
 	
 	@PostMapping(path="/uu")
-	public ResponseEntity<?> updatedUser(@RequestPart("user") UserDTO pr, @RequestPart("file") MultipartFile file) throws IOException{
+	public ResponseEntity<?> updatedUser(@RequestPart("user") UserEntity pr, @RequestPart("file") MultipartFile file) throws IOException{
 		logger.info("UserController.updatedUser()");
 		Map<String,Object> response = new HashMap<>();
 		try {
@@ -87,7 +86,7 @@ public class UserController {
 	@PostMapping(path="/su")
 	public ResponseEntity<Object> saveUserCompany(@RequestBody UserEntity us) {
 		logger.info("UserController.saveUserCompany()");
-		UserDTO userSave = userService.registerUserByProfile(us);
+		UserEntity userSave = userService.registerUserByProfile(us);
 		return new ResponseEntity<Object>(userSave,HttpStatus.CREATED);
 	}
 	
@@ -123,30 +122,30 @@ public class UserController {
 	}
 	
 	@GetMapping(value="/gubo/{id}")
-	public  ResponseEntity<List<UserDTO>>getUserListByOrg(@PathVariable("id")Integer id) {
+	public  ResponseEntity<List<UserEntity>>getUserListByOrg(@PathVariable("id")Integer id) {
 		logger.info("UserController.getUserListByOrg()");
-		List<UserDTO> userList= userService.getUserListByOrganizationId(id);
-		return new ResponseEntity<List<UserDTO>>(userList,HttpStatus.OK);
+		List<UserEntity> userList= userService.getUserListByOrganizationId(id);
+		return new ResponseEntity<List<UserEntity>>(userList,HttpStatus.OK);
 	}
 	
 	@PostMapping(path="/guldm")
-	public ResponseEntity<List<UserDTO>> getListUserDeliveryMan(@RequestBody UserEntity user){
+	public ResponseEntity<List<UserEntity>> getListUserDeliveryMan(@RequestBody UserEntity user){
 		logger.info("UserController.getListUserDeliveryMan()");
 		user.setProfile(new ProfileEntity());
 		user.getProfile().setIdProfile(Constants.DELIVERY_MAN_USER_ROL);
 		user.setStatus(Constants.DELIVERY_MAN_STATUS_DISPONIBLE);
-		List<UserDTO> lista=userService.getUserListByProfileANDStatus(user);
-		return new ResponseEntity<List<UserDTO>>(lista,HttpStatus.OK);
+		List<UserEntity> lista=userService.getUserListByProfileANDStatus(user);
+		return new ResponseEntity<List<UserEntity>>(lista,HttpStatus.OK);
 	}
 	
 	@PostMapping(path="/gulcm")
-	public ResponseEntity<List<UserDTO>> getListUserChefMan(@RequestBody UserEntity user){
+	public ResponseEntity<List<UserEntity>> getListUserChefMan(@RequestBody UserEntity user){
 		logger.info("UserController.getListUserCheftMan()");
 		user.setProfile(new ProfileEntity());
 		user.getProfile().setIdProfile(Constants.MAIN_CHEF_USER_ROL);
 		user.setStatus(Constants.DELIVERY_MAN_STATUS_DISPONIBLE);
-		List<UserDTO> lista=userService.getUserListByProfileANDStatus(user);
-		return new ResponseEntity<List<UserDTO>>(lista,HttpStatus.OK);
+		List<UserEntity> lista=userService.getUserListByProfileANDStatus(user);
+		return new ResponseEntity<List<UserEntity>>(lista,HttpStatus.OK);
 	}
 	
 	@PostMapping(path="/gludmos")

@@ -75,11 +75,6 @@ public class ProductController {
 
 		productService.deleteById(id);
 	}
-
-	@PostMapping(path="/category/{id_category}")
-	public ResponseEntity<List<ProductEntity>>  getListProductByCategoryId(@PathVariable Integer id_category){
-		logger.info("ProductController.getListProductByOrganizationIdAndSucursalId()");
-		List<ProductEntity>  lista=productService.findByCategoryProductId(id_category);
-		return new ResponseEntity<List<ProductEntity>>(lista,HttpStatus.OK);
-	}
+	
+	
 }

@@ -55,9 +55,5 @@ public class ProductServiceImpl implements ProductService{
 	public List<ProductEntity> getAllProductByCompanyId(Integer companyId) {
 		return repo.findByOrganizationId(companyId);
 	}
-
-	@Override
-	public List<ProductEntity> findByCategoryProductId(Integer categoryId) {
-		return repo.findByCategoryProductId(categoryId);
-	}
+	
 }
