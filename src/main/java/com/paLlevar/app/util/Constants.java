@@ -50,6 +50,10 @@ public class Constants {
 	public static final String MESSAGE_BODY_RESPONSE="message";
 	public static final String MESSAGE_TITLE_RESPONSE="title";
 	public static final String DATA_RESPONSE="data";
+
+	public static final String API_DOCUMENT_URL = "https://api.apis.net.pe/v1/";
+	public static final String DOCUMENT_NOT_VALID = "Documento no valido";
+	public static final String DOCUMENT_FOUND = "Documento encontrado";
 	
 
 }

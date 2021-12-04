@@ -161,6 +161,19 @@ public class UserController {
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);			
 		}
 	}
+
+	@PostMapping(path = "/vud")
+	public ResponseEntity<?> validateUserDocument(@RequestBody Map<String,Object> documentRequest){
+		Map<String,Object> response = new HashMap<>();
+		try {
+			response = userService.validateDocument(documentRequest);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} catch (Exception e) {
+			response.put(Constants.MESSAGE_BODY_RESPONSE, "Error al realizar la peticion");
+			return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
 	
 	
 	
