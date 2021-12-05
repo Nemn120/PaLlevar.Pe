@@ -15,10 +15,13 @@ public interface OrderRepository extends OrderCustomRepository, JpaRepository<Or
 	
 	List<OrderEntity> findByOrganizationIdAndStatus(Integer organizationId,String status);
 	
+	@Query("SELECT o FROM OrderEntity o WHERE  o.organizationId=:orgId AND o.status=:status ORDER BY o.attendDate ASC")
+	public List<OrderEntity> getListOrderStatusAttendAndOrgId(@Param("status") String status, @Param("orgId") Integer orgId);
+	
 	@Query("SELECT o FROM OrderEntity o WHERE  o.userOrder.id=:userId AND o.status not in (:status) ")
 	public List<OrderEntity> getListOrderByNotStatusAndUserId(@Param("status") List<String> status, @Param("userId") Integer userId);
 	
-	@Query("SELECT o FROM OrderEntity o WHERE  o.organizationId=:orgId AND o.status in (:status) ")
+	@Query("SELECT o FROM OrderEntity o WHERE  o.organizationId=:orgId AND o.status in (:status) ORDER BY o.createDate ASC")
 	public List<OrderEntity> getListOrderByStatusAndOrgId(@Param("status") List<String> status, @Param("orgId") Integer orgId);
 	
 

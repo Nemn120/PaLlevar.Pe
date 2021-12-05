@@ -148,7 +148,7 @@ public class OrderController {
 	@PostMapping(path="/gloa")
 	public ResponseEntity<List<OrderEntity>> getListOrderAttent(@RequestBody OrderEntity or){
 		logger.info("OrderController.getListOrderAttent()");
-		List<OrderEntity> lista = orderService.getListOrderByStatus(Constants.ORDER_STATUS_ATTENT, or);
+		List<OrderEntity> lista = orderService.getListOrderAttend(Constants.ORDER_STATUS_ATTENT, or);
 		return new ResponseEntity<List<OrderEntity>>(lista,HttpStatus.OK);
 	}
 	

@@ -22,6 +22,9 @@ public interface MenuDayProductRepository extends JpaRepository<MenuDayProductEn
 	
 	List<MenuDayProductEntity> findByOrganizationIdAndStatus(Integer organizationId, String status);
 	
+	@Query("SELECT m FROM MenuDayProductEntity m INNER JOIN m.product pro WHERE m.organizationId=:organizationId AND m.status=:status AND pro.categoryProduct.id=:categoryId")
+	List<MenuDayProductEntity> getMenuDayProductByOrganizationAndStatusAndCategory(@Param("organizationId") Integer organizationId, @Param("status") String status, @Param("categoryId") Integer categoryId );
+	
 	List<MenuDayProductEntity> findByOrganizationIdAndStatusAndType(Integer organizationId, String status,String type);
 	
 /*	@Query(value="SELECT distinct m FROM menu_product_day m INNER JOIN order_detail od ON od.menu_product_id = m.id INNER JOIN order_header oh ON oh.id=od.order_id "

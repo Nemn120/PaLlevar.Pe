@@ -17,6 +17,7 @@ public interface OrderService extends GenericCRUD<OrderEntity, Integer>{
 	public List<OrderEntity> saveOrderByManyOrganization(OrderEntity order);
 	
 	public List<OrderEntity> getListOrderByStatus(String status,OrderEntity order);
+	public List<OrderEntity> getListOrderAttend(String status, OrderEntity order);
 	public Boolean CheckOrder(Integer oid,  Integer orgId);
 	public List<OrderEntity> getListOrderByNotStatusAndUserId(List<String> status, Integer userId);
 	public List<OrderEntity> getListOrderStatusAndOrgId(List<String> status, Integer orgId);

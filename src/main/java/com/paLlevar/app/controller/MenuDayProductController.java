@@ -114,6 +114,14 @@ public class MenuDayProductController {
 		List<MenuDayProductEntity> lista = menudayproductService.getListByOrganizationIdAndStatus(mdp.getOrganizationId(),Constants.MENUD_PROD_STATUS_AVAILABLE);
 		return new ResponseEntity<List<MenuDayProductEntity>>(lista,HttpStatus.OK);
 	}
+	
+	@PostMapping(value="/glmbosc")
+	public ResponseEntity<List<MenuDayProductEntity>>  getListByOrgAndStatusAndCategory(@RequestBody MenuDayProductEntity mdp){
+		logger.info("MenuDayProductController.getListByOrgAndStatusAndCategory()");
+		List<MenuDayProductEntity> lista = menudayproductService.getListByOrganizationIdAndStatusAndCategory(mdp.getOrganizationId(),Constants.MENUD_PROD_STATUS_AVAILABLE, mdp.getProduct().getCategoryProduct().getId());
+		return new ResponseEntity<List<MenuDayProductEntity>>(lista,HttpStatus.OK);
+	}
+	
 	@PostMapping(value="/glmbot") 
 	public ResponseEntity<List<MenuDayProductEntity>>  getListByOrgAndStatusAndType(@RequestBody MenuDayProductEntity mdp){
 		logger.info("MenuDayProductController.getListByOrgAndStatusAndType()");

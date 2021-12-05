@@ -154,6 +154,11 @@ public class OrderServiceImpl implements OrderService {
 		}	
 		return odList;	
 	}
+	
+	@Override
+	public List<OrderEntity> getListOrderAttend(String status, OrderEntity order){
+		return repo.getListOrderStatusAttendAndOrgId(status, order.getOrganizationId());
+	}
 
 	@Override
 	public Boolean CheckOrder(Integer oid, Integer orgId) {

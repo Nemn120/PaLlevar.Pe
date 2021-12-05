@@ -100,6 +100,11 @@ public class MenuDayProductServiceImpl implements MenuDayProductService {
 	public List<MenuDayProductEntity> getListByOrganizationIdAndStatus(Integer id, String status) {
 		return repo.findByOrganizationIdAndStatus(id,status);
 	}
+	
+	@Override
+	public List<MenuDayProductEntity> getListByOrganizationIdAndStatusAndCategory(Integer id, String status, Integer categoryId ) {
+		return repo.getMenuDayProductByOrganizationAndStatusAndCategory(id,status,categoryId);
+	}
 
 	@Override
 	public List<MenuDayProductEntity> getListByOrganizationIdAndStatusAndType(Integer id, String status, String type) {
