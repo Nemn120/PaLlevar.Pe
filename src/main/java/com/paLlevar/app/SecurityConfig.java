@@ -32,9 +32,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Value("${security.signing-key}")
 	private String signingKey;
 
-	@Value("${security.encoding-strength}")
-	private Integer encodingStrength;
-
 	@Value("${security.security-realm}")
 	private String securityRealm;
 	
@@ -43,9 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		
 	@Autowired
 	private PasswordEncoder  bcrypt;
-	
-	
-	
+
 	@Bean
 	@Override
 	protected AuthenticationManager authenticationManager() throws Exception {
@@ -72,27 +67,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         .csrf()
         .disable();        
 	}
-	
-	@Bean
-	public JwtAccessTokenConverter accessTokenConverter() {
-		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-		converter.setSigningKey(signingKey);		
-		return converter;
-	}
-	
-	@Bean
-	public TokenStore tokenStore() {
-		return new JwtTokenStore(accessTokenConverter());
-		//return new JdbcTokenStore(this.dataSource);
-	}
-	
-	@Bean
-	@Primary
-	public DefaultTokenServices tokenServices() {
-		DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-		defaultTokenServices.setTokenStore(tokenStore());
-		defaultTokenServices.setSupportRefreshToken(true);	// utiliza token de refresco		
-		defaultTokenServices.setReuseRefreshToken(false);	// genera mas token refresco
-		return defaultTokenServices;
-	}
+
 }

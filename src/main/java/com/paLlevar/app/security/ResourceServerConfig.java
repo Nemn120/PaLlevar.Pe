@@ -43,9 +43,5 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers("/order/**" ).permitAll()
                 .antMatchers("/orderDetail/**" ).permitAll()
                 .antMatchers("/menuDayProduct/**" ).permitAll();
-                
-                
-                
-    }    
-
+    }
 }

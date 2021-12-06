@@ -4,7 +4,9 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,9 +15,11 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 
 // ejecucion de la creacion del token,
@@ -40,14 +44,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Value("${security.jwt.scope-write}")
 	private String scopeWrite;
 
-	@Value("${security.jwt.resource-ids}")
-	private String resourceIds;
-
-	@Autowired
-	private TokenStore tokenStore;
-
-	@Autowired
-	private JwtAccessTokenConverter accessTokenConverter;
+	@Value("security.jwt.key")
+	private String jwtKey;
 
 	@Autowired
 	private AuthenticationManager authenticationManager;	
@@ -55,28 +53,59 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Autowired
 	private PasswordEncoder bcrypt;	
 	//v .resourceIds(resourceIds)
+
+	@Autowired
+	private InfoAdicionalToken infoAdicionalToken;
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-		
-		security.tokenKeyAccess("permitAll()")
-		.checkTokenAccess("isAuthenticated()")
-		.allowFormAuthenticationForClients();
+		security
+				.tokenKeyAccess("permitAll()")
+				.checkTokenAccess("isAuthenticated()");
 	}
 	
 	@Override // crea el token, codifica el secret 
 	public void configure(ClientDetailsServiceConfigurer configurer) throws Exception {
-		configurer.inMemory().withClient(clientId).secret(bcrypt.encode(clientSecret)).authorizedGrantTypes(grantType , "refresh_token")
-		// ambitos de lectura y escritura									tiempo del token
-		.scopes(scopeRead, scopeWrite).accessTokenValiditySeconds(100000)
+		configurer.inMemory().withClient(clientId)
+				.secret(bcrypt.encode(clientSecret)).authorizedGrantTypes(grantType , "refresh_token")
+		// ambitos de lectura y escritura
+				.scopes(scopeRead, scopeWrite).authorizedGrantTypes("password", "refresh_token")
+				// tiempo del token
+				.accessTokenValiditySeconds(100000)
 		// si usas token de refresco.,
-		.refreshTokenValiditySeconds(0);		
+		.refreshTokenValiditySeconds(100000);
 	}
 
 	@Override 		// genera la cadena token con todos los datos configurados.	
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
-		enhancerChain.setTokenEnhancers(Arrays.asList(accessTokenConverter));
-		endpoints.tokenStore(tokenStore).accessTokenConverter(accessTokenConverter).tokenEnhancer(enhancerChain).authenticationManager(authenticationManager);
+		enhancerChain.setTokenEnhancers(Arrays.asList(infoAdicionalToken,accessTokenConverter()));
+		endpoints
+				.tokenStore(tokenStore())
+				.accessTokenConverter(accessTokenConverter())
+				.tokenEnhancer(enhancerChain)
+				.authenticationManager(authenticationManager);
+	}
+
+	@Bean
+	public JwtTokenStore tokenStore() {
+		return new JwtTokenStore(accessTokenConverter());
+	}
+
+	@Bean
+	public JwtAccessTokenConverter accessTokenConverter() {
+		JwtAccessTokenConverter tokenConverter = new JwtAccessTokenConverter();
+		tokenConverter.setSigningKey(jwtKey);
+		return tokenConverter;
+	}
+
+	@Bean
+	@Primary
+	public DefaultTokenServices tokenServices() {
+		DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
+		defaultTokenServices.setTokenStore(tokenStore());
+		defaultTokenServices.setSupportRefreshToken(true);	// utiliza token de refresco
+		defaultTokenServices.setReuseRefreshToken(false);	// genera mas token refresco
+		return defaultTokenServices;
 	}
 
 }
